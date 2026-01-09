@@ -1,0 +1,17 @@
+<Application x:Class="Lemoo.UI.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Startup="OnStartup"
+             Exit="OnExit">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 通用样式（按钮、文本等，不包含主题） -->
+                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/CommonStyles.xaml" />
+                
+                <!-- 注意：主题资源字典由 ThemeManager 在运行时动态添加，不在这里静态合并 -->
+                <!-- 这样可以确保主题切换能够正确应用到整个应用程序 -->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

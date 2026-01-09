@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ============================================
+         阴影效果定义
+         共享资源，不依赖主题
+         ============================================ -->
+    
+    <!-- 小阴影（卡片、按钮） -->
+    <DropShadowEffect x:Key="Shadow.Small"
+                      Color="Black"
+                      Opacity="0.2"
+                      BlurRadius="4"
+                      ShadowDepth="2"
+                      Direction="270" />
+    
+    <!-- 中等阴影（弹出菜单、下拉框） -->
+    <DropShadowEffect x:Key="Shadow.Medium"
+                      Color="Black"
+                      Opacity="0.3"
+                      BlurRadius="12"
+                      ShadowDepth="4"
+                      Direction="270" />
+    
+    <!-- 大阴影（模态对话框） -->
+    <DropShadowEffect x:Key="Shadow.Large"
+                      Color="Black"
+                      Opacity="0.4"
+                      BlurRadius="20"
+                      ShadowDepth="8"
+                      Direction="270" />
+    
+    <!-- 菜单阴影 -->
+    <DropShadowEffect x:Key="Shadow.Menu"
+                      Color="Black"
+                      Opacity="0.3"
+                      BlurRadius="12"
+                      ShadowDepth="4"
+                      Direction="270" />
+    
+    <!-- 工具提示阴影 -->
+    <DropShadowEffect x:Key="Shadow.Tooltip"
+                      Color="Black"
+                      Opacity="0.25"
+                      BlurRadius="8"
+                      ShadowDepth="2"
+                      Direction="270" />
+    
+</ResourceDictionary>
+
+

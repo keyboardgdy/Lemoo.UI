@@ -1,0 +1,43 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- ============================================
+         间距定义
+         共享资源，不依赖主题
+         ============================================ -->
+    
+    <!-- 基础间距单位（4px 网格系统） -->
+    <sys:Double x:Key="Spacing.Unit">4</sys:Double>
+    
+    <!-- 间距值 -->
+    <sys:Double x:Key="Spacing.XS">4</sys:Double>    <!-- 0.25rem -->
+    <sys:Double x:Key="Spacing.SM">8</sys:Double>    <!-- 0.5rem -->
+    <sys:Double x:Key="Spacing.MD">12</sys:Double>   <!-- 0.75rem -->
+    <sys:Double x:Key="Spacing.LG">16</sys:Double>   <!-- 1rem -->
+    <sys:Double x:Key="Spacing.XL">24</sys:Double>   <!-- 1.5rem -->
+    <sys:Double x:Key="Spacing.XXL">32</sys:Double>  <!-- 2rem -->
+    
+    <!-- 内边距 -->
+    <Thickness x:Key="Padding.XS">4</Thickness>
+    <Thickness x:Key="Padding.SM">8</Thickness>
+    <Thickness x:Key="Padding.MD">12</Thickness>
+    <Thickness x:Key="Padding.LG">16</Thickness>
+    <Thickness x:Key="Padding.XL">24</Thickness>
+    
+    <!-- 外边距 -->
+    <Thickness x:Key="Margin.XS">4</Thickness>
+    <Thickness x:Key="Margin.SM">8</Thickness>
+    <Thickness x:Key="Margin.MD">12</Thickness>
+    <Thickness x:Key="Margin.LG">16</Thickness>
+    <Thickness x:Key="Margin.XL">24</Thickness>
+    
+    <!-- 控件特定间距 -->
+    <Thickness x:Key="Padding.Button">8,6</Thickness>
+    <Thickness x:Key="Padding.MenuItem">12,10</Thickness>
+    <Thickness x:Key="Padding.Input">8,6</Thickness>
+    <Thickness x:Key="Padding.Card">16</Thickness>
+    
+</ResourceDictionary>
+
+

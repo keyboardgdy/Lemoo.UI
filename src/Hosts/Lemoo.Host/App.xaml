@@ -1,0 +1,16 @@
+﻿<Application x:Class="Lemoo.Host.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Lemoo.Host">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 通用样式（按钮、文本等） -->
+                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/CommonStyles.xaml" />
+                
+                <!-- 主题资源（颜色、字体等），使用 Base 主题作为默认主题 -->
+                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/Base.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,194 @@
+<Page x:Class="Lemoo.UI.WPF.Views.Pages.SettingsSamplePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:Lemoo.UI.WPF.Views.Pages"
+      mc:Ignorable="d"
+      Background="Transparent">
+
+    <Page.Resources>
+        <local:BoolToBorderBrushConverter x:Key="BoolToBorderBrushConverter" />
+    </Page.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0"
+                   Text="主题设置"
+                   FontSize="24"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource InputForegroundBrush}"
+                   Margin="0,0,0,24" />
+
+        <!-- 主题选择卡片 -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource WorkbenchSurfaceBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="24">
+            <StackPanel>
+                <TextBlock Text="选择主题模式"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource InputForegroundBrush}"
+                           Margin="0,0,0,16" />
+
+                <TextBlock Text="更改应用程序的外观主题，包括颜色、背景和控件样式。"
+                           FontSize="14"
+                           Foreground="{DynamicResource InputForegroundBrush}"
+                           Opacity="0.7"
+                           TextWrapping="Wrap"
+                           Margin="0,0,0,24" />
+
+                <!-- 主题选项 -->
+                <StackPanel Orientation="Vertical">
+                    <!-- 原色模式 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{Binding IsBaseThemeSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                            BorderThickness="2"
+                            CornerRadius="6"
+                            Padding="16"
+                            Margin="0,0,0,12"
+                            Cursor="Hand"
+                            MouseLeftButtonDown="OnBaseThemeSelected">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <RadioButton Grid.Column="0"
+                                       IsChecked="{Binding IsBaseThemeSelected}"
+                                       GroupName="ThemeGroup"
+                                       Margin="0,0,16,0"
+                                       VerticalAlignment="Center"
+                                       Checked="OnBaseThemeRadioButtonChecked" />
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="原色模式"
+                                         FontSize="15"
+                                         FontWeight="SemiBold"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Margin="0,0,0,4" />
+                                <TextBlock Text="使用品牌原色配色方案（深色背景 + 青色强调）"
+                                         FontSize="13"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Opacity="0.7"
+                                         TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <Border Grid.Column="2"
+                                  Width="40"
+                                  Height="24"
+                                  Background="#222831"
+                                  BorderBrush="#00ADB5"
+                                  BorderThickness="2"
+                                  CornerRadius="4"
+                                  Margin="16,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 深色模式 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{Binding IsDarkThemeSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                            BorderThickness="2"
+                            CornerRadius="6"
+                            Padding="16"
+                            Margin="0,0,0,12"
+                            Cursor="Hand"
+                            MouseLeftButtonDown="OnDarkThemeSelected">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <RadioButton Grid.Column="0"
+                                       IsChecked="{Binding IsDarkThemeSelected}"
+                                       GroupName="ThemeGroup"
+                                       Margin="0,0,16,0"
+                                       VerticalAlignment="Center"
+                                       Checked="OnDarkThemeRadioButtonChecked" />
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="深色模式"
+                                         FontSize="15"
+                                         FontWeight="SemiBold"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Margin="0,0,0,4" />
+                                <TextBlock Text="Visual Studio Dark 风格（深色背景 + 蓝色强调）"
+                                         FontSize="13"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Opacity="0.7"
+                                         TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <Border Grid.Column="2"
+                                  Width="40"
+                                  Height="24"
+                                  Background="#1E1E1E"
+                                  BorderBrush="#007ACC"
+                                  BorderThickness="2"
+                                  CornerRadius="4"
+                                  Margin="16,0,0,0" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 浅色模式 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{Binding IsLightThemeSelected, Converter={StaticResource BoolToBorderBrushConverter}}"
+                            BorderThickness="2"
+                            CornerRadius="6"
+                            Padding="16"
+                            Cursor="Hand"
+                            MouseLeftButtonDown="OnLightThemeSelected">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <RadioButton Grid.Column="0"
+                                       IsChecked="{Binding IsLightThemeSelected}"
+                                       GroupName="ThemeGroup"
+                                       Margin="0,0,16,0"
+                                       VerticalAlignment="Center"
+                                       Checked="OnLightThemeRadioButtonChecked" />
+
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="浅色模式"
+                                         FontSize="15"
+                                         FontWeight="SemiBold"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Margin="0,0,0,4" />
+                                <TextBlock Text="Visual Studio Light 风格（浅色背景 + 蓝色强调）"
+                                         FontSize="13"
+                                         Foreground="{DynamicResource InputForegroundBrush}"
+                                         Opacity="0.7"
+                                         TextWrapping="Wrap" />
+                            </StackPanel>
+
+                            <Border Grid.Column="2"
+                                  Width="40"
+                                  Height="24"
+                                  Background="#FFFFFF"
+                                  BorderBrush="#007ACC"
+                                  BorderThickness="2"
+                                  CornerRadius="4"
+                                  Margin="16,0,0,0" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

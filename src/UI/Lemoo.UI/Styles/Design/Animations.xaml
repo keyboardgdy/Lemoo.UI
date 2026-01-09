@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ============================================
+         动画定义
+         共享资源，不依赖主题
+         ============================================ -->
+    
+    <!-- 标准动画时长 -->
+    <Duration x:Key="AnimationDuration.Fast">0:0:0.1</Duration>
+    <Duration x:Key="AnimationDuration.Normal">0:0:0.15</Duration>
+    <Duration x:Key="AnimationDuration.Slow">0:0:0.3</Duration>
+    
+    <!-- 缓动函数 -->
+    <CubicEase x:Key="EasingFunction.Default"
+               EasingMode="EaseInOut" />
+    
+    <CubicEase x:Key="EasingFunction.EaseOut"
+               EasingMode="EaseOut" />
+    
+    <CubicEase x:Key="EasingFunction.EaseIn"
+               EasingMode="EaseIn" />
+    
+</ResourceDictionary>
+
+

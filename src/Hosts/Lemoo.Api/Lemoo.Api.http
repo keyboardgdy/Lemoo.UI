@@ -1,0 +1,6 @@
+@Lemoo.Api_HostAddress = http://localhost:5115
+
+GET {{Lemoo.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

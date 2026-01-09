@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ============================================
+         共享资源（与主题解耦）
+         - 字体 / 间距 / 阴影 / 动画
+         - Win11 风格控件样式
+         ============================================ -->
+    <ResourceDictionary.MergedDictionaries>
+        <!-- 共享设计资源（从 Styles/Design 加载，而不是 Themes/Shared） -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Typography.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Spacing.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml" />
+
+        <!-- Win11 风格控件样式（从 Styles/Win11 入口加载） -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+</ResourceDictionary>
+

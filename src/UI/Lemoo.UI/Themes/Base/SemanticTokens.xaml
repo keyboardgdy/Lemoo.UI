@@ -1,0 +1,97 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- ============================================
+         语义令牌层（VS Code 风格）
+         使用语义化的令牌名称，描述颜色的用途
+         注意：由于 WPF 限制，Color 不能绑定到另一个 Color，
+         所以这里直接使用颜色值，但保持语义化命名
+         ============================================ -->
+    
+    <!-- 工作台（Workbench） -->
+    <Color x:Key="workbench.background">#222831</Color>
+    <Color x:Key="workbench.surface">#2A2F36</Color>
+    <Color x:Key="workbench.card">#2A2F36</Color>
+    
+    <!-- 标题栏（Title Bar） -->
+    <Color x:Key="titleBar.background">#222831</Color>
+    <Color x:Key="titleBar.foreground">#EEEEEE</Color>
+    <Color x:Key="titleBar.activeBackground">#222831</Color>
+    <Color x:Key="titleBar.inactiveBackground">#161A1E</Color>
+    <Color x:Key="titleBar.border">#2A2F36</Color>
+    
+    <!-- 侧边栏（Sidebar） -->
+    <Color x:Key="sidebar.background">#222831</Color>
+    <Color x:Key="sidebar.foreground">#EEEEEE</Color>
+    <Color x:Key="sidebar.hoverBackground">#333B46</Color>
+    <Color x:Key="sidebar.selectedBackground">#00ADB5</Color>
+    <Color x:Key="sidebar.selectedForeground">#FFFFFF</Color>
+    <Color x:Key="sidebar.border">#2A2F36</Color>
+    
+    <!-- 菜单（Menu） -->
+    <Color x:Key="menu.background">#2A2F36</Color>
+    <Color x:Key="menu.foreground">#EEEEEE</Color>
+    <Color x:Key="menu.border">#3A3F46</Color>
+    <Color x:Key="menu.hoverBackground">#333B46</Color>
+    <Color x:Key="menu.selectedBackground">#00ADB5</Color>
+    <Color x:Key="menu.selectedForeground">#FFFFFF</Color>
+    <Color x:Key="menu.separator">#3A3F46</Color>
+    
+    <!-- 菜单项（MenuItem） -->
+    <Color x:Key="menuItem.background">#00000000</Color>
+    <Color x:Key="menuItem.foreground">#EEEEEE</Color>
+    <Color x:Key="menuItem.hoverBackground">#333B46</Color>
+    <Color x:Key="menuItem.selectedBackground">#00ADB5</Color>
+    <Color x:Key="menuItem.selectedForeground">#FFFFFF</Color>
+    <Color x:Key="menuItem.highlightedBackground">#00ADB5</Color>
+    
+    <!-- 按钮（Button） -->
+    <Color x:Key="button.background">#00000000</Color>
+    <Color x:Key="button.foreground">#EEEEEE</Color>
+    <Color x:Key="button.hoverBackground">#333B46</Color>
+    <Color x:Key="button.pressedBackground">#00ADB5</Color>
+    <Color x:Key="button.disabledBackground">#555555</Color>
+    <Color x:Key="button.disabledForeground">#666666</Color>
+    <Color x:Key="button.border">#2A2F36</Color>
+    
+    <!-- 标签页（Tab） -->
+    <Color x:Key="tab.background">#20252B</Color>
+    <Color x:Key="tab.activeBackground">#222831</Color>
+    <Color x:Key="tab.foreground">#DDDDDD</Color>
+    <Color x:Key="tab.activeForeground">#FFFFFF</Color>
+    <Color x:Key="tab.hoverBackground">#333B46</Color>
+    <Color x:Key="tab.selectedBackground">#00ADB5</Color>
+    <Color x:Key="tab.selectedForeground">#FFFFFF</Color>
+    <Color x:Key="tab.border">#2A2F36</Color>
+    
+    <!-- 输入框（Input） -->
+    <Color x:Key="input.background">#2A2F36</Color>
+    <Color x:Key="input.foreground">#EEEEEE</Color>
+    <Color x:Key="input.border">#3A3F46</Color>
+    <Color x:Key="input.focusBorder">#00ADB5</Color>
+    <Color x:Key="input.placeholder">#888888</Color>
+    
+    <!-- 分隔符（Separator） -->
+    <Color x:Key="separator.background">#3A3F46</Color>
+    
+    <!-- 滚动条（Scrollbar） -->
+    <Color x:Key="scrollbar.shadow">#000000</Color>
+    <Color x:Key="scrollbar.sliderBackground">#3A3F46</Color>
+    <Color x:Key="scrollbar.sliderHoverBackground">#333B46</Color>
+    
+    <!-- 状态栏（Status Bar） -->
+    <Color x:Key="statusBar.background">#222831</Color>
+    <Color x:Key="statusBar.foreground">#EEEEEE</Color>
+    
+    <!-- 通知（Notification/Toast） -->
+    <Color x:Key="notification.background">#2A2F36</Color>
+    <Color x:Key="notification.border">#3A3F46</Color>
+    <Color x:Key="notification.foreground">#EEEEEE</Color>
+    
+    <!-- 下拉菜单（Dropdown） -->
+    <Color x:Key="dropdown.background">#2A2F36</Color>
+    <Color x:Key="dropdown.foreground">#EEEEEE</Color>
+    <Color x:Key="dropdown.border">#3A3F46</Color>
+    <Color x:Key="dropdown.hoverBackground">#333B46</Color>
+    
+</ResourceDictionary>

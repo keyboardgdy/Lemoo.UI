@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <!-- 关闭默认 Page 项，改为手动控制，避免与显式声明产生冲突 -->
+    <EnableDefaultPageItems>false</EnableDefaultPageItems>
+    <!-- 暂时忽略公共成员缺少 XML 注释的警告，避免 UI 控件大量 CS1591 噪音 -->
+    <NoWarn>1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>1.0.0</Version>
+    <Authors>Lemoo Team</Authors>
+    <Description>Lemoo UI Framework - A professional WPF UI component library</Description>
+  </PropertyGroup>
+
+  <!-- 资源文件 -->
+  <ItemGroup>
+    <Resource Include="Resources\**\*" />
+  </ItemGroup>
+
+  <!-- 显式包含需要编译的控件 XAML -->
+  <ItemGroup>
+    <Page Include="Controls\Chrome\MainTitleBar.xaml" />
+    <Page Include="Controls\Navigation\Sidebar.xaml" />
+    <Page Include="Controls\Tabs\DocumentTabHost.xaml" />
+  </ItemGroup>
+  
+  <!-- 显式包含资源字典文件 -->
+  <ItemGroup>
+    <!-- Styles -->
+    <Page Include="Styles\CommonStyles.xaml" />
+    <Page Include="Styles\Design\Typography.xaml" />
+    <Page Include="Styles\Design\Spacing.xaml" />
+    <Page Include="Styles\Design\Shadows.xaml" />
+    <Page Include="Styles\Design\Animations.xaml" />
+    <Page Include="Styles\Win11\Win11.Tokens.xaml" />
+    <Page Include="Styles\Win11\Win11.Button.xaml" />
+    <Page Include="Styles\Win11\Win11.TextBox.xaml" />
+    <Page Include="Styles\Win11\Win11.PasswordBox.xaml" />
+    <Page Include="Styles\Win11\Win11.CheckBox.xaml" />
+    <Page Include="Styles\Win11\Win11.Controls.xaml" />
+    
+    <!-- Themes/Base -->
+    <Page Include="Themes\Base\ColorPalette.xaml" />
+    <Page Include="Themes\Base\SemanticTokens.xaml" />
+    <Page Include="Themes\Base\ComponentBrushes.xaml" />
+    <Page Include="Themes\Base\Base.xaml" />
+    
+    <!-- Themes/Dark -->
+    <Page Include="Themes\Dark\ColorPalette.xaml" />
+    <Page Include="Themes\Dark\SemanticTokens.xaml" />
+    <Page Include="Themes\Dark\ComponentBrushes.xaml" />
+    <Page Include="Themes\Dark\Dark.xaml" />
+    
+    <!-- Themes/Light -->
+    <Page Include="Themes\Light\ColorPalette.xaml" />
+    <Page Include="Themes\Light\SemanticTokens.xaml" />
+    <Page Include="Themes\Light\ComponentBrushes.xaml" />
+    <Page Include="Themes\Light\Light.xaml" />
+  </ItemGroup>
+
+</Project>
+

@@ -1,0 +1,16 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Win11 圆角半径 -->
+    <CornerRadius x:Key="Win11.CornerRadius.Small">4</CornerRadius>
+    <CornerRadius x:Key="Win11.CornerRadius.Medium">6</CornerRadius>
+    <CornerRadius x:Key="Win11.CornerRadius.Large">8</CornerRadius>
+
+    <!-- Win11 边框粗细 -->
+    <Thickness x:Key="Win11.BorderThickness.Thin">1</Thickness>
+    <Thickness x:Key="Win11.BorderThickness.Medium">1.5</Thickness>
+    <Thickness x:Key="Win11.BorderThickness.Thick">2</Thickness>
+
+</ResourceDictionary>
+
+

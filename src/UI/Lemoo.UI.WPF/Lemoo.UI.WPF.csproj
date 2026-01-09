@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lemoo.UI.Shared\Lemoo.UI.Shared.csproj" />
+    <ProjectReference Include="..\Lemoo.UI\Lemoo.UI.csproj" />
+    <ProjectReference Include="..\..\Core\Lemoo.Core.Abstractions\Lemoo.Core.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <!-- 作为可执行应用程序 -->
+    <OutputType>WinExe</OutputType>
+    <!-- 启用 ApplicationDefinition（App.xaml 作为应用程序入口） -->
+    <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
+  </PropertyGroup>
+
+</Project>
