@@ -45,7 +45,8 @@ public class TaskManagerModule : ModuleBase
         
         // 3. 注册仓储
         services.AddScoped<ITaskRepository, TaskRepository>();
-        
+        services.AddScoped<ITaskLabelRepository, TaskLabelRepository>();
+
         // 4. 注册 MediatR
         services.AddMediatR(cfg =>
         {

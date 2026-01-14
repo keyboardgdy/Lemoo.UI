@@ -9,33 +9,33 @@
          ============================================ -->
     
     <!-- 工作台（Workbench） -->
-    <Color x:Key="workbench.background">#FFFFFF</Color>
-    <Color x:Key="workbench.surface">#F3F3F3</Color>
-    <Color x:Key="workbench.card">#F9F9F9</Color>
-    
+    <Color x:Key="workbench.background">#FAFAFA</Color>
+    <Color x:Key="workbench.surface">#FFFFFF</Color>
+    <Color x:Key="workbench.card">#FFFFFF</Color>
+
     <!-- 标题栏（Title Bar） -->
-    <Color x:Key="titleBar.background">#F3F3F3</Color>
+    <Color x:Key="titleBar.background">#E8E8E8</Color>
     <Color x:Key="titleBar.foreground">#1E1E1E</Color>
-    <Color x:Key="titleBar.activeBackground">#F3F3F3</Color>
-    <Color x:Key="titleBar.inactiveBackground">#F9F9F9</Color>
-    <Color x:Key="titleBar.border">#E1E1E1</Color>
-    
+    <Color x:Key="titleBar.activeBackground">#E8E8E8</Color>
+    <Color x:Key="titleBar.inactiveBackground">#E3E3E3</Color>
+    <Color x:Key="titleBar.border">#D8D8D8</Color>
+
     <!-- 侧边栏（Sidebar） -->
-    <Color x:Key="sidebar.background">#F3F3F3</Color>
+    <Color x:Key="sidebar.background">#E8E8E8</Color>
     <Color x:Key="sidebar.foreground">#1E1E1E</Color>
-    <Color x:Key="sidebar.hoverBackground">#E8E8E8</Color>
+    <Color x:Key="sidebar.hoverBackground">#DDDDDD</Color>
     <Color x:Key="sidebar.selectedBackground">#C9DEF5</Color>
     <Color x:Key="sidebar.selectedForeground">#1E1E1E</Color>
-    <Color x:Key="sidebar.border">#E1E1E1</Color>
-    
+    <Color x:Key="sidebar.border">#D8D8D8</Color>
+
     <!-- 菜单（Menu） -->
-    <Color x:Key="menu.background">#FFFFFF</Color>
+    <Color x:Key="menu.background">#E8E8E8</Color>
     <Color x:Key="menu.foreground">#1E1E1E</Color>
-    <Color x:Key="menu.border">#E1E1E1</Color>
-    <Color x:Key="menu.hoverBackground">#E8E8E8</Color>
+    <Color x:Key="menu.border">#D8D8D8</Color>
+    <Color x:Key="menu.hoverBackground">#DDDDDD</Color>
     <Color x:Key="menu.selectedBackground">#C9DEF5</Color>
     <Color x:Key="menu.selectedForeground">#1E1E1E</Color>
-    <Color x:Key="menu.separator">#E1E1E1</Color>
+    <Color x:Key="menu.separator">#D5D5D5</Color>
     
     <!-- 菜单项（MenuItem） -->
     <Color x:Key="menuItem.background">#00000000</Color>
@@ -48,31 +48,31 @@
     <!-- 按钮（Button） -->
     <Color x:Key="button.background">#00000000</Color>
     <Color x:Key="button.foreground">#1E1E1E</Color>
-    <Color x:Key="button.hoverBackground">#E8E8E8</Color>
+    <Color x:Key="button.hoverBackground">#E5E5E5</Color>
     <Color x:Key="button.pressedBackground">#007ACC</Color>
-    <Color x:Key="button.disabledBackground">#F3F3F3</Color>
+    <Color x:Key="button.disabledBackground">#F0F0F0</Color>
     <Color x:Key="button.disabledForeground">#B0B0B0</Color>
-    <Color x:Key="button.border">#E1E1E1</Color>
-    
+    <Color x:Key="button.border">#E0E0E0</Color>
+
     <!-- 标签页（Tab） -->
-    <Color x:Key="tab.background">#F9F9F9</Color>
-    <Color x:Key="tab.activeBackground">#FFFFFF</Color>
+    <Color x:Key="tab.background">#EBEBEB</Color>
+    <Color x:Key="tab.activeBackground">#FAFAFA</Color>
     <Color x:Key="tab.foreground">#6E6E6E</Color>
     <Color x:Key="tab.activeForeground">#1E1E1E</Color>
-    <Color x:Key="tab.hoverBackground">#E8E8E8</Color>
+    <Color x:Key="tab.hoverBackground">#E0E0E0</Color>
     <Color x:Key="tab.selectedBackground">#C9DEF5</Color>
     <Color x:Key="tab.selectedForeground">#1E1E1E</Color>
-    <Color x:Key="tab.border">#E1E1E1</Color>
-    
+    <Color x:Key="tab.border">#DCDCDC</Color>
+
     <!-- 输入框（Input） -->
     <Color x:Key="input.background">#FFFFFF</Color>
     <Color x:Key="input.foreground">#1E1E1E</Color>
-    <Color x:Key="input.border">#E1E1E1</Color>
+    <Color x:Key="input.border">#D0D0D0</Color>
     <Color x:Key="input.focusBorder">#007ACC</Color>
     <Color x:Key="input.placeholder">#858585</Color>
-    
+
     <!-- 分隔符（Separator） -->
-    <Color x:Key="separator.background">#E1E1E1</Color>
+    <Color x:Key="separator.background">#DCDCDC</Color>
     
     <!-- 滚动条（Scrollbar） -->
     <Color x:Key="scrollbar.shadow">#000000</Color>
@@ -80,8 +80,8 @@
     <Color x:Key="scrollbar.sliderHoverBackground">#A8A8A8</Color>
     
     <!-- 状态栏（Status Bar） -->
-    <Color x:Key="statusBar.background">#007ACC</Color>
-    <Color x:Key="statusBar.foreground">#FFFFFF</Color>
+    <Color x:Key="statusBar.background">#E8E8E8</Color>
+    <Color x:Key="statusBar.foreground">#1E1E1E</Color>
     
     <!-- 通知（Notification/Toast） -->
     <Color x:Key="notification.background">#FFFFFF</Color>

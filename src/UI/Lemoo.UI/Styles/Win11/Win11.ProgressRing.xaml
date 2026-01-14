@@ -1,0 +1,85 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Lemoo.UI.Controls"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- ProgressRing 默认样式 -->
+    <Style TargetType="{x:Type ui:ProgressRing}" x:Key="{x:Type ui:ProgressRing}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Primary}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:ProgressRing}">
+                    <Grid x:Name="RootGrid">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Determinate" />
+                                <VisualState x:Name="Indeterminate">
+                                    <Storyboard RepeatBehavior="Forever">
+                                        <!-- 旋转动画 -->
+                                        <DoubleAnimation
+                                            Storyboard.TargetName="RingPath"
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)"
+                                            From="0"
+                                            To="360"
+                                            Duration="0:0:2" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <!-- 环形背景 -->
+                        <Ellipse
+                            Stroke="{DynamicResource Brush.Separator}"
+                            StrokeThickness="{TemplateBinding RingThickness}"
+                            Fill="Transparent"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}" />
+
+                        <!-- 进度环 -->
+                        <Path
+                            x:Name="RingPath"
+                            Stroke="{TemplateBinding Foreground}"
+                            StrokeThickness="{TemplateBinding RingThickness}"
+                            Fill="Transparent"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <RotateTransform />
+                            </Path.RenderTransform>
+                            <Path.Data>
+                                <MultiBinding Converter="{StaticResource ArcSegmentConverter}">
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Width" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Height" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Value" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="Maximum" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="RingThickness" />
+                                </MultiBinding>
+                            </Path.Data>
+                        </Path>
+
+                        <!-- 百分比文本 -->
+                        <TextBlock
+                            x:Name="PercentageText"
+                            Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}{0:F0}%}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="{TemplateBinding Foreground}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Visibility="{TemplateBinding ShowPercentage, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

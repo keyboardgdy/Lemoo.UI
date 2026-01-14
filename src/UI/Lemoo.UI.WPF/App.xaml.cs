@@ -1,7 +1,10 @@
 using System.Windows;
-using Lemoo.Core.Abstractions.UI;
+using Lemoo.UI.Abstractions;
+using Lemoo.UI.WPF.Abstractions;
+using Lemoo.UI.WPF.Constants;
 using Lemoo.UI.WPF.Services;
 using Lemoo.UI.WPF.ViewModels;
+using Lemoo.UI.WPF.ViewModels.Pages;
 using Lemoo.UI.WPF.Views;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,12 +32,17 @@ public partial class App : Application
         // 注册页面注册服务
         var pageRegistry = new PageRegistryService();
         services.AddSingleton<IPageRegistry>(pageRegistry);
-        
+
+        // 注册导航服务
+        services.AddSingleton<INavigationService, NavigationService>();
+
         // 注册示例页面（用于UI框架测试）
         RegisterSamplePages(pageRegistry);
 
         // 注册 ViewModel（使用简化版本，不依赖 MediatR 和 Logger）
-        services.AddSingleton<MainViewModel>();
+        services.AddSingleton<IMainViewModel, MainViewModel>();
+        services.AddTransient<DashboardViewModel>();
+        services.AddTransient<SettingsViewModel>();
 
         // 注册 MainWindow（使用工厂方法以便注入服务）
         services.AddTransient<MainWindow>(provider =>
@@ -67,32 +75,22 @@ public partial class App : Application
     /// </summary>
     private void RegisterSamplePages(PageRegistryService pageRegistry)
     {
-        // 注册示例页面
-        pageRegistry.RegisterPage("dashboard", typeof(Views.Pages.DashboardPage), new NavigationItemMetadata
+        pageRegistry.RegisterPage(PageKeys.Dashboard, typeof(Views.Pages.DashboardPage), new NavigationItemMetadata
         {
-            PageKey = "dashboard",
-            Title = "仪表盘",
-            Icon = "\uE80F",
+            PageKey = PageKeys.Dashboard,
+            Title = NavigationConstants.MenuText.Dashboard,
+            Icon = NavigationConstants.Icons.Home,
             Module = "UI.Framework",
             Order = 1
         });
-        
-        pageRegistry.RegisterPage("settings", typeof(Views.Pages.SettingsSamplePage), new NavigationItemMetadata
+
+        pageRegistry.RegisterPage(PageKeys.Settings, typeof(Views.Pages.SettingsSamplePage), new NavigationItemMetadata
         {
-            PageKey = "settings",
-            Title = "设置示例",
-            Icon = "\uE713",
+            PageKey = PageKeys.Settings,
+            Title = NavigationConstants.MenuText.SettingsSample,
+            Icon = NavigationConstants.Icons.Settings,
             Module = "UI.Framework",
             Order = 2
-        });
-        
-        pageRegistry.RegisterPage("win11-combobox", typeof(Views.Pages.Win11ComboBoxSamplePage), new NavigationItemMetadata
-        {
-            PageKey = "win11-combobox",
-            Title = "Win11 下拉示例",
-            Icon = "\uE74E",
-            Module = "UI.Framework",
-            Order = 3
         });
     }
 }

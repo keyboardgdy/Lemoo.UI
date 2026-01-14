@@ -13,10 +13,10 @@
     <Color x:Key="workbench.card">#252526</Color>
     
     <!-- 标题栏（Title Bar） -->
-    <Color x:Key="titleBar.background">#1E1E1E</Color>
+    <Color x:Key="titleBar.background">#252526</Color>
     <Color x:Key="titleBar.foreground">#E0E0E0</Color>
-    <Color x:Key="titleBar.activeBackground">#1E1E1E</Color>
-    <Color x:Key="titleBar.inactiveBackground">#252526</Color>
+    <Color x:Key="titleBar.activeBackground">#252526</Color>
+    <Color x:Key="titleBar.inactiveBackground">#1E1E1E</Color>
     <Color x:Key="titleBar.border">#3E3E42</Color>
     
     <!-- 侧边栏（Sidebar） -->

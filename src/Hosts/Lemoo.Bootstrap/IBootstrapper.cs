@@ -13,16 +13,31 @@ public interface IBootstrapper
     /// 引导应用程序
     /// </summary>
     Task<BootstrapResult> BootstrapAsync(CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// 注册服务
     /// </summary>
     void RegisterServices(IServiceCollection services, IConfiguration configuration);
-    
+
+    /// <summary>
+    /// 异步注册服务
+    /// </summary>
+    Task RegisterServicesAsync(IServiceCollection services, IConfiguration configuration, CancellationToken cancellationToken = default);
+
     /// <summary>
     /// 配置宿主
     /// </summary>
     void ConfigureHost(IHostBuilder hostBuilder);
+
+    /// <summary>
+    /// 启动模块生命周期
+    /// </summary>
+    Task StartModulesAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 停止模块生命周期
+    /// </summary>
+    Task StopModulesAsync(IServiceProvider serviceProvider, CancellationToken cancellationToken = default);
 }
 
 /// <summary>

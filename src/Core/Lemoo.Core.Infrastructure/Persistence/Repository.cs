@@ -1,5 +1,6 @@
 using Lemoo.Core.Abstractions.Domain;
 using Lemoo.Core.Abstractions.Persistence;
+using Lemoo.Core.Abstractions.Specifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
@@ -7,10 +8,10 @@ using System.Linq.Expressions;
 namespace Lemoo.Core.Infrastructure.Persistence;
 
 /// <summary>
-/// 基础仓储实现 - 基于 EF Core
+/// Base repository implementation using EF Core with Specification pattern support
 /// </summary>
-/// <typeparam name="TEntity">实体类型</typeparam>
-/// <typeparam name="TKey">主键类型</typeparam>
+/// <typeparam name="TEntity">Entity type</typeparam>
+/// <typeparam name="TKey">Primary key type</typeparam>
 public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
     where TKey : notnull
@@ -18,12 +19,22 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     protected readonly DbContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
     protected readonly ILogger<Repository<TEntity, TKey>> Logger;
+    protected readonly ISpecificationEvaluator SpecificationEvaluator;
 
     public Repository(DbContext dbContext, ILogger<Repository<TEntity, TKey>> logger)
+        : this(dbContext, logger, SpecificationEvaluator.Instance)
     {
-        DbContext = dbContext;
+    }
+
+    public Repository(
+        DbContext dbContext,
+        ILogger<Repository<TEntity, TKey>> logger,
+        ISpecificationEvaluator specificationEvaluator)
+    {
+        DbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         DbSet = dbContext.Set<TEntity>();
-        Logger = logger;
+        Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        SpecificationEvaluator = specificationEvaluator ?? throw new ArgumentNullException(nameof(specificationEvaluator));
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
@@ -34,6 +45,69 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await DbSet.ToListAsync(cancellationToken);
+    }
+
+    // Specification pattern support
+    public virtual async Task<IEnumerable<TEntity>> GetAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<TEntity?> FirstOrDefaultAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public virtual async Task<TResult> FirstOrDefaultAsync<TResult>(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+        where TResult : class
+    {
+        var query = (IQueryable<TResult>)ApplySpecification(specification);
+        return await query.FirstOrDefaultAsync(cancellationToken)
+            ?? throw new InvalidOperationException($"No result found for specification");
+    }
+
+    // Bulk operations
+    public virtual async Task AddRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default)
+    {
+        if (entities == null) throw new ArgumentNullException(nameof(entities));
+
+        var entityList = entities.ToList();
+        await DbSet.AddRangeAsync(entityList, cancellationToken);
+        Logger.LogDebug("添加 {Count} 个实体: {EntityType}", entityList.Count, typeof(TEntity).Name);
+    }
+
+    public virtual Task UpdateRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default)
+    {
+        if (entities == null) throw new ArgumentNullException(nameof(entities));
+
+        var entityList = entities.ToList();
+        DbSet.UpdateRange(entityList);
+        Logger.LogDebug("更新 {Count} 个实体: {EntityType}", entityList.Count, typeof(TEntity).Name);
+        return Task.CompletedTask;
+    }
+
+    public virtual Task DeleteRangeAsync(
+        IEnumerable<TEntity> entities,
+        CancellationToken cancellationToken = default)
+    {
+        if (entities == null) throw new ArgumentNullException(nameof(entities));
+
+        var entityList = entities.ToList();
+        DbSet.RemoveRange(entityList);
+        Logger.LogDebug("删除 {Count} 个实体: {EntityType}", entityList.Count, typeof(TEntity).Name);
+        return Task.CompletedTask;
     }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -57,13 +131,15 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
         return Task.CompletedTask;
     }
 
-    public virtual async Task DeleteByIdAsync(TKey id, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> DeleteByIdAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         if (entity != null)
         {
             await DeleteAsync(entity, cancellationToken);
+            return true;
         }
+        return false;
     }
 
     public virtual async Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken = default)
@@ -76,9 +152,18 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
         return await DbSet.CountAsync(cancellationToken);
     }
 
+    public virtual async Task<int> CountAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.CountAsync(cancellationToken);
+    }
+
     /// <summary>
-    /// 根据条件查询
+    /// Query by predicate (kept for backward compatibility)
     /// </summary>
+    [Obsolete("Consider using Specification pattern instead")]
     public virtual IQueryable<TEntity> Query(Expression<Func<TEntity, bool>>? predicate = null)
     {
         var query = DbSet.AsQueryable();
@@ -90,7 +175,7 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     }
 
     /// <summary>
-    /// 根据条件查找第一个
+    /// First or default by predicate
     /// </summary>
     public virtual async Task<TEntity?> FirstOrDefaultAsync(
         Expression<Func<TEntity, bool>> predicate,
@@ -100,13 +185,21 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     }
 
     /// <summary>
-    /// 根据条件查找所有
+    /// Find by predicate
     /// </summary>
     public virtual async Task<IEnumerable<TEntity>> FindAsync(
         Expression<Func<TEntity, bool>> predicate,
         CancellationToken cancellationToken = default)
     {
         return await DbSet.Where(predicate).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Apply specification to query
+    /// </summary>
+    protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
+    {
+        return SpecificationEvaluator.GetQuery(DbSet.AsQueryable(), specification);
     }
 }
 

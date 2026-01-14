@@ -1,5 +1,5 @@
 using System.Windows.Controls;
-using Lemoo.Core.Abstractions.UI;
+using Lemoo.UI.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lemoo.UI.WPF.Services;

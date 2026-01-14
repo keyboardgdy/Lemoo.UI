@@ -25,13 +25,20 @@ public class Bootstrapper : IBootstrapper
 {
     private readonly IConfiguration _configuration;
     private readonly ILogger<Bootstrapper> _logger;
+    private readonly StartupOptions _options;
     private IReadOnlyList<IModule>? _loadedModules;
-    
-    public Bootstrapper(IConfiguration configuration, ILogger<Bootstrapper> logger)
+
+    public Bootstrapper(IConfiguration configuration, ILogger<Bootstrapper> logger, StartupOptions? options = null)
     {
         _configuration = configuration;
         _logger = logger;
+        _options = options ?? new StartupOptions();
     }
+
+    /// <summary>
+    /// 获取启动选项
+    /// </summary>
+    public StartupOptions Options => _options;
     
     public async Task<BootstrapResult> BootstrapAsync(CancellationToken cancellationToken = default)
     {
@@ -108,16 +115,19 @@ public class Bootstrapper : IBootstrapper
             _logger.LogWarning("模块尚未加载，无法启动模块生命周期");
             return;
         }
-        
+
         var moduleLoader = serviceProvider.GetRequiredService<IModuleLoader>();
         var modules = moduleLoader.GetLoadedModules();
-        
+
         // 启动前
         foreach (var module in modules)
         {
             try
             {
-                _logger.LogDebug("模块 {ModuleName} 启动前处理", module.Name);
+                if (_options.EnableModuleLifecycleLogging)
+                {
+                    _logger.LogDebug("模块 {ModuleName} 启动前处理", module.Name);
+                }
                 await module.OnApplicationStartingAsync(serviceProvider, cancellationToken);
             }
             catch (Exception ex)
@@ -126,13 +136,16 @@ public class Bootstrapper : IBootstrapper
                 throw;
             }
         }
-        
+
         // 启动后
         foreach (var module in modules)
         {
             try
             {
-                _logger.LogDebug("模块 {ModuleName} 启动后处理", module.Name);
+                if (_options.EnableModuleLifecycleLogging)
+                {
+                    _logger.LogDebug("模块 {ModuleName} 启动后处理", module.Name);
+                }
                 await module.OnApplicationStartedAsync(serviceProvider, cancellationToken);
             }
             catch (Exception ex)
@@ -141,7 +154,7 @@ public class Bootstrapper : IBootstrapper
                 throw;
             }
         }
-        
+
         _logger.LogInformation("所有模块生命周期启动完成");
     }
     
@@ -154,16 +167,19 @@ public class Bootstrapper : IBootstrapper
         {
             return;
         }
-        
+
         var moduleLoader = serviceProvider.GetRequiredService<IModuleLoader>();
         var modules = moduleLoader.GetLoadedModules().Reverse();
-        
+
         // 停止前
         foreach (var module in modules)
         {
             try
             {
-                _logger.LogDebug("模块 {ModuleName} 停止前处理", module.Name);
+                if (_options.EnableModuleLifecycleLogging)
+                {
+                    _logger.LogDebug("模块 {ModuleName} 停止前处理", module.Name);
+                }
                 await module.OnApplicationStoppingAsync(serviceProvider, cancellationToken);
             }
             catch (Exception ex)
@@ -171,13 +187,16 @@ public class Bootstrapper : IBootstrapper
                 _logger.LogError(ex, "模块 {ModuleName} 停止前处理失败", module.Name);
             }
         }
-        
+
         // 停止后
         foreach (var module in modules)
         {
             try
             {
-                _logger.LogDebug("模块 {ModuleName} 停止后处理", module.Name);
+                if (_options.EnableModuleLifecycleLogging)
+                {
+                    _logger.LogDebug("模块 {ModuleName} 停止后处理", module.Name);
+                }
                 await module.OnApplicationStoppedAsync(serviceProvider, cancellationToken);
             }
             catch (Exception ex)
@@ -185,55 +204,131 @@ public class Bootstrapper : IBootstrapper
                 _logger.LogError(ex, "模块 {ModuleName} 停止后处理失败", module.Name);
             }
         }
-        
+
         _logger.LogInformation("所有模块生命周期停止完成");
     }
     
     public void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {
-        _logger.LogInformation("注册核心服务...");
-        
+        _logger.LogInformation("注册核心服务（同步模式）...");
+
         // 注册基础设施服务
         services.AddSingleton<IModuleLoader, ModuleLoader>();
+        services.AddSingleton<IModuleContractRegistry, ModuleContractRegistry>();
         services.AddMemoryCache();
         services.AddLogging(builder =>
         {
             builder.AddSerilog();
         });
-        
+
         // 加载并注册模块
         // 注意：这里需要先注册ILogger，所以使用临时服务提供者
         var tempServices = new ServiceCollection();
         tempServices.AddSingleton<IConfiguration>(configuration);
         tempServices.AddLogging();
-        var tempProvider = tempServices.BuildServiceProvider();
-        
+
+        // 使用 using 确保临时 ServiceProvider 被正确释放
+        using var tempProvider = tempServices.BuildServiceProvider();
+
         var moduleLoader = new ModuleLoader(
             tempProvider.GetRequiredService<ILogger<ModuleLoader>>(),
             configuration);
-        
+
         // 同步加载模块（在服务注册阶段）
         // 注意：由于 RegisterServices 不是异步方法，必须使用 GetAwaiter().GetResult()
-        // 这在服务注册阶段是安全的，因为此时还没有构建 ServiceProvider
-        _loadedModules = moduleLoader.LoadModulesAsync().GetAwaiter().GetResult();
-        
-        // 按顺序配置模块服务
+        // 使用 Task.Run 确保异步操作在线程池线程上执行，避免死锁
+        try
+        {
+            _loadedModules = Task.Run(() => moduleLoader.LoadModulesAsync()).GetAwaiter().GetResult();
+        }
+        catch (AggregateException ex)
+        {
+            // 展开聚合异常以获取实际异常
+            if (ex.InnerExceptions.Count == 1)
+            {
+                throw ex.InnerExceptions[0];
+            }
+            throw;
+        }
+
+        // 获取模块契约注册表
+        var contractRegistry = new ModuleContractRegistry();
+
+        // 按顺序配置模块服务（使用同步方法）
         foreach (var module in _loadedModules)
         {
             _logger.LogInformation("配置模块服务: {ModuleName}", module.Name);
             module.PreConfigureServices(services, configuration);
             module.ConfigureServices(services, configuration);
         }
-        
-        // 后配置
-        foreach (var module in _loadedModules)
+
+        // 后配置（按依赖逆序）
+        foreach (var module in _loadedModules.Reverse())
         {
             module.PostConfigureServices(services, configuration);
         }
-        
+
+        // 注册契约注册表
+        services.AddSingleton(contractRegistry);
+
         _logger.LogInformation("已注册 {Count} 个模块", _loadedModules.Count);
     }
-    
+
+    /// <summary>
+    /// 异步注册服务（推荐使用）
+    /// </summary>
+    public async Task RegisterServicesAsync(IServiceCollection services, IConfiguration configuration, CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("注册核心服务（异步模式）...");
+
+        // 注册基础设施服务
+        services.AddSingleton<IModuleLoader, ModuleLoader>();
+        services.AddSingleton<IModuleContractRegistry, ModuleContractRegistry>();
+        services.AddMemoryCache();
+        services.AddLogging(builder =>
+        {
+            builder.AddSerilog();
+        });
+
+        // 加载并注册模块
+        // 注意：这里需要先注册ILogger，所以使用临时服务提供者
+        var tempServices = new ServiceCollection();
+        tempServices.AddSingleton<IConfiguration>(configuration);
+        tempServices.AddLogging();
+
+        // 使用 using 确保临时 ServiceProvider 被正确释放
+        using var tempProvider = tempServices.BuildServiceProvider();
+
+        var moduleLoader = new ModuleLoader(
+            tempProvider.GetRequiredService<ILogger<ModuleLoader>>(),
+            configuration);
+
+        // 异步加载模块
+        _loadedModules = await moduleLoader.LoadModulesAsync(cancellationToken);
+
+        // 获取模块契约注册表
+        var contractRegistry = new ModuleContractRegistry();
+
+        // 按顺序配置模块服务（使用异步方法）
+        foreach (var module in _loadedModules)
+        {
+            _logger.LogInformation("配置模块服务: {ModuleName}", module.Name);
+            await module.PreConfigureServicesAsync(services, configuration, cancellationToken);
+            await module.ConfigureServicesAsync(services, configuration, cancellationToken);
+        }
+
+        // 后配置（按依赖逆序）
+        foreach (var module in _loadedModules.Reverse())
+        {
+            await module.PostConfigureServicesAsync(services, configuration, cancellationToken);
+        }
+
+        // 注册契约注册表
+        services.AddSingleton(contractRegistry);
+
+        _logger.LogInformation("已注册 {Count} 个模块", _loadedModules.Count);
+    }
+
     public void ConfigureHost(IHostBuilder hostBuilder)
     {
         hostBuilder

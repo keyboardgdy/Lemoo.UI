@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Lemoo.UI.Helpers;
@@ -32,6 +34,18 @@ public static class ThemeManager
         /// </summary>
         Light,
         /// <summary>
+        /// 霓虹赛博朋克主题（Neon Cyberpunk）
+        /// </summary>
+        NeonCyberpunk,
+        /// <summary>
+        /// 极光主题（Aurora Borealis）
+        /// </summary>
+        Aurora,
+        /// <summary>
+        /// 热带夕阳主题（Sunset Tropics）
+        /// </summary>
+        SunsetTropics,
+        /// <summary>
         /// 跟随系统主题
         /// </summary>
         System
@@ -41,13 +55,19 @@ public static class ThemeManager
     private static readonly Uri BaseThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Base/Base.xaml", UriKind.Absolute);
     private static readonly Uri DarkThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Dark/Dark.xaml", UriKind.Absolute);
     private static readonly Uri LightThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Light/Light.xaml", UriKind.Absolute);
+    private static readonly Uri NeonCyberpunkThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/NeonCyberpunk/NeonCyberpunk.xaml", UriKind.Absolute);
+    private static readonly Uri AuroraThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Aurora/Aurora.xaml", UriKind.Absolute);
+    private static readonly Uri SunsetTropicsThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/SunsetTropics/SunsetTropics.xaml", UriKind.Absolute);
 
     // 主题资源字典路径后缀（用于快速识别）
-    private static readonly string[] ThemePathSuffixes = 
+    private static readonly string[] ThemePathSuffixes =
     {
         "/Themes/Base/Base.xaml",
         "/Themes/Dark/Dark.xaml",
-        "/Themes/Light/Light.xaml"
+        "/Themes/Light/Light.xaml",
+        "/Themes/NeonCyberpunk/NeonCyberpunk.xaml",
+        "/Themes/Aurora/Aurora.xaml",
+        "/Themes/SunsetTropics/SunsetTropics.xaml"
     };
 
     // 资源字典缓存（避免重复创建，提升性能）
@@ -79,6 +99,112 @@ public static class ThemeManager
                 ThemeChanged?.Invoke(null, new ThemeChangedEventArgs(oldTheme, value));
             }
         }
+    }
+
+    /// <summary>
+    /// 获取所有可用主题的信息
+    /// </summary>
+    public static ReadOnlyCollection<ThemeInfo> AvailableThemes { get; }
+
+    /// <summary>
+    /// 静态构造函数 - 初始化主题信息
+    /// </summary>
+    static ThemeManager()
+    {
+        var themes = new List<ThemeInfo>
+        {
+            new ThemeInfo
+            {
+                ThemeType = Theme.Base,
+                DisplayName = "原色模式",
+                Description = "品牌原色配色方案",
+                DetailDescription = "深色背景搭配青色强调色，展示 Lemoo 品牌特色",
+                PreviewPrimaryColor = Color.FromRgb(0x1A, 0x1E, 0x24),
+                PreviewSecondaryColor = Color.FromRgb(0x25, 0x2B, 0x33),
+                PreviewAccentColor = Color.FromRgb(0x00, 0xAD, 0xB5),
+                PreviewTextColor = Color.FromRgb(0xEE, 0xEE, 0xEE),
+                IsDefault = true,
+                Tag = "默认",
+                Category = "Lemoo"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.Dark,
+                DisplayName = "深色模式",
+                Description = "Visual Studio Dark 风格",
+                DetailDescription = "经典深色 IDE 配色，蓝色强调色，专业开发体验",
+                PreviewPrimaryColor = Color.FromRgb(0x25, 0x25, 0x26),
+                PreviewSecondaryColor = Color.FromRgb(0x1E, 0x1E, 0x1E),
+                PreviewAccentColor = Color.FromRgb(0x00, 0x7A, 0xCC),
+                PreviewTextColor = Color.FromRgb(0xE0, 0xE0, 0xE0),
+                IsDefault = false,
+                Category = "Visual Studio"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.Light,
+                DisplayName = "浅色模式",
+                Description = "Visual Studio Light 风格",
+                DetailDescription = "清爽明亮配色方案，适合日间使用",
+                PreviewPrimaryColor = Color.FromRgb(0xE8, 0xE8, 0xE8),
+                PreviewSecondaryColor = Color.FromRgb(0xFA, 0xFA, 0xFA),
+                PreviewAccentColor = Color.FromRgb(0x00, 0x7A, 0xCC),
+                PreviewTextColor = Color.FromRgb(0x1E, 0x1E, 0x1E),
+                IsDefault = false,
+                Category = "Visual Studio"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.NeonCyberpunk,
+                DisplayName = "霓虹赛博朋克",
+                Description = "未来科技风格",
+                DetailDescription = "霓虹色彩与深色背景的碰撞，营造强烈的科技感和未来感",
+                PreviewPrimaryColor = Color.FromRgb(0x0D, 0x0D, 0x14),
+                PreviewSecondaryColor = Color.FromRgb(0x0A, 0x0A, 0x0F),
+                PreviewAccentColor = Color.FromRgb(0xFF, 0x00, 0x6E),
+                PreviewTextColor = Color.FromRgb(0x00, 0xF5, 0xFF),
+                IsDefault = false,
+                Tag = "创新",
+                Category = "创意主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.Aurora,
+                DisplayName = "极光",
+                Description = "北极光风格",
+                DetailDescription = "流动的渐变色彩和柔和的光晕效果，带来宁静而神秘的视觉体验",
+                PreviewPrimaryColor = Color.FromRgb(0x14, 0x1C, 0x27),
+                PreviewSecondaryColor = Color.FromRgb(0x0F, 0x14, 0x19),
+                PreviewAccentColor = Color.FromRgb(0x00, 0xD9, 0xA0),
+                PreviewTextColor = Color.FromRgb(0xE0, 0xF7, 0xFA),
+                IsDefault = false,
+                Tag = "优雅",
+                Category = "创意主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.SunsetTropics,
+                DisplayName = "热带夕阳",
+                Description = "热带海滩风格",
+                DetailDescription = "温暖的大地色系与活力的珊瑚橙、青绿色的融合，充满热情与生机",
+                PreviewPrimaryColor = Color.FromRgb(0xFF, 0xE5, 0xD9),
+                PreviewSecondaryColor = Color.FromRgb(0xFF, 0xF8, 0xF0),
+                PreviewAccentColor = Color.FromRgb(0xFF, 0x6B, 0x6B),
+                PreviewTextColor = Color.FromRgb(0x2C, 0x3E, 0x50),
+                IsDefault = false,
+                Tag = "温暖",
+                Category = "创意主题"
+            }
+        };
+        AvailableThemes = new ReadOnlyCollection<ThemeInfo>(themes);
+    }
+
+    /// <summary>
+    /// 根据主题类型获取主题信息
+    /// </summary>
+    public static ThemeInfo? GetThemeInfo(Theme theme)
+    {
+        return AvailableThemes.FirstOrDefault(t => t.ThemeType == theme);
     }
 
     /// <summary>
@@ -119,6 +245,9 @@ public static class ThemeManager
             Theme.Base => BaseThemeUri,
             Theme.Dark => DarkThemeUri,
             Theme.Light => LightThemeUri,
+            Theme.NeonCyberpunk => NeonCyberpunkThemeUri,
+            Theme.Aurora => AuroraThemeUri,
+            Theme.SunsetTropics => SunsetTropicsThemeUri,
             _ => BaseThemeUri
         };
 
@@ -324,6 +453,9 @@ public static class ThemeManager
             Theme.Base => BaseThemeUri,
             Theme.Dark => DarkThemeUri,
             Theme.Light => LightThemeUri,
+            Theme.NeonCyberpunk => NeonCyberpunkThemeUri,
+            Theme.Aurora => AuroraThemeUri,
+            Theme.SunsetTropics => SunsetTropicsThemeUri,
             _ => BaseThemeUri
         };
 

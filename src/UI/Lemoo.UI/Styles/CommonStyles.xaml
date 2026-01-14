@@ -15,6 +15,7 @@
 
         <!-- Win11 风格控件样式（从 Styles/Win11 入口加载） -->
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ScrollBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
 </ResourceDictionary>

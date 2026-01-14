@@ -1,6 +1,7 @@
 using Lemoo.Core.Abstractions.Persistence;
 using Lemoo.Core.Application;
 using Lemoo.Core.Application.Common;
+using Lemoo.Modules.TaskManager.Application.DTOs;
 using TaskEntity = Lemoo.Modules.TaskManager.Domain.Entities.Task;
 using TaskStatus = Lemoo.Modules.TaskManager.Domain.ValueObjects.TaskStatus;
 using TaskPriority = Lemoo.Modules.TaskManager.Domain.ValueObjects.TaskPriority;
@@ -20,7 +21,7 @@ public interface ITaskRepository : IRepository<TaskEntity, Guid>
         TaskStatus? status = null,
         TaskPriority? priority = null,
         CancellationToken cancellationToken = default);
-    
+
     /// <summary>
     /// 分页搜索任务
     /// </summary>
@@ -31,4 +32,9 @@ public interface ITaskRepository : IRepository<TaskEntity, Guid>
         int pageIndex = 1,
         int pageSize = 20,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// 获取任务统计
+    /// </summary>
+    System.Threading.Tasks.Task<TaskStatisticsDto> GetStatisticsAsync(CancellationToken cancellationToken = default);
 }

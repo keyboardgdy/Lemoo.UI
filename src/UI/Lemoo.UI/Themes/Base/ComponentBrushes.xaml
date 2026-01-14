@@ -95,12 +95,81 @@
     <SolidColorBrush x:Key="DropdownForegroundBrush" Color="{StaticResource dropdown.foreground}"/>
     <SolidColorBrush x:Key="DropdownBorderBrush" Color="{StaticResource dropdown.border}"/>
     <SolidColorBrush x:Key="DropdownHoverBackgroundBrush" Color="{StaticResource dropdown.hoverBackground}"/>
-    
+
+    <!-- 卡片画刷 -->
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource card.background}"/>
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource card.border}"/>
+    <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="{StaticResource card.hoverBackground}"/>
+
+    <!-- 列表项画刷 -->
+    <SolidColorBrush x:Key="ListItemBackgroundBrush" Color="{StaticResource listItem.background}"/>
+    <SolidColorBrush x:Key="ListItemHoverBackgroundBrush" Color="{StaticResource listItem.hoverBackground}"/>
+    <SolidColorBrush x:Key="ListItemSelectedBackgroundBrush" Color="{StaticResource listItem.selectedBackground}"/>
+
+    <!-- 弹出层画刷 -->
+    <SolidColorBrush x:Key="PopupBackgroundBrush" Color="{StaticResource popup.background}"/>
+    <SolidColorBrush x:Key="PopupBorderBrush" Color="{StaticResource popup.border}"/>
+
+    <!-- 开关画刷 -->
+    <SolidColorBrush x:Key="ToggleSwitchOffBackgroundBrush" Color="{StaticResource toggleSwitch.offBackground}"/>
+    <SolidColorBrush x:Key="ToggleSwitchOffBorderBrush" Color="{StaticResource toggleSwitch.offBorder}"/>
+    <SolidColorBrush x:Key="ToggleSwitchOnBackgroundBrush" Color="{StaticResource toggleSwitch.onBackground}"/>
+    <SolidColorBrush x:Key="ToggleSwitchOnBorderBrush" Color="{StaticResource toggleSwitch.onBorder}"/>
+    <SolidColorBrush x:Key="ToggleSwitchKnobBrush" Color="{StaticResource toggleSwitch.knob}"/>
+    <SolidColorBrush x:Key="ToggleSwitchKnobOnBrush" Color="{StaticResource toggleSwitch.knobOn}"/>
+    <SolidColorBrush x:Key="ToggleSwitchHoverBorderBrush" Color="{StaticResource toggleSwitch.hoverBorder}"/>
+    <SolidColorBrush x:Key="ToggleSwitchPressedBorderBrush" Color="{StaticResource toggleSwitch.pressedBorder}"/>
+
+    <!-- NumericUpDown 画刷 -->
+    <SolidColorBrush x:Key="NumericUpDownButtonBackgroundBrush" Color="{StaticResource numericUpDown.buttonBackground}"/>
+    <SolidColorBrush x:Key="NumericUpDownButtonHoverBackgroundBrush" Color="{StaticResource numericUpDown.buttonHoverBackground}"/>
+    <SolidColorBrush x:Key="NumericUpDownButtonPressedBackgroundBrush" Color="{StaticResource numericUpDown.buttonPressedBackground}"/>
+
+    <!-- 文本画刷 -->
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource text.primary}"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource text.secondary}"/>
+    <SolidColorBrush x:Key="TextDisabledBrush" Color="{StaticResource text.disabled}"/>
+    <SolidColorBrush x:Key="TextOnDarkBrush" Color="{StaticResource text.onDark}"/>
+
+    <!-- 边框画刷 -->
+    <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource border.default}"/>
+    <SolidColorBrush x:Key="BorderFocusBrush" Color="{StaticResource border.focus}"/>
+
+    <!-- 阴影画刷 -->
+    <SolidColorBrush x:Key="ShadowColorBrush" Color="{StaticResource shadow.color}"/>
+
     <!-- 强调色画刷（用于 Win11 控件样式） -->
     <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource Palette.Accent.Primary}"/>
     <SolidColorBrush x:Key="AccentSecondaryBrush" Color="{StaticResource Palette.Accent.Secondary}"/>
     <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource Palette.Accent.Hover}"/>
     <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource Palette.Accent.Pressed}"/>
-    
+
+    <!-- 简化名称画刷（兼容性） -->
+    <SolidColorBrush x:Key="Brush.WorkbenchBackground" Color="{StaticResource workbench.background}"/>
+    <SolidColorBrush x:Key="Brush.Card.Background" Color="{StaticResource card.background}"/>
+    <SolidColorBrush x:Key="Brush.Card.Border" Color="{StaticResource card.border}"/>
+    <SolidColorBrush x:Key="Brush.ListItem.HoverBackground" Color="{StaticResource listItem.hoverBackground}"/>
+    <SolidColorBrush x:Key="Brush.Popup.Background" Color="{StaticResource popup.background}"/>
+    <SolidColorBrush x:Key="Brush.Popup.Border" Color="{StaticResource popup.border}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.OffBackground" Color="{StaticResource toggleSwitch.offBackground}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.OffBorder" Color="{StaticResource toggleSwitch.offBorder}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.OnBackground" Color="{StaticResource toggleSwitch.onBackground}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.OnBorder" Color="{StaticResource toggleSwitch.onBorder}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.Knob" Color="{StaticResource toggleSwitch.knob}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.Knob.On" Color="{StaticResource toggleSwitch.knobOn}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.HoverBorder" Color="{StaticResource toggleSwitch.hoverBorder}"/>
+    <SolidColorBrush x:Key="Brush.ToggleSwitch.PressedBorder" Color="{StaticResource toggleSwitch.pressedBorder}"/>
+    <SolidColorBrush x:Key="Brush.NumericUpDown.ButtonBackground" Color="{StaticResource numericUpDown.buttonBackground}"/>
+    <SolidColorBrush x:Key="Brush.NumericUpDown.ButtonHoverBackground" Color="{StaticResource numericUpDown.buttonHoverBackground}"/>
+    <SolidColorBrush x:Key="Brush.NumericUpDown.ButtonPressedBackground" Color="{StaticResource numericUpDown.buttonPressedBackground}"/>
+    <SolidColorBrush x:Key="Brush.Text.Primary" Color="{StaticResource text.primary}"/>
+    <SolidColorBrush x:Key="Brush.Text.Secondary" Color="{StaticResource text.secondary}"/>
+    <SolidColorBrush x:Key="Brush.Text.Disabled" Color="{StaticResource text.disabled}"/>
+    <SolidColorBrush x:Key="Brush.Text.OnDark" Color="{StaticResource text.onDark}"/>
+    <SolidColorBrush x:Key="Brush.Border.Default" Color="{StaticResource border.default}"/>
+    <SolidColorBrush x:Key="Brush.Border.Focus" Color="{StaticResource border.focus}"/>
+    <SolidColorBrush x:Key="Brush.Separator" Color="{StaticResource separator}"/>
+    <SolidColorBrush x:Key="Brush.Shadow" Color="{StaticResource shadow.color}"/>
+
 </ResourceDictionary>
 

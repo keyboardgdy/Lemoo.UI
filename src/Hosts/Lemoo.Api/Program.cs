@@ -26,32 +26,39 @@ builder.Services.AddCors(options =>
 builder.Services.AddHealthChecks();
 
 // 配置Lemoo应用程序（包括引导、服务注册、模块生命周期）
-var app = await builder.ConfigureLemooApplicationAsync(configurePipeline: app =>
-{
-    // 配置HTTP请求管道
-    // 请求ID追踪（应该最早注册）
-    app.UseRequestId();
-
-    // 全局异常处理
-    app.UseGlobalExceptionHandler();
-
-    if (app.Environment.IsDevelopment())
+var app = await builder.ConfigureLemooApplicationAsync(
+    configurePipeline: app =>
     {
-        app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        // 配置HTTP请求管道
+        // 请求ID追踪（应该最早注册）
+        app.UseRequestId();
+
+        // 全局异常处理
+        app.UseGlobalExceptionHandler();
+
+        if (app.Environment.IsDevelopment())
         {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lemoo API v1");
-        });
-    }
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Lemoo API v1");
+            });
+        }
 
-    app.UseHttpsRedirection();
-    app.UseCors();
-    app.UseAuthorization();
+        app.UseHttpsRedirection();
+        app.UseCors();
+        app.UseAuthorization();
 
-    // 健康检查端点
-    app.MapHealthChecks("/health");
+        // 健康检查端点
+        app.MapHealthChecks("/health");
 
-    app.MapControllers();
-});
+        app.MapControllers();
+    },
+    configureOptions: options =>
+    {
+        // 配置启动选项
+        options.EnableModuleLifecycleLogging = true;
+        // options.AutoMigrate = builder.Configuration.GetValue<bool>("Lemoo:Database:AutoMigrate");
+    });
 
 app.Run();

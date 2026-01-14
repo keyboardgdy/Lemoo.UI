@@ -90,11 +90,24 @@ public class UnitOfWork : IUnitOfWork
             await _transaction.DisposeAsync();
             _transaction = null;
         }
-        
+
         if (_dbContext != null)
         {
             await _dbContext.DisposeAsync();
         }
+    }
+
+    /// <summary>
+    /// Gets all currently tracked entities for domain event dispatching
+    /// </summary>
+    public IEnumerable<object> GetTrackedEntities()
+    {
+        return _dbContext.ChangeTracker.Entries()
+            .Where(e => e.State == EntityState.Added ||
+                       e.State == EntityState.Modified ||
+                       e.State == EntityState.Deleted)
+            .Select(e => e.Entity)
+            .ToList();
     }
 }
 

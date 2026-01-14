@@ -3,27 +3,38 @@ namespace Lemoo.Core.Abstractions.Domain;
 /// <summary>
 /// 领域事件处理器接口
 /// </summary>
-/// <typeparam name="TDomainEvent">领域事件类型</typeparam>
-public interface IDomainEventHandler<in TDomainEvent>
-    where TDomainEvent : IDomainEvent
+/// <typeparam name="TEvent">领域事件类型</typeparam>
+public interface IDomainEventHandler<in TEvent>
+    where TEvent : IDomainEvent
 {
-    Task Handle(TDomainEvent domainEvent, CancellationToken cancellationToken);
+    /// <summary>
+    /// 处理领域事件
+    /// </summary>
+    /// <param name="domainEvent">领域事件</param>
+    /// <param name="cancellationToken">取消令牌</param>
+    Task HandleAsync(TEvent domainEvent, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
-/// 通知处理器接口（MediatR）
+/// Marker interface for domain event dispatcher
 /// </summary>
-/// <typeparam name="TNotification">通知类型</typeparam>
-public interface INotificationHandler<in TNotification>
-    where TNotification : INotification
+public interface IDomainEventDispatcher
 {
-    Task Handle(TNotification notification, CancellationToken cancellationToken);
+    /// <summary>
+    /// Dispatch a single domain event
+    /// </summary>
+    Task DispatchAsync(IDomainEvent domainEvent, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Dispatch multiple domain events
+    /// </summary>
+    Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default);
 }
 
 /// <summary>
-/// 通知接口（MediatR）
+/// Generic domain event dispatcher for specific event types
 /// </summary>
-public interface INotification
+public interface IDomainEventDispatcher<T> where T : IDomainEvent
 {
+    Task DispatchAsync(T domainEvent, CancellationToken cancellationToken = default);
 }
-

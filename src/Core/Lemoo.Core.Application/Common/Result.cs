@@ -1,3 +1,5 @@
+using Lemoo.Core.Common.Errors;
+
 namespace Lemoo.Core.Application.Common;
 
 /// <summary>
@@ -9,6 +11,7 @@ public class Result
     public bool IsFailure => !IsSuccess;
     public string? Error { get; protected set; }
     public IReadOnlyList<string> Errors { get; protected set; } = Array.Empty<string>();
+    public ErrorDetail? ErrorDetail { get; protected set; }
     
     protected Result(bool isSuccess, string? error = null, IEnumerable<string>? errors = null)
     {
@@ -16,13 +19,31 @@ public class Result
         Error = error;
         Errors = errors != null ? errors.ToList().AsReadOnly() : Array.Empty<string>();
     }
-    
+
+    protected Result(ErrorDetail errorDetail)
+    {
+        IsSuccess = false;
+        Error = errorDetail.Message;
+        ErrorDetail = errorDetail;
+        Errors = Array.Empty<string>();
+    }
+
     public static Result Success() => new(true);
+
     public static Result Failure(string error) => new(false, error);
+
+    public static Result Failure(string code, string message, string? details = null) =>
+        new(ErrorDetail.Create(code, message, details));
+
+    public static Result Failure(ErrorDetail errorDetail) => new(errorDetail);
+
     public static Result Failure(IEnumerable<string> errors) => new(false, null, errors);
-    
+
     public static Result<T> Success<T>(T data) => new(true, data);
     public static Result<T> Failure<T>(string error) => new(false, default, error);
+    public static Result<T> Failure<T>(string code, string message, string? details = null) =>
+        Result<T>.Failure(ErrorDetail.Create(code, message, details));
+    public static Result<T> Failure<T>(ErrorDetail errorDetail) => new(errorDetail);
     public static Result<T> Failure<T>(IEnumerable<string> errors) => new(false, default, null, errors);
     
     /// <summary>
@@ -61,15 +82,21 @@ public class Result
 public class Result<T> : Result
 {
     public T? Data { get; private set; }
-    
+
     internal Result(bool isSuccess, T? data = default, string? error = null, IEnumerable<string>? errors = null)
         : base(isSuccess, error, errors)
     {
         Data = data;
     }
-    
+
+    internal Result(ErrorDetail errorDetail) : base(errorDetail)
+    {
+        Data = default;
+    }
+
     public static Result<T> Success(T data) => new(true, data);
     public static new Result<T> Failure(string error) => new(false, default, error);
+    public static new Result<T> Failure(ErrorDetail errorDetail) => new(errorDetail);
     public static new Result<T> Failure(IEnumerable<string> errors) => new(false, default, null, errors);
     
     /// <summary>
@@ -100,10 +127,10 @@ public class Result<T> : Result
     {
         if (IsFailure)
             return Result<TResult>.Failure(Error ?? string.Join("; ", Errors));
-        
+
         if (Data == null)
             return Result<TResult>.Failure("数据为空");
-        
+
         try
         {
             return binder(Data);
@@ -111,6 +138,27 @@ public class Result<T> : Result
         catch (Exception ex)
         {
             return Result<TResult>.Failure($"绑定失败: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// 异步绑定结果（链式操作）
+    /// </summary>
+    public async Task<Result<TResult>> BindAsync<TResult>(Func<T, Task<Result<TResult>>> binder)
+    {
+        if (IsFailure)
+            return Result<TResult>.Failure(Error ?? string.Join("; ", Errors));
+
+        if (Data == null)
+            return Result<TResult>.Failure("数据为空");
+
+        try
+        {
+            return await binder(Data);
+        }
+        catch (Exception ex)
+        {
+            return Result<TResult>.Failure($"异步绑定失败: {ex.Message}");
         }
     }
     

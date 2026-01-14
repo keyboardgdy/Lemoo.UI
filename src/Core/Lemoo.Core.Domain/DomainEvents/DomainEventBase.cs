@@ -9,5 +9,6 @@ public abstract class DomainEventBase : IDomainEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
     public DateTime OccurredOn { get; } = DateTime.UtcNow;
+    public virtual int Version => 1;
 }
 

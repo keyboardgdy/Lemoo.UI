@@ -1,0 +1,105 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Aurora/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Aurora/ColorPalette.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============================================
+         组件画刷层 - 极光主题
+         将语义令牌转换为 SolidColorBrush，供 XAML 直接使用
+         ============================================ -->
+
+    <!-- 工作台画刷 -->
+    <SolidColorBrush x:Key="WorkbenchBackgroundBrush" Color="{StaticResource workbench.background}"/>
+    <SolidColorBrush x:Key="WorkbenchSurfaceBrush" Color="{StaticResource workbench.surface}"/>
+    <SolidColorBrush x:Key="WorkbenchCardBrush" Color="{StaticResource workbench.card}"/>
+
+    <!-- 标题栏画刷 -->
+    <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource titleBar.background}"/>
+    <SolidColorBrush x:Key="TitleBarForegroundBrush" Color="{StaticResource titleBar.foreground}"/>
+    <SolidColorBrush x:Key="TitleBarActiveBackgroundBrush" Color="{StaticResource titleBar.activeBackground}"/>
+    <SolidColorBrush x:Key="TitleBarBorderBrush" Color="{StaticResource titleBar.border}"/>
+
+    <!-- 侧边栏画刷 -->
+    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource sidebar.background}"/>
+    <SolidColorBrush x:Key="SidebarForegroundBrush" Color="{StaticResource sidebar.foreground}"/>
+    <SolidColorBrush x:Key="SidebarHoverBackgroundBrush" Color="{StaticResource sidebar.hoverBackground}"/>
+    <SolidColorBrush x:Key="SidebarSelectedBackgroundBrush" Color="{StaticResource sidebar.selectedBackground}"/>
+    <SolidColorBrush x:Key="SidebarSelectedForegroundBrush" Color="{StaticResource sidebar.selectedForeground}"/>
+    <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource sidebar.border}"/>
+
+    <!-- 菜单画刷 -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource menu.background}"/>
+    <SolidColorBrush x:Key="MenuForegroundBrush" Color="{StaticResource menu.foreground}"/>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="{StaticResource menu.border}"/>
+    <SolidColorBrush x:Key="MenuHoverBackgroundBrush" Color="{StaticResource menu.hoverBackground}"/>
+    <SolidColorBrush x:Key="MenuSelectedBackgroundBrush" Color="{StaticResource menu.selectedBackground}"/>
+    <SolidColorBrush x:Key="MenuSelectedForegroundBrush" Color="{StaticResource menu.selectedForeground}"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush" Color="{StaticResource menu.separator}"/>
+
+    <!-- 菜单项画刷 -->
+    <SolidColorBrush x:Key="MenuItemBackgroundBrush" Color="{StaticResource menuItem.background}"/>
+    <SolidColorBrush x:Key="MenuItemForegroundBrush" Color="{StaticResource menuItem.foreground}"/>
+    <SolidColorBrush x:Key="MenuItemHoverBackgroundBrush" Color="{StaticResource menuItem.hoverBackground}"/>
+    <SolidColorBrush x:Key="MenuItemSelectedBackgroundBrush" Color="{StaticResource menuItem.selectedBackground}"/>
+    <SolidColorBrush x:Key="MenuItemSelectedForegroundBrush" Color="{StaticResource menuItem.selectedForeground}"/>
+    <SolidColorBrush x:Key="MenuItemHighlightedBackgroundBrush" Color="{StaticResource menuItem.highlightedBackground}"/>
+
+    <!-- 按钮画刷 -->
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{StaticResource button.background}"/>
+    <SolidColorBrush x:Key="ButtonForegroundBrush" Color="{StaticResource button.foreground}"/>
+    <SolidColorBrush x:Key="ButtonHoverBackgroundBrush" Color="{StaticResource button.hoverBackground}"/>
+    <SolidColorBrush x:Key="ButtonPressedBackgroundBrush" Color="{StaticResource button.pressedBackground}"/>
+    <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush" Color="{StaticResource button.disabledBackground}"/>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush" Color="{StaticResource button.disabledForeground}"/>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource button.border}"/>
+
+    <!-- 标签页画刷 -->
+    <SolidColorBrush x:Key="TabBackgroundBrush" Color="{StaticResource tab.background}"/>
+    <SolidColorBrush x:Key="TabActiveBackgroundBrush" Color="{StaticResource tab.activeBackground}"/>
+    <SolidColorBrush x:Key="TabForegroundBrush" Color="{StaticResource tab.foreground}"/>
+    <SolidColorBrush x:Key="TabActiveForegroundBrush" Color="{StaticResource tab.activeForeground}"/>
+    <SolidColorBrush x:Key="TabHoverBackgroundBrush" Color="{StaticResource tab.hoverBackground}"/>
+    <SolidColorBrush x:Key="TabSelectedBackgroundBrush" Color="{StaticResource tab.selectedBackground}"/>
+    <SolidColorBrush x:Key="TabSelectedForegroundBrush" Color="{StaticResource tab.selectedForeground}"/>
+    <SolidColorBrush x:Key="TabBorderBrush" Color="{StaticResource tab.border}"/>
+
+    <!-- 输入框画刷 -->
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="{StaticResource input.background}"/>
+    <SolidColorBrush x:Key="InputForegroundBrush" Color="{StaticResource input.foreground}"/>
+    <SolidColorBrush x:Key="InputBorderBrush" Color="{StaticResource input.border}"/>
+    <SolidColorBrush x:Key="InputFocusBorderBrush" Color="{StaticResource input.focusBorder}"/>
+    <SolidColorBrush x:Key="InputPlaceholderBrush" Color="{StaticResource input.placeholder}"/>
+
+    <!-- 分隔符画刷 -->
+    <SolidColorBrush x:Key="SeparatorBrush" Color="{StaticResource separator.background}"/>
+
+    <!-- 滚动条画刷 -->
+    <SolidColorBrush x:Key="ScrollbarShadowBrush" Color="{StaticResource scrollbar.shadow}"/>
+    <SolidColorBrush x:Key="ScrollbarSliderBackgroundBrush" Color="{StaticResource scrollbar.sliderBackground}"/>
+    <SolidColorBrush x:Key="ScrollbarSliderHoverBackgroundBrush" Color="{StaticResource scrollbar.sliderHoverBackground}"/>
+
+    <!-- 状态栏画刷 -->
+    <SolidColorBrush x:Key="StatusBarBackgroundBrush" Color="{StaticResource statusBar.background}"/>
+    <SolidColorBrush x:Key="StatusBarForegroundBrush" Color="{StaticResource statusBar.foreground}"/>
+
+    <!-- 通知画刷 -->
+    <SolidColorBrush x:Key="NotificationBackgroundBrush" Color="{StaticResource notification.background}"/>
+    <SolidColorBrush x:Key="NotificationBorderBrush" Color="{StaticResource notification.border}"/>
+    <SolidColorBrush x:Key="NotificationForegroundBrush" Color="{StaticResource notification.foreground}"/>
+
+    <!-- 下拉菜单画刷 -->
+    <SolidColorBrush x:Key="DropdownBackgroundBrush" Color="{StaticResource dropdown.background}"/>
+    <SolidColorBrush x:Key="DropdownForegroundBrush" Color="{StaticResource dropdown.foreground}"/>
+    <SolidColorBrush x:Key="DropdownBorderBrush" Color="{StaticResource dropdown.border}"/>
+    <SolidColorBrush x:Key="DropdownHoverBackgroundBrush" Color="{StaticResource dropdown.hoverBackground}"/>
+
+    <!-- 强调色画刷（用于 Win11 控件样式） -->
+    <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource Palette.Accent.Primary}"/>
+    <SolidColorBrush x:Key="AccentSecondaryBrush" Color="{StaticResource Palette.Accent.Secondary}"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource Palette.Accent.Hover}"/>
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource Palette.Accent.Pressed}"/>
+
+</ResourceDictionary>

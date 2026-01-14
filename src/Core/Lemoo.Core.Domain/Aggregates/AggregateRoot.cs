@@ -7,38 +7,89 @@ namespace Lemoo.Core.Domain.Aggregates;
 /// 聚合根基类
 /// </summary>
 /// <typeparam name="TKey">主键类型</typeparam>
-public abstract class AggregateRoot<TKey> : EntityBase<TKey>
+public abstract class AggregateRoot<TKey> : EntityBase<TKey>, IDomainEventContainer
     where TKey : notnull
 {
     private readonly List<IDomainEvent> _domainEvents = new();
-    
+    private readonly object _lock = new();
+
     /// <summary>
     /// 领域事件集合
     /// </summary>
-    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
-    
+    [System.Text.Json.Serialization.JsonIgnore]
+    public IReadOnlyCollection<IDomainEvent> DomainEvents
+    {
+        get
+        {
+            lock (_lock)
+            {
+                return _domainEvents.AsReadOnly();
+            }
+        }
+    }
+
     /// <summary>
-    /// 添加领域事件
+    /// 获取所有领域事件（线程安全）
+    /// </summary>
+    public IReadOnlyList<IDomainEvent> GetDomainEvents()
+    {
+        lock (_lock)
+        {
+            return _domainEvents.ToList();
+        }
+    }
+
+    /// <summary>
+    /// 添加领域事件（线程安全）
     /// </summary>
     protected void AddDomainEvent(IDomainEvent domainEvent)
     {
-        _domainEvents.Add(domainEvent);
+        if (domainEvent == null) throw new ArgumentNullException(nameof(domainEvent));
+
+        lock (_lock)
+        {
+            _domainEvents.Add(domainEvent);
+        }
     }
-    
+
     /// <summary>
-    /// 移除领域事件
+    /// 移除领域事件（线程安全）
     /// </summary>
     protected void RemoveDomainEvent(IDomainEvent domainEvent)
     {
-        _domainEvents.Remove(domainEvent);
+        if (domainEvent == null) throw new ArgumentNullException(nameof(domainEvent));
+
+        lock (_lock)
+        {
+            _domainEvents.Remove(domainEvent);
+        }
     }
-    
+
     /// <summary>
-    /// 清空领域事件
+    /// 清空领域事件（线程安全）
     /// </summary>
     public void ClearDomainEvents()
     {
-        _domainEvents.Clear();
+        lock (_lock)
+        {
+            _domainEvents.Clear();
+        }
+    }
+
+    /// <summary>
+    /// Explicit interface implementation for AddDomainEvent
+    /// </summary>
+    void IDomainEventContainer.AddDomainEvent(IDomainEvent domainEvent)
+    {
+        AddDomainEvent(domainEvent);
+    }
+
+    /// <summary>
+    /// Explicit interface implementation for RemoveDomainEvent
+    /// </summary>
+    void IDomainEventContainer.RemoveDomainEvent(IDomainEvent domainEvent)
+    {
+        RemoveDomainEvent(domainEvent);
     }
 }
 

@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "cb456720926205bc",
+        "id": "e2fe57e38c78cfe7",
         "type": "tabs",
         "children": [
           {
-            "id": "d899fbf88fed235c",
+            "id": "9c501f88c39b0326",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "使用说明.md",
+                "file": "项目优化与完善/Lemoo.UI架构改进计划.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "使用说明"
+              "title": "Lemoo.UI架构改进计划"
             }
           }
         ]
@@ -40,7 +40,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical",
+                "sortOrder": "byCreatedTimeReverse",
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
@@ -171,17 +171,37 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:新建数据库": false,
       "switcher:打开快速切换": false,
       "graph:查看关系图谱": false,
       "canvas:新建白板": false,
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
-      "command-palette:打开命令面板": false,
-      "bases:创建新数据库": false
+      "command-palette:打开命令面板": false
     }
   },
-  "active": "d899fbf88fed235c",
+  "active": "9c501f88c39b0326",
   "lastOpenFiles": [
+    "项目分析/桌面应用接入AI应用前景分析.md",
+    "项目分析/桌面应用接入AI应用前景分析.md.tmp.38704.1768373117914",
+    "项目优化与完善/模块层增强文档.md",
+    "项目优化与完善/Lemoo.UI架构改进计划.md",
+    "项目分析/05-改进建议.md",
+    "项目优化与完善/模块层增强文档.md.tmp.6884.1768370420331",
+    "项目优化与完善",
+    "项目分析/Lemoo.UI架构改进计划.md.tmp.23036.1768369757490",
+    "项目分析/05-改进建议.md.tmp.28920.1768358602126",
+    "项目分析/05-改进建议.md.tmp.12212.1768358169680",
+    "项目分析/05-改进建议.md.tmp.12212.1768358154887",
+    "项目分析/05-改进建议.md.tmp.12212.1768358147885",
+    "项目分析/05-改进建议.md.tmp.12212.1768358142866",
+    "项目分析/01-项目概述.md",
+    "项目分析/02-架构设计.md",
+    "项目分析/03-模块系统.md",
+    "项目分析/04-核心组件.md",
+    "项目分析/Lemoo.UI-改进实施指南.md",
+    "项目分析/Lemoo.UI-项目架构分析报告.md",
+    "项目分析/04-核心组件.md.tmp.10080.1768357252661",
     "模块集成标准文档.md",
     "Lemoo.Bootstrap详细分析.md",
     "项目日志/项目分析.md",
@@ -193,14 +213,10 @@
     "infrastructure-layer-enhancements.md",
     "core-layer-enhancements.md",
     "latest-optimizations.md",
-    "项目日志",
     "example-module-enhancement.md",
     "getting-started.md",
     "项目启动项bootstrap-optimization-summary.md",
     "项目优化architecture-optimization.md",
-    "architecture.md",
-    "项目分析project-analysis.md",
-    "optimization-suggestions.md",
-    "modules.md"
+    "architecture.md"
   ]
 }

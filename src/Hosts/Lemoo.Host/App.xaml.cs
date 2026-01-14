@@ -2,8 +2,8 @@
 using System.Reflection;
 using System.Windows;
 using Lemoo.Bootstrap;
-using Lemoo.Core.Abstractions.UI;
 using Lemoo.Core.Application.Extensions;
+using Lemoo.UI.Abstractions;
 using Lemoo.Modules.Abstractions;
 using Lemoo.UI.WPF.Services;
 using Microsoft.Extensions.Configuration;
@@ -44,17 +44,25 @@ public partial class App : Application
                     config.Sources.Clear();
                     config.AddConfiguration(configuration);
                 })
-                .ConfigureLemooApplication(configuration, (services, config) =>
-                {
-                    // 直接注册通过项目引用方式加载的模块（避免仅从 /Modules 目录加载导致模块服务未注册）
-                    // RegisterProjectReferencedModules(services, config);
-                    
-                    // 注册UI框架服务
-                    RegisterUIFrameworkServices(services);
-                    
-                    // 注册所有模块UI
-                    RegisterModuleUIs(services, config);
-                });
+                .ConfigureLemooApplication(
+                    configuration,
+                    configureServices: (services, config) =>
+                    {
+                        // 直接注册通过项目引用方式加载的模块（避免仅从 /Modules 目录加载导致模块服务未注册）
+                        // RegisterProjectReferencedModules(services, config);
+
+                        // 注册UI框架服务
+                        RegisterUIFrameworkServices(services);
+
+                        // 注册所有模块UI
+                        RegisterModuleUIs(services, config);
+                    },
+                    configureOptions: options =>
+                    {
+                        // 配置启动选项
+                        options.EnableModuleLifecycleLogging = true;
+                        // options.AutoMigrate = configuration.GetValue<bool>("Lemoo:Database:AutoMigrate");
+                    });
             
             // 构建Host
             _host = hostBuilder.Build();

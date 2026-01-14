@@ -1,0 +1,145 @@
+<Window x:Class="Lemoo.Modules.TaskManager.UI.Views.Dialogs.TaskEditDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}"
+        Width="500"
+        Height="Auto"
+        SizeToContent="Height"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner"
+        Background="{DynamicResource ApplicationPageBackgroundThemeBrush}">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="LabelStyle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="InputStyle">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DatePicker" x:Key="DatePickerStyle">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}"/>
+        </Style>
+
+        <Style TargetType="ComboBox" x:Key="ComboBoxStyle">
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}"/>
+        </Style>
+    </Window.Resources>
+
+    <Border Margin="20" CornerRadius="8" Background="{DynamicResource LayerFillColorDefaultBrush}">
+        <Grid Margin="24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 标题 -->
+            <TextBlock Grid.Row="0"
+                       Text="{Binding WindowTitle}"
+                       FontSize="20"
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,24"/>
+
+            <!-- 表单内容 -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- 标题输入 -->
+                    <StackPanel Margin="0,0,0,16">
+                        <TextBlock Text="标题 *" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource InputStyle}"
+                                 PlaceholderText="输入任务标题..."/>
+                    </StackPanel>
+
+                    <!-- 描述输入 -->
+                    <StackPanel Margin="0,0,0,16">
+                        <TextBlock Text="描述" Style="{StaticResource LabelStyle}"/>
+                        <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource InputStyle}"
+                                 Height="100"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 PlaceholderText="输入任务描述（可选）..."/>
+                    </StackPanel>
+
+                    <!-- 优先级选择 -->
+                    <StackPanel Margin="0,0,0,16">
+                        <TextBlock Text="优先级 *" Style="{StaticResource LabelStyle}"/>
+                        <ComboBox SelectedItem="{Binding SelectedPriority}"
+                                  ItemsSource="{Binding PriorityOptions}"
+                                  DisplayMemberPath="DisplayName"
+                                  Style="{StaticResource ComboBoxStyle}"/>
+                    </StackPanel>
+
+                    <!-- 截止日期 -->
+                    <StackPanel Margin="0,0,0,16">
+                        <TextBlock Text="截止日期" Style="{StaticResource LabelStyle}"/>
+                        <DatePicker SelectedDate="{Binding DueDate}"
+                                    Style="{StaticResource DatePickerStyle}"/>
+                    </StackPanel>
+
+                    <!-- 错误消息 -->
+                    <Border Background="#FDE7E9"
+                            CornerRadius="4"
+                            Padding="12"
+                            Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE7BA;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Foreground="#C42B1C"
+                                       Margin="0,0,8,0"/>
+                            <TextBlock Text="{Binding ErrorMessage}"
+                                       Foreground="#C42B1C"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- 按钮 -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+                <Button Content="取消"
+                        Command="{Binding CancelCommand}"
+                        Padding="20,8"
+                        Margin="0,0,12,0"/>
+                <Button Content="保存"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Padding="20,8"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+
+    <!-- 加载遮罩 -->
+    <Border Background="#80000000"
+            Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="保存中..." FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Border>
+</Window>

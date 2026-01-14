@@ -1,24 +1,25 @@
-using Lemoo.Core.Abstractions.UI;
-using Lemoo.UI.WPF.ViewModels;
+using Lemoo.UI.Abstractions;
+using Lemoo.UI.WPF.Models;
+using Lemoo.UI.WPF.Abstractions;
 
 namespace Lemoo.UI.WPF.Services;
 
 /// <summary>
-/// 导航服务
+/// 导航服务实现
 /// </summary>
-public class NavigationService
+public class NavigationService : INavigationService
 {
     private readonly IPageRegistry _pageRegistry;
 
     public NavigationService(IPageRegistry pageRegistry)
     {
-        _pageRegistry = pageRegistry;
+        _pageRegistry = pageRegistry ?? throw new ArgumentNullException(nameof(pageRegistry));
     }
 
     /// <summary>
-    /// 构建导航树并更新MainViewModel
+    /// 构建导航树并更新主视图模型
     /// </summary>
-    public void BuildNavigationTree(MainViewModel mainViewModel, IEnumerable<NavigationItemMetadata> navItems)
+    public void BuildNavigationTree(IMainViewModel mainViewModel, IEnumerable<NavigationItemMetadata> navItems)
     {
         if (mainViewModel == null)
             throw new ArgumentNullException(nameof(mainViewModel));
@@ -43,7 +44,7 @@ public class NavigationService
         foreach (var rootItem in rootItems)
         {
             var navItem = CreateNavigationItem(rootItem);
-            
+
             // 添加子项
             if (childItems.TryGetValue(rootItem.PageKey, out var children))
             {
@@ -57,7 +58,19 @@ public class NavigationService
         }
     }
 
-    private NavigationItem CreateNavigationItem(NavigationItemMetadata metadata)
+    /// <summary>
+    /// 从页面注册表构建导航树
+    /// </summary>
+    public void BuildNavigationTreeFromRegistry(IMainViewModel mainViewModel, IPageRegistry pageRegistry)
+    {
+        if (pageRegistry == null)
+            throw new ArgumentNullException(nameof(pageRegistry));
+
+        var allPages = pageRegistry.GetAllPages().Values;
+        BuildNavigationTree(mainViewModel, allPages);
+    }
+
+    private static NavigationItem CreateNavigationItem(NavigationItemMetadata metadata)
     {
         return new NavigationItem
         {

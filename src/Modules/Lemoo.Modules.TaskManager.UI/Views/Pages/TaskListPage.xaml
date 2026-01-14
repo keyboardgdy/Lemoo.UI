@@ -5,64 +5,247 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="任务列表">
-    <Grid>
+      Title="任务管理">
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <!-- 工具栏 -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-            <TextBox Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}" 
-                     Width="200" 
-                     Margin="0,0,10,0"
-                     VerticalContentAlignment="Center"/>
-            <Button Content="搜索" Command="{Binding SearchCommand}" Margin="0,0,10,0"/>
-            <Button Content="刷新" Command="{Binding LoadTasksCommand}" Margin="0,0,10,0"/>
-            <Button Content="新建任务" Command="{Binding CreateTaskCommand}"/>
-        </StackPanel>
-        
+
+        <!-- 标题和操作栏 -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="任务管理" FontSize="28" FontWeight="SemiBold"/>
+                <TextBlock Text="管理和跟踪您的所有任务" FontSize="14" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="刷新" Command="{Binding LoadTasksCommand}" Margin="0,0,10,0" Padding="15,8"/>
+                <Button Content="新建任务" Command="{Binding CreateTaskCommand}" Style="{StaticResource AccentButtonStyle}" Padding="15,8"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 搜索和筛选栏 -->
+        <Border Grid.Row="1" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8" Padding="16" Margin="0,0,0,16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- 搜索栏 -->
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}"
+                             PlaceholderText="搜索任务..."
+                             VerticalContentAlignment="Center"
+                             Padding="12,8"
+                             FontSize="14"
+                             Height="36"/>
+
+                    <Button Grid.Column="1"
+                            Content="搜索"
+                            Command="{Binding SearchCommand}"
+                            Margin="8,0,0,0"
+                            Padding="20,8"
+                            Height="36"/>
+                </Grid>
+
+                <!-- 筛选选项 -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="状态：" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox Grid.Column="1"
+                              SelectedItem="{Binding SelectedStatus}"
+                              ItemsSource="{Binding StatusOptions}"
+                              DisplayMemberPath="DisplayName"
+                              Height="32"
+                              Padding="8,4"/>
+
+                    <TextBlock Grid.Column="3" Text="优先级：" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <ComboBox Grid.Column="4"
+                              SelectedItem="{Binding SelectedPriority}"
+                              ItemsSource="{Binding PriorityOptions}"
+                              DisplayMemberPath="DisplayName"
+                              Height="32"
+                              Padding="8,4"/>
+                </Grid>
+            </Grid>
+        </Border>
+
         <!-- 任务列表 -->
-        <DataGrid Grid.Row="1" 
-                  ItemsSource="{Binding Tasks}" 
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  Margin="10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="标题" Binding="{Binding Title}" Width="200"/>
-                <DataGridTextColumn Header="描述" Binding="{Binding Description}" Width="*"/>
-                <DataGridTextColumn Header="优先级" Binding="{Binding PriorityName}" Width="80"/>
-                <DataGridTextColumn Header="状态" Binding="{Binding StatusName}" Width="80"/>
-                <DataGridTextColumn Header="截止日期" Binding="{Binding DueDate, StringFormat='{}{0:yyyy-MM-dd}'}" Width="120"/>
-                <DataGridTemplateColumn Header="操作" Width="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="完成" 
-                                        Command="{Binding DataContext.CompleteTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}"
-                                        Margin="5,0"/>
-                                <Button Content="删除" 
-                                        Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}"
-                                        Margin="5,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        
+        <Border Grid.Row="2"
+                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="8"
+                Padding="0">
+            <Grid>
+                <!-- 任务数据网格 -->
+                <DataGrid ItemsSource="{Binding Tasks}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          GridLinesVisibility="None"
+                          HeadersVisibility="Column"
+                          RowBackground="Transparent"
+                          AlternatingRowBackground="Transparent"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow">
+
+                    <DataGrid.Resources>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Height" Value="48"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="Height" Value="44"/>
+                            <Setter Property="Padding" Value="16,8"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                        </Style>
+
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="16,8"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="标题" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Description}"
+                                                   FontSize="12"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Visibility="{Binding Description, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="优先级" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding PriorityColor}"
+                                            CornerRadius="4"
+                                            Padding="8,4"
+                                            HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding PriorityName}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="状态" Width="100">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding StatusColor}"
+                                            CornerRadius="4"
+                                            Padding="8,4"
+                                            HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding StatusName}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="截止日期" Width="120">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="&#xE8E3;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                                        <TextBlock Text="{Binding DueDate, StringFormat='{}{0:yyyy-MM-dd}'}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="操作" Width="180">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="编辑"
+                                                Command="{Binding DataContext.EditTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource TextButtonStyle}"
+                                                Margin="0,0,16,0"/>
+                                        <Button Content="完成"
+                                                Command="{Binding DataContext.CompleteTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource TextButtonStyle}"
+                                                Margin="0,0,16,0"/>
+                                        <Button Content="删除"
+                                                Command="{Binding DataContext.DeleteTaskCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource TextButtonStyle}"
+                                                Foreground="#C42B1C"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- 空状态 -->
+                <TextBlock Text="暂无任务"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Visibility="{Binding HasNoTasks, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </Grid>
+        </Border>
+
         <!-- 加载遮罩 -->
-        <Border Grid.Row="1" 
-                Background="#80000000" 
+        <Border Grid.Row="0" Grid.RowSpan="3"
+                Background="#80000000"
+                CornerRadius="8"
                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <TextBlock Text="加载中..." 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"
-                       Foreground="White"
-                       FontSize="16"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="加载中..." FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
         </Border>
     </Grid>
 </Page>

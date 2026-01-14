@@ -16,7 +16,12 @@ public class Task : AggregateRoot
     public TaskStatus Status { get; private set; }
     public DateTime? DueDate { get; private set; }
     public DateTime? CompletedAt { get; private set; }
-    
+
+    /// <summary>
+    /// 任务标签关联（导航属性）
+    /// </summary>
+    public ICollection<TaskLabelLink> Labels { get; private set; } = new List<TaskLabelLink>();
+
     // EF Core 需要无参构造函数
     private Task() { }
     

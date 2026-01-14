@@ -1,5 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Lemoo.UI.WPF.Abstractions;
+using Lemoo.UI.WPF.Constants;
+using Lemoo.UI.WPF.Models;
 using System.Collections.ObjectModel;
 
 namespace Lemoo.UI.WPF.ViewModels;
@@ -7,7 +10,7 @@ namespace Lemoo.UI.WPF.ViewModels;
 /// <summary>
 /// 主视图模型
 /// </summary>
-public partial class MainViewModel : ObservableObject
+public partial class MainViewModel : ObservableObject, IMainViewModel
 {
     /// <summary>
     /// 窗口标题（供 MainWindow 绑定使用）
@@ -36,25 +39,57 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     public ObservableCollection<NavigationItem> BottomNavigationItems { get; } = new();
 
+    /// <summary>
+    /// 默认构造函数，初始化示例导航
+    /// </summary>
     public MainViewModel()
     {
-        // 默认初始化示例导航（用于UI.WPF独立运行）
+        InitializeDefaultNavigation();
+    }
+
+    /// <summary>
+    /// 初始化默认示例导航（用于独立运行）
+    /// </summary>
+    public void InitializeDefaultNavigation()
+    {
+        ClearNavigation();
         InitializeNavigation();
     }
-    
+
     /// <summary>
-    /// 构造函数重载，允许跳过默认导航初始化（用于Host）
+    /// 从元数据初始化导航（用于模块化场景）
     /// </summary>
-    public MainViewModel(bool skipDefaultNavigation)
+    /// <param name="menuItems">菜单项集合</param>
+    /// <param name="navItems">导航项集合</param>
+    /// <param name="bottomNavItems">底部导航项集合</param>
+    public void InitializeNavigationFromMetadata(
+        IEnumerable<MenuItemModel> menuItems,
+        IEnumerable<NavigationItem> navItems,
+        IEnumerable<NavigationItem>? bottomNavItems = null)
     {
-        if (!skipDefaultNavigation)
+        ClearNavigation();
+
+        foreach (var item in menuItems)
         {
-            InitializeNavigation();
+            MenuItems.Add(item);
+        }
+
+        foreach (var item in navItems)
+        {
+            NavigationItems.Add(item);
+        }
+
+        if (bottomNavItems != null)
+        {
+            foreach (var item in bottomNavItems)
+            {
+                BottomNavigationItems.Add(item);
+            }
         }
     }
-    
+
     /// <summary>
-    /// 清除所有导航项（用于Host重新初始化）
+    /// 清除所有导航项（用于重新初始化）
     /// </summary>
     public void ClearNavigation()
     {
@@ -68,69 +103,56 @@ public partial class MainViewModel : ObservableObject
     /// </summary>
     private void InitializeNavigation()
     {
-        // 顶部菜单：示例 -> 仪表盘 / 示例列表 / 设置示例
         var samplesMenu = new MenuItemModel
         {
-            Header = "示例",
-            Icon = "\uE8A5" // browse
+            Header = NavigationConstants.MenuText.Samples,
+            Icon = NavigationConstants.Icons.Browse
         };
+
         samplesMenu.Children.Add(new MenuItemModel
         {
-            Header = "仪表盘",
-            PageKey = "dashboard",
-            Icon = "\uE80F" // home
+            Header = NavigationConstants.MenuText.Dashboard,
+            PageKey = PageKeys.Dashboard,
+            Icon = NavigationConstants.Icons.Home
         });
+
         samplesMenu.Children.Add(new MenuItemModel
         {
-            Header = "设置示例",
-            PageKey = "settings",
-            Icon = "\uE713" // settings
-        });
-        // Win11 下拉框示例（顶部菜单）
-        samplesMenu.Children.Add(new MenuItemModel
-        {
-            Header = "Win11 下拉示例",
-            PageKey = "win11-combobox",
-            Icon = "\uE74E" // Combobox-like icon
+            Header = NavigationConstants.MenuText.SettingsSample,
+            PageKey = PageKeys.Settings,
+            Icon = NavigationConstants.Icons.Settings
         });
 
         MenuItems.Add(samplesMenu);
 
-        // 侧边栏导航：总览、示例分组等
         NavigationItems.Add(new NavigationItem
         {
-            Title = "总览",
-            Icon = "\uE80F", // Home
-            PageKey = "dashboard"
+            Title = NavigationConstants.MenuText.Overview,
+            Icon = NavigationConstants.Icons.Home,
+            PageKey = PageKeys.Dashboard
         });
 
         var examplesGroup = new NavigationItem
         {
-            Title = "示例功能",
-            Icon = "\uE8A5", // List / browse
+            Title = NavigationConstants.MenuText.SampleFeatures,
+            Icon = NavigationConstants.Icons.Browse,
             IsExpanded = true
         };
+
         examplesGroup.Children.Add(new NavigationItem
         {
-            Title = "设置示例",
-            Icon = "\uE713", // Settings
-            PageKey = "settings"
+            Title = NavigationConstants.MenuText.SettingsSample,
+            Icon = NavigationConstants.Icons.Settings,
+            PageKey = PageKeys.Settings
         });
-        // Win11 下拉框示例（侧边导航）
-        examplesGroup.Children.Add(new NavigationItem
-        {
-            Title = "Win11 下拉示例",
-            Icon = "\uE74E",
-            PageKey = "win11-combobox"
-        });
+
         NavigationItems.Add(examplesGroup);
 
-        // 底部导航：设置
         BottomNavigationItems.Add(new NavigationItem
         {
-            Title = "设置",
-            Icon = "\uE713",
-            PageKey = "settings"
+            Title = NavigationConstants.MenuText.Settings,
+            Icon = NavigationConstants.Icons.Settings,
+            PageKey = PageKeys.Settings
         });
     }
     

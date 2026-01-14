@@ -6,11 +6,12 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Shell;
 using System.Windows.Threading;
-using Lemoo.Core.Abstractions.UI;
+using Lemoo.UI.Abstractions;
 using Lemoo.UI.Controls.Chrome;
 using Lemoo.UI.Controls.Tabs;
 using Lemoo.UI.Helpers;
-using Lemoo.UI.WPF.ViewModels;
+using Lemoo.UI.WPF.Abstractions;
+using Lemoo.UI.WPF.Constants;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lemoo.UI.WPF.Views;
@@ -38,9 +39,9 @@ public partial class MainWindow : Window
     {
         _serviceProvider = serviceProvider;
         _pageRegistry = serviceProvider.GetService<IPageRegistry>();
-        
+
         // 从服务提供者获取ViewModel
-        var viewModel = serviceProvider.GetRequiredService<MainViewModel>();
+        var viewModel = serviceProvider.GetRequiredService<IMainViewModel>();
         DataContext = viewModel;
 
         // 使用 WindowChrome 完全控制窗口边框（标题栏区域由自定义控件接管）
@@ -195,16 +196,13 @@ public partial class MainWindow : Window
             _restoreHeight = Height;
             _isInitialized = true;
 
-            // 初始化主题系统
-            ThemeManager.Initialize();
-
             // 首次启动时自动打开默认页面
             if (DocumentTabHost.Tabs.Count == 0 && _pageRegistry != null && _serviceProvider != null)
             {
-                var defaultPageObject = _pageRegistry.CreatePage("dashboard", _serviceProvider);
+                var defaultPageObject = _pageRegistry.CreatePage(PageKeys.Dashboard, _serviceProvider);
                 if (defaultPageObject is Page defaultPage)
                 {
-                    DocumentTabHost.OpenPage("仪表盘", defaultPage, "dashboard");
+                    DocumentTabHost.OpenPage(NavigationConstants.MenuText.Dashboard, defaultPage, PageKeys.Dashboard);
                 }
             }
         }

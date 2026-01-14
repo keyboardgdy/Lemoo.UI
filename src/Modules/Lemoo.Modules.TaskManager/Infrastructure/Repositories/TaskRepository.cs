@@ -1,5 +1,6 @@
 using Lemoo.Core.Abstractions.Persistence;
 using Lemoo.Core.Application.Common;
+using Lemoo.Modules.TaskManager.Application.DTOs;
 using Lemoo.Modules.TaskManager.Application.Repositories;
 using TaskEntity = Lemoo.Modules.TaskManager.Domain.Entities.Task;
 using TaskStatus = Lemoo.Modules.TaskManager.Domain.ValueObjects.TaskStatus;
@@ -90,5 +91,70 @@ public class TaskRepository : Repository<TaskEntity, Guid>, ITaskRepository
             .ToListAsync(cancellationToken);
         
         return PagedResult<TaskEntity>.Create(items, pageIndex, pageSize, totalCount);
+    }
+
+    public async System.Threading.Tasks.Task<TaskStatisticsDto> GetStatisticsAsync(CancellationToken cancellationToken = default)
+    {
+        var now = DateTime.UtcNow;
+        var sevenDaysAgo = now.AddDays(-7);
+
+        var tasks = await TaskContext.Tasks.ToListAsync(cancellationToken);
+
+        var totalTasks = tasks.Count;
+        var pendingTasks = tasks.Count(t => t.Status == TaskStatus.Pending);
+        var inProgressTasks = tasks.Count(t => t.Status == TaskStatus.InProgress);
+        var completedTasks = tasks.Count(t => t.Status == TaskStatus.Completed);
+        var overdueTasks = tasks.Count(t => t.DueDate.HasValue && t.DueDate.Value < now && t.Status != TaskStatus.Completed);
+        var highPriorityTasks = tasks.Count(t => t.Priority == TaskPriority.High);
+
+        var completionRate = totalTasks > 0 ? (double)completedTasks / totalTasks * 100 : 0;
+
+        var tasksByStatus = new Dictionary<string, int>
+        {
+            { "待办", pendingTasks },
+            { "进行中", inProgressTasks },
+            { "已完成", completedTasks }
+        };
+
+        var tasksByPriority = new Dictionary<string, int>
+        {
+            { "低", tasks.Count(t => t.Priority == TaskPriority.Low) },
+            { "中", tasks.Count(t => t.Priority == TaskPriority.Medium) },
+            { "高", highPriorityTasks }
+        };
+
+        // 获取最近7天每天完成的任务数
+        var dailyCompletedTasks = new List<DailyTaskCountDto>();
+        for (int i = 6; i >= 0; i--)
+        {
+            var date = now.AddDays(-i);
+            var dateStart = date.Date;
+            var dateEnd = date.Date.AddDays(1);
+
+            var count = tasks.Count(t =>
+                t.CompletedAt.HasValue &&
+                t.CompletedAt.Value >= dateStart &&
+                t.CompletedAt.Value < dateEnd);
+
+            dailyCompletedTasks.Add(new DailyTaskCountDto
+            {
+                Date = date,
+                Count = count
+            });
+        }
+
+        return new TaskStatisticsDto
+        {
+            TotalTasks = totalTasks,
+            PendingTasks = pendingTasks,
+            InProgressTasks = inProgressTasks,
+            CompletedTasks = completedTasks,
+            OverdueTasks = overdueTasks,
+            HighPriorityTasks = highPriorityTasks,
+            CompletionRate = Math.Round(completionRate, 2),
+            TasksByStatus = tasksByStatus,
+            TasksByPriority = tasksByPriority,
+            DailyCompletedTasks = dailyCompletedTasks
+        };
     }
 }

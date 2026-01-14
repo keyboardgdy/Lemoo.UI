@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using Lemoo.UI.WPF.ViewModels.Pages;
 
 namespace Lemoo.UI.WPF.Views.Pages;
 
@@ -7,10 +8,9 @@ namespace Lemoo.UI.WPF.Views.Pages;
 /// </summary>
 public partial class DashboardPage : Page
 {
-    public DashboardPage()
+    public DashboardPage(DashboardViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 }
-
-

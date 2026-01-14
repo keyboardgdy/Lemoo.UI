@@ -3,12 +3,15 @@
   <ItemGroup>
     <ProjectReference Include="..\Lemoo.UI.Shared\Lemoo.UI.Shared.csproj" />
     <ProjectReference Include="..\Lemoo.UI\Lemoo.UI.csproj" />
-    <ProjectReference Include="..\..\Core\Lemoo.Core.Abstractions\Lemoo.Core.Abstractions.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Pages\" />
   </ItemGroup>
 
   <PropertyGroup>

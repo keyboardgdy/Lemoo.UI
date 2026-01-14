@@ -1,5 +1,6 @@
 using Lemoo.Core.Abstractions.Caching;
 using Lemoo.Core.Abstractions.Configuration;
+using Lemoo.Core.Abstractions.Domain;
 using Lemoo.Core.Abstractions.Files;
 using Lemoo.Core.Abstractions.Jobs;
 using Lemoo.Core.Abstractions.Localization;
@@ -7,9 +8,12 @@ using Lemoo.Core.Abstractions.Logging;
 using Lemoo.Core.Abstractions.Messaging;
 using Lemoo.Core.Abstractions.Security;
 using Lemoo.Core.Abstractions.Services;
+using Lemoo.Core.Abstractions.Specifications;
 using Lemoo.Core.Infrastructure.Caching;
 using Lemoo.Core.Infrastructure.Configuration;
+using Lemoo.Core.Infrastructure.Domain;
 using Lemoo.Core.Infrastructure.Files;
+using Lemoo.Core.Infrastructure.Interceptors;
 using Lemoo.Core.Infrastructure.Jobs;
 using Lemoo.Core.Infrastructure.Localization;
 using Lemoo.Core.Infrastructure.Logging;
@@ -22,36 +26,36 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Lemoo.Core.Infrastructure.Extensions;
 
 /// <summary>
-/// 基础设施服务注册扩展方法
+/// Infrastructure services registration extensions
 /// </summary>
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// 添加基础设施服务
+    /// Add infrastructure services with proper lifetime management
     /// </summary>
     public static IServiceCollection AddInfrastructureServices(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
-        // 注册缓存服务
+        // Register caching services
         services.AddMemoryCache();
         services.AddSingleton<ICacheService, MemoryCacheService>();
-        
-        // 注册配置服务（需要IConfigurationRoot）
+
+        // Register configuration service (requires IConfigurationRoot)
         services.AddSingleton<IConfigurationService>(sp =>
         {
             var config = sp.GetRequiredService<IConfiguration>() as IConfigurationRoot
-                ?? throw new InvalidOperationException("配置必须是IConfigurationRoot类型以支持热更新");
+                ?? throw new InvalidOperationException("Configuration must be IConfigurationRoot type to support hot reload");
             return new ConfigurationService(config, sp);
         });
-        
-        // 注册日志服务
+
+        // Register logging service
         services.AddSingleton<ILoggerService, LoggerService>();
-        
-        // 注册文件服务
+
+        // Register file service
         services.AddSingleton<IFileService, LocalFileService>();
-        
-        // 注册消息总线（默认使用内存，可通过配置切换为RabbitMQ）
+
+        // Register message bus (default to InMemory, can switch to RabbitMQ via configuration)
         var messageBusType = configuration.GetValue<string>("Lemoo:Messaging:Type", "InMemory");
         if (messageBusType.Equals("RabbitMQ", StringComparison.OrdinalIgnoreCase))
         {
@@ -61,23 +65,33 @@ public static class ServiceCollectionExtensions
         {
             services.AddSingleton<IMessageBus, InMemoryMessageBus>();
         }
-        
-        // 注册服务客户端（需要按服务类型注册）
-        services.AddHttpClient(); // 添加HttpClient支持
+
+        // Register service clients
+        services.AddHttpClient();
         services.AddScoped(typeof(IServiceClient<>), typeof(ServiceClient<>));
-        
-        // 注册后台任务服务（Hangfire）
+
+        // Register background job service (Hangfire)
         services.AddSingleton<IBackgroundJobService, HangfireJobService>();
-        
-        // 注册本地化服务
+
+        // Register localization service
         services.AddSingleton<ILocalizationService, ResourceFileLocalizationService>();
-        
-        // 注册认证授权服务
+
+        // Register authentication/authorization services
         services.AddSingleton<IAuthenticationService, JwtAuthenticationService>();
         services.AddSingleton<IAuthorizationService, PolicyAuthorizationService>();
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
         services.AddSingleton<IUserContext, UserContext>();
-        
+
+        // Register domain event dispatcher
+        services.AddSingleton<IDomainEventDispatcher, DomainEventDispatcher>();
+
+        // Register specification evaluator
+        services.AddSingleton<ISpecificationEvaluator, SpecificationEvaluator>();
+
+        // Register EF Core interceptors
+        services.AddScoped<AuditSaveChangesInterceptor>();
+        services.AddScoped<SoftDeleteSaveChangesInterceptor>();
+
         return services;
     }
 }

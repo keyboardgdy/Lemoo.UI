@@ -17,37 +17,44 @@ public static class HostBuilderExtensions
     public static IHostBuilder ConfigureLemooApplication(
         this IHostBuilder hostBuilder,
         IConfiguration configuration,
-        Action<IServiceCollection, IConfiguration>? configureServices = null)
+        Action<IServiceCollection, IConfiguration>? configureServices = null,
+        Action<StartupOptions>? configureOptions = null)
     {
         var loggerFactory = LoggerFactory.Create(b => b.AddConsole());
         var logger = loggerFactory.CreateLogger<Bootstrapper>();
-        var bootstrapper = new Bootstrapper(configuration, logger);
-        
+
+        // 创建并配置启动选项
+        var options = new StartupOptions();
+        configureOptions?.Invoke(options);
+
+        var bootstrapper = new Bootstrapper(configuration, logger, options);
+
         // 注册Bootstrapper为单例，以便后续使用
         hostBuilder.ConfigureServices((context, services) =>
         {
             services.AddSingleton(bootstrapper);
+            services.AddSingleton(options);
         });
-        
+
         // 配置Host
         bootstrapper.ConfigureHost(hostBuilder);
-        
+
         // 注册服务
         hostBuilder.ConfigureServices((context, services) =>
         {
             // 注册核心服务
             services.AddLemooCore(configuration);
-            
+
             // 注册模块服务
             bootstrapper.RegisterServices(services, configuration);
-            
+
             // 注册CQRS管道行为
             services.AddCqrsPipelineBehaviors();
-            
+
             // 自定义服务配置
             configureServices?.Invoke(services, configuration);
         });
-        
+
         return hostBuilder;
     }
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using Lemoo.Core.Abstractions.Module;
 using Lemoo.Core.Common.Exceptions;
@@ -14,11 +15,15 @@ public class ModuleLoader : IModuleLoader
     private readonly ILogger<ModuleLoader> _logger;
     private readonly IConfiguration _configuration;
     private readonly List<IModule> _loadedModules = new();
-    
+    private readonly Dictionary<string, ModuleLoadContext> _moduleLoadContexts = new();
+    private readonly ModuleVersionCompatibilityChecker _versionChecker;
+    private bool _disposed;
+
     public ModuleLoader(ILogger<ModuleLoader> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
+        _versionChecker = new ModuleVersionCompatibilityChecker(logger);
     }
     
     public Task<IReadOnlyList<IModule>> LoadModulesAsync(CancellationToken cancellationToken = default)
@@ -26,21 +31,54 @@ public class ModuleLoader : IModuleLoader
         var enabledModulesSection = _configuration.GetSection("Lemoo:Modules:Enabled");
         var enabledModules = enabledModulesSection.Get<string[]>() ?? Array.Empty<string>();
         var modulePath = _configuration["Lemoo:Modules:Path"] ?? "./Modules";
-        
+
         _logger.LogInformation("开始加载模块，路径: {ModulePath}", modulePath);
-        
+
         var moduleAssemblies = DiscoverModuleAssemblies(modulePath);
         var modules = InstantiateModules(moduleAssemblies, enabledModules);
-        
+
+        // 版本兼容性检查
+        var compatibilityResult = _versionChecker.ValidateCompatibility(modules);
+        if (!compatibilityResult.IsCompatible)
+        {
+            var errorMessages = string.Join(Environment.NewLine,
+                compatibilityResult.Errors.Select(e => $"  - {e.Message}"));
+            throw new ModuleDependencyException("ModuleCompatibility",
+                $"模块版本兼容性检查失败:{Environment.NewLine}{errorMessages}");
+        }
+
+        // 记录兼容性警告
+        foreach (var warning in compatibilityResult.Warnings)
+        {
+            _logger.LogWarning("模块兼容性警告: {Message}", warning.Message);
+        }
+
         ValidateModuleDependencies(modules);
         var sortedModules = SortModulesByDependencies(modules);
-        
+
         _loadedModules.Clear();
         _loadedModules.AddRange(sortedModules);
-        
+
         _logger.LogInformation("成功加载 {Count} 个模块", _loadedModules.Count);
-        
+
         return Task.FromResult<IReadOnlyList<IModule>>(_loadedModules.AsReadOnly());
+    }
+
+    public Task<ModuleLoadResult> LoadModulesWithResultAsync(CancellationToken cancellationToken = default)
+    {
+        var stopwatch = Stopwatch.StartNew();
+
+        try
+        {
+            var modules = LoadModulesAsync(cancellationToken).GetAwaiter().GetResult();
+            stopwatch.Stop();
+            return Task.FromResult(ModuleLoadResult.Successful(modules, stopwatch.Elapsed));
+        }
+        catch (Exception ex)
+        {
+            stopwatch.Stop();
+            return Task.FromResult(ModuleLoadResult.Failed(ex.Message, stopwatch.Elapsed));
+        }
     }
     
     private IReadOnlyList<Assembly> DiscoverModuleAssemblies(string modulePath)
@@ -190,8 +228,85 @@ public class ModuleLoader : IModuleLoader
     }
     
     public IReadOnlyList<IModule> GetLoadedModules() => _loadedModules.AsReadOnly();
-    
+
     public IModule? GetModule(string moduleName) =>
         _loadedModules.FirstOrDefault(m => m.Name == moduleName);
+
+    /// <summary>
+    /// 卸载模块
+    /// </summary>
+    public async Task<bool> UnloadModuleAsync(string moduleName, TimeSpan timeout = default)
+    {
+        if (_disposed)
+            return false;
+
+        _logger.LogInformation("开始卸载模块: {ModuleName}", moduleName);
+
+        try
+        {
+            // 1. 从已加载列表中移除
+            var module = _loadedModules.FirstOrDefault(m => m.Name == moduleName);
+            if (module != null)
+            {
+                _loadedModules.Remove(module);
+            }
+
+            // 2. 卸载模块加载上下文
+            if (_moduleLoadContexts.TryGetValue(moduleName, out var loadContext))
+            {
+                var unloaded = await loadContext.UnloadAsync(timeout);
+                if (unloaded)
+                {
+                    _moduleLoadContexts.Remove(moduleName);
+                    _logger.LogInformation("模块卸载成功: {ModuleName}", moduleName);
+                    return true;
+                }
+                else
+                {
+                    _logger.LogWarning("模块卸载超时: {ModuleName}", moduleName);
+                    return false;
+                }
+            }
+
+            _logger.LogDebug("模块没有加载上下文，跳过卸载: {ModuleName}", moduleName);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "模块卸载失败: {ModuleName}", moduleName);
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// 卸载所有模块
+    /// </summary>
+    public async Task UnloadAllModulesAsync(TimeSpan timeout = default)
+    {
+        _logger.LogInformation("开始卸载所有模块...");
+
+        var moduleNames = _moduleLoadContexts.Keys.ToList();
+        foreach (var moduleName in moduleNames)
+        {
+            await UnloadModuleAsync(moduleName, timeout);
+        }
+
+        _loadedModules.Clear();
+        _logger.LogInformation("所有模块已卸载");
+    }
+
+    /// <summary>
+    /// 释放资源
+    /// </summary>
+    public void Dispose()
+    {
+        if (_disposed)
+            return;
+
+        // 同步卸载所有模块（使用较短的超时）
+        UnloadAllModulesAsync(TimeSpan.FromSeconds(5)).GetAwaiter().GetResult();
+
+        _disposed = true;
+    }
 }
 

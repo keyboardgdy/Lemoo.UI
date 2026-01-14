@@ -9,5 +9,10 @@ public interface IUnitOfWork : IDisposable, IAsyncDisposable
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
     Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Gets all currently tracked entities for domain event dispatching
+    /// </summary>
+    IEnumerable<object> GetTrackedEntities();
 }
 

@@ -1,0 +1,233 @@
+<Page x:Class="Lemoo.Modules.TaskManager.UI.Views.Pages.TaskDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="任务详情">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题和操作栏 -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 返回按钮 -->
+            <Button Grid.Column="0"
+                    Content="&#xE72B;"
+                    FontFamily="Segoe MDL2 Assets"
+                    FontSize="16"
+                    Width="40"
+                    Height="40"
+                    Padding="0"
+                    Click="OnBackClick"
+                    Margin="0,0,16,0"/>
+
+            <!-- 标题 -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="任务详情" FontSize="28" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding Task.Title, FallbackValue='查看任务的详细信息'}"
+                           FontSize="14"
+                           Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                           Margin="0,5,0,0"
+                           TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+
+            <!-- 操作按钮 -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button Content="编辑"
+                        Command="{Binding EditTaskCommand}"
+                        Margin="0,0,8,0"
+                        Padding="15,8"/>
+                <Button Content="完成"
+                        Command="{Binding CompleteTaskCommand}"
+                        Style="{StaticResource AccentButtonStyle}"
+                        Margin="0,0,8,0"
+                        Padding="15,8"/>
+                <Button Content="删除"
+                        Command="{Binding DeleteTaskCommand}"
+                        Foreground="#C42B1C"
+                        Padding="15,8"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- 错误消息 -->
+        <Border Grid.Row="1"
+                Background="#FDE7E9"
+                CornerRadius="8"
+                Padding="16"
+                Margin="0,0,0,16"
+                Visibility="{Binding HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE7BA;"
+                           FontFamily="Segoe MDL2 Assets"
+                           Foreground="#C42B1C"
+                           FontSize="16"
+                           Margin="0,0,12,0"/>
+                <TextBlock Text="{Binding ErrorMessage}"
+                           Foreground="#C42B1C"
+                           FontSize="14"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 任务详情内容 -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="800">
+                <!-- 状态和优先级 -->
+                <Grid Margin="0,0,0,24">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 状态标签 -->
+                    <Border Grid.Column="0"
+                            Background="{Binding Task.StatusColor}"
+                            CornerRadius="16"
+                            Padding="16,8"
+                            Visibility="{Binding Task, Converter={StaticResource NullToVisibilityConverter}}">
+                        <TextBlock Text="{Binding Task.StatusName}" FontSize="14" Foreground="White" FontWeight="SemiBold"/>
+                    </Border>
+
+                    <!-- 优先级标签 -->
+                    <Border Grid.Column="2"
+                            Background="{Binding Task.PriorityColor}"
+                            CornerRadius="16"
+                            Padding="16,8"
+                            Visibility="{Binding Task, Converter={StaticResource NullToVisibilityConverter}}">
+                        <TextBlock Text="{Binding Task.PriorityName}" FontSize="14" Foreground="White" FontWeight="SemiBold"/>
+                    </Border>
+
+                    <!-- 过期标签 -->
+                    <Border Grid.Column="4"
+                            Background="#C42B1C"
+                            CornerRadius="16"
+                            Padding="16,8"
+                            Visibility="{Binding Task.IsOverdue, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <TextBlock Text="已过期" FontSize="14" Foreground="White" FontWeight="SemiBold"/>
+                    </Border>
+                </Grid>
+
+                <!-- 描述 -->
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="描述" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding Task.Description}"
+                                   FontSize="14"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                        <TextBlock Text="暂无描述"
+                                   FontSize="14"
+                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                   FontStyle="Italic"
+                                   Visibility="{Binding Task.Description, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=Inverse}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- 时间信息 -->
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock Text="时间信息" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+
+                        <!-- 创建时间 -->
+                        <Grid Margin="0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="&#xE8F3;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="1" Text="创建时间：" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Task.CreatedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" FontSize="14"/>
+                        </Grid>
+
+                        <!-- 截止日期 -->
+                        <Grid Margin="0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="&#xE8E3;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="1" Text="截止日期：" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Task.DueDate, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" FontSize="14"/>
+                            <TextBlock Grid.Column="2" Text="未设置" FontSize="14" Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                       Visibility="{Binding Task.DueDate, Converter={StaticResource NullToVisibilityConverter}}"/>
+                        </Grid>
+
+                        <!-- 完成时间 -->
+                        <Grid Margin="0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="&#xE915;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="1" Text="完成时间：" FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Task.CompletedAt, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}" FontSize="14"/>
+                            <TextBlock Grid.Column="2" Text="未完成" FontSize="14" Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                       Visibility="{Binding Task.CompletedAt, Converter={StaticResource NullToVisibilityConverter}}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- 标签 -->
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        CornerRadius="8"
+                        Padding="24"
+                        Visibility="{Binding Task.Labels, Converter={StaticResource CollectionToVisibilityConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="标签" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                        <ItemsControl ItemsSource="{Binding Task.Labels}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="{Binding Color}"
+                                            CornerRadius="12"
+                                            Padding="12,6"
+                                            Margin="0,0,8,8">
+                                        <TextBlock Text="{Binding Name}" FontSize="12" Foreground="White"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 加载遮罩 -->
+        <Border Grid.Row="0" Grid.RowSpan="3"
+                Background="#80000000"
+                CornerRadius="8"
+                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="加载中..." FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

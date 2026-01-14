@@ -74,6 +74,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="innerEllipse" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="outerEllipse" Property="Stroke" Value="{DynamicResource InputFocusBorderBrush}"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>

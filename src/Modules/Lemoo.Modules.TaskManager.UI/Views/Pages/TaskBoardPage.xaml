@@ -1,0 +1,176 @@
+<Page x:Class="Lemoo.Modules.TaskManager.UI.Views.Pages.TaskBoardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="任务看板">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题栏 -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <TextBlock Text="任务看板" FontSize="28" FontWeight="SemiBold"/>
+                <TextBlock Text="以看板方式查看和管理任务" FontSize="14" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Margin="0,5,0,0"/>
+            </StackPanel>
+
+            <Button Grid.Column="1"
+                    Content="刷新"
+                    Command="{Binding LoadTasksCommand}"
+                    Padding="15,8"/>
+        </Grid>
+
+        <!-- 看板列 -->
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding Columns}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="8"
+                                Width="320"
+                                Margin="0,0,16,0"
+                                Padding="16">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- 列标题 -->
+                                <Grid Grid.Row="0" Margin="0,0,0,16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <Ellipse Width="8" Height="8" Fill="{Binding DataContext.StatusColor, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource IntToColorConverter}, ConverterParameter={Binding Status}}" Margin="0,0,8,0"/>
+                                        <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold"/>
+                                    </StackPanel>
+
+                                    <Border Grid.Column="1"
+                                            Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                            CornerRadius="12"
+                                            Padding="12,4">
+                                        <TextBlock Text="{Binding Count}" FontSize="12" FontWeight="SemiBold"/>
+                                    </Border>
+                                </Grid>
+
+                                <!-- 任务卡片 -->
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                                    <ItemsControl ItemsSource="{Binding Tasks}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{DynamicResource LayerFillColorDefaultBrush}"
+                                                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="6"
+                                                        Margin="0,0,0,12"
+                                                        Padding="12">
+                                                    <Border.InputBindings>
+                                                        <MouseBinding MouseAction="LeftClick" Command="{Binding DataContext.ViewDetailCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                                                    </Border.InputBindings>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <StackPanel>
+                                                        <!-- 标题和优先级 -->
+                                                        <Grid Margin="0,0,0,8">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock Grid.Column="0"
+                                                                       Text="{Binding Title}"
+                                                                       FontWeight="Medium"
+                                                                       TextTrimming="CharacterEllipsis"/>
+
+                                                            <Border Grid.Column="1"
+                                                                    Background="{Binding PriorityColor}"
+                                                                    CornerRadius="10"
+                                                                    Padding="8,4"
+                                                                    Margin="8,0,0,0">
+                                                                <TextBlock Text="{Binding PriorityName}" FontSize="10" Foreground="White"/>
+                                                            </Border>
+                                                        </Grid>
+
+                                                        <!-- 描述 -->
+                                                        <TextBlock Text="{Binding Description}"
+                                                                   FontSize="12"
+                                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   MaxHeight="40"
+                                                                   TextWrapping="Wrap"
+                                                                   Margin="0,0,0,8"
+                                                                   Visibility="{Binding Description, Converter={StaticResource NullToVisibilityConverter}}"/>
+
+                                                        <!-- 底部信息 -->
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!-- 截止日期 -->
+                                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Visibility="{Binding DueDate, Converter={StaticResource NullToVisibilityConverter}}">
+                                                                <TextBlock Text="&#xE8E3;" FontFamily="Segoe MDL2 Assets" FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}" Margin="0,0,4,0"/>
+                                                                <TextBlock Text="{Binding DueDate, StringFormat='{}{0:MM/dd}'}" FontSize="12" Foreground="{DynamicResource TextFillColorTertiaryBrush}"/>
+                                                            </StackPanel>
+
+                                                            <!-- 过期标记 -->
+                                                            <Border Grid.Column="1"
+                                                                    Background="#C42B1C"
+                                                                    CornerRadius="4"
+                                                                    Padding="6,2"
+                                                                    Visibility="{Binding IsOverdue, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                                <TextBlock Text="过期" FontSize="10" Foreground="White"/>
+                                                            </Border>
+                                                        </Grid>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- 加载遮罩 -->
+        <Border Grid.Row="0" Grid.RowSpan="2"
+                Background="#80000000"
+                CornerRadius="8"
+                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="加载中..." FontSize="16" Foreground="White" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
