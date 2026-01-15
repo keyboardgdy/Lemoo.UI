@@ -34,14 +34,14 @@ public class ModuleDependency
     /// <summary>
     /// 解析版本范围字符串
     /// </summary>
-    public VersionRange ParseVersionRange()
+    public Lemoo.Core.Abstractions.Module.VersionRange ParseVersionRange()
     {
         if (string.IsNullOrWhiteSpace(VersionRange))
         {
-            return VersionRange.Any;
+            return Lemoo.Core.Abstractions.Module.VersionRange.Any;
         }
 
-        return VersionRange.Parse(VersionRange);
+        return Lemoo.Core.Abstractions.Module.VersionRange.Parse(VersionRange);
     }
 }
 

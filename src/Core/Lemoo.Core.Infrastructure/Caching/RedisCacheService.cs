@@ -132,5 +132,72 @@ public class RedisCacheService : ICacheService
             return false;
         }
     }
+
+    public async Task RefreshAsync(string key, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var cachedBytes = await _distributedCache.GetAsync(key, cancellationToken);
+            if (cachedBytes != null && cachedBytes.Length > 0)
+            {
+                var options = new DistributedCacheEntryOptions();
+                if (expiration.HasValue)
+                {
+                    options.AbsoluteExpirationRelativeToNow = expiration;
+                }
+                else
+                {
+                    options.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+                }
+
+                await _distributedCache.RefreshAsync(key, cancellationToken);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "刷新Redis缓存失败: {Key}", key);
+            throw;
+        }
+    }
+
+    public async Task<IDictionary<string, T?>> GetManyAsync<T>(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        var result = new Dictionary<string, T?>();
+        var tasks = keys.Select(async key =>
+        {
+            try
+            {
+                var value = await GetAsync<T>(key, cancellationToken);
+                return new { Key = key, Value = value };
+            }
+            catch
+            {
+                return new { Key = key, Value = default(T?) };
+            }
+        });
+
+        var results = await Task.WhenAll(tasks);
+        foreach (var item in results)
+        {
+            result[item.Key] = item.Value;
+        }
+
+        return result;
+    }
+
+    public async Task SetManyAsync<T>(IDictionary<string, T> items, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+    {
+        var tasks = items.Select(item =>
+            SetAsync(item.Key, item.Value, expiration, cancellationToken)
+        );
+
+        await Task.WhenAll(tasks);
+    }
+
+    public async Task RemoveManyAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        var tasks = keys.Select(key => RemoveAsync(key, cancellationToken));
+        await Task.WhenAll(tasks);
+    }
 }
 

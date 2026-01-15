@@ -46,6 +46,26 @@ public static class ThemeManager
         /// </summary>
         SunsetTropics,
         /// <summary>
+        /// 玫瑰石英主题（Rose Quartz）
+        /// </summary>
+        RoseQuartz,
+        /// <summary>
+        /// 深海幽蓝主题（Deep Ocean）
+        /// </summary>
+        DeepOcean,
+        /// <summary>
+        /// 樱花幻梦主题（Sakura）
+        /// </summary>
+        Sakura,
+        /// <summary>
+        /// 午夜丝绒主题（Midnight Velvet）
+        /// </summary>
+        MidnightVelvet,
+        /// <summary>
+        /// 森林低语主题（Forest Whisper）
+        /// </summary>
+        ForestWhisper,
+        /// <summary>
         /// 跟随系统主题
         /// </summary>
         System
@@ -58,6 +78,11 @@ public static class ThemeManager
     private static readonly Uri NeonCyberpunkThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/NeonCyberpunk/NeonCyberpunk.xaml", UriKind.Absolute);
     private static readonly Uri AuroraThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Aurora/Aurora.xaml", UriKind.Absolute);
     private static readonly Uri SunsetTropicsThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/SunsetTropics/SunsetTropics.xaml", UriKind.Absolute);
+    private static readonly Uri RoseQuartzThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/RoseQuartz/RoseQuartz.xaml", UriKind.Absolute);
+    private static readonly Uri DeepOceanThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/DeepOcean/DeepOcean.xaml", UriKind.Absolute);
+    private static readonly Uri SakuraThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/Sakura/Sakura.xaml", UriKind.Absolute);
+    private static readonly Uri MidnightVelvetThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/MidnightVelvet/MidnightVelvet.xaml", UriKind.Absolute);
+    private static readonly Uri ForestWhisperThemeUri = new("pack://application:,,,/Lemoo.UI;component/Themes/ForestWhisper/ForestWhisper.xaml", UriKind.Absolute);
 
     // 主题资源字典路径后缀（用于快速识别）
     private static readonly string[] ThemePathSuffixes =
@@ -67,7 +92,12 @@ public static class ThemeManager
         "/Themes/Light/Light.xaml",
         "/Themes/NeonCyberpunk/NeonCyberpunk.xaml",
         "/Themes/Aurora/Aurora.xaml",
-        "/Themes/SunsetTropics/SunsetTropics.xaml"
+        "/Themes/SunsetTropics/SunsetTropics.xaml",
+        "/Themes/RoseQuartz/RoseQuartz.xaml",
+        "/Themes/DeepOcean/DeepOcean.xaml",
+        "/Themes/Sakura/Sakura.xaml",
+        "/Themes/MidnightVelvet/MidnightVelvet.xaml",
+        "/Themes/ForestWhisper/ForestWhisper.xaml"
     };
 
     // 资源字典缓存（避免重复创建，提升性能）
@@ -194,6 +224,76 @@ public static class ThemeManager
                 IsDefault = false,
                 Tag = "温暖",
                 Category = "创意主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.RoseQuartz,
+                DisplayName = "玫瑰石英",
+                Description = "柔和优雅风格",
+                DetailDescription = "柔和优雅的粉紫色调，灵感来自天然玫瑰石英的温润质感，营造温馨浪漫氛围",
+                PreviewPrimaryColor = Color.FromRgb(0x1A, 0x15, 0x20),
+                PreviewSecondaryColor = Color.FromRgb(0x2A, 0x22, 0x32),
+                PreviewAccentColor = Color.FromRgb(0xE8, 0xB4, 0xBC),
+                PreviewTextColor = Color.FromRgb(0xF5, 0xE6, 0xE8),
+                IsDefault = false,
+                Tag = "优雅",
+                Category = "惊艳主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.DeepOcean,
+                DisplayName = "深海幽蓝",
+                Description = "沉稳深邃风格",
+                DetailDescription = "沉稳深邃的蓝绿色调，灵感来自深邃海洋的神秘与宁静，带来专业专注感",
+                PreviewPrimaryColor = Color.FromRgb(0x0B, 0x12, 0x19),
+                PreviewSecondaryColor = Color.FromRgb(0x14, 0x22, 0x28),
+                PreviewAccentColor = Color.FromRgb(0x00, 0xCE, 0xD1),
+                PreviewTextColor = Color.FromRgb(0xE0, 0xF0, 0xF8),
+                IsDefault = false,
+                Tag = "专业",
+                Category = "惊艳主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.Sakura,
+                DisplayName = "樱花幻梦",
+                Description = "唯美日式风格",
+                DetailDescription = "唯美的日式樱花粉，灵感来自春日樱花飘落的梦幻场景，带来轻松愉悦的视觉体验",
+                PreviewPrimaryColor = Color.FromRgb(0x1F, 0x1A, 0x24),
+                PreviewSecondaryColor = Color.FromRgb(0x2D, 0x26, 0x34),
+                PreviewAccentColor = Color.FromRgb(0xFF, 0xB7, 0xC5),
+                PreviewTextColor = Color.FromRgb(0xFF, 0xF0, 0xF5),
+                IsDefault = false,
+                Tag = "梦幻",
+                Category = "惊艳主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.MidnightVelvet,
+                DisplayName = "午夜丝绒",
+                Description = "奢华高贵风格",
+                DetailDescription = "奢华的金紫配色，灵感来自午夜时分的高贵与优雅，展现精致的应用体验",
+                PreviewPrimaryColor = Color.FromRgb(0x0F, 0x0A, 0x18),
+                PreviewSecondaryColor = Color.FromRgb(0x1A, 0x14, 0x28),
+                PreviewAccentColor = Color.FromRgb(0xD4, 0xAF, 0x37),
+                PreviewTextColor = Color.FromRgb(0xF5, 0xE6, 0xF0),
+                IsDefault = false,
+                Tag = "奢华",
+                Category = "惊艳主题"
+            },
+            new ThemeInfo
+            {
+                ThemeType = Theme.ForestWhisper,
+                DisplayName = "森林低语",
+                Description = "清新自然风格",
+                DetailDescription = "清新的自然绿色，灵感来自清晨森林的清新与宁静，带来放松舒适的视觉感受",
+                PreviewPrimaryColor = Color.FromRgb(0x0D, 0x1F, 0x12),
+                PreviewSecondaryColor = Color.FromRgb(0x1A, 0x2F, 0x24),
+                PreviewAccentColor = Color.FromRgb(0x52, 0xB7, 0x88),
+                PreviewTextColor = Color.FromRgb(0xE0, 0xF0, 0xE8),
+                IsDefault = false,
+                Tag = "清新",
+                Category = "惊艳主题"
             }
         };
         AvailableThemes = new ReadOnlyCollection<ThemeInfo>(themes);
@@ -248,6 +348,11 @@ public static class ThemeManager
             Theme.NeonCyberpunk => NeonCyberpunkThemeUri,
             Theme.Aurora => AuroraThemeUri,
             Theme.SunsetTropics => SunsetTropicsThemeUri,
+            Theme.RoseQuartz => RoseQuartzThemeUri,
+            Theme.DeepOcean => DeepOceanThemeUri,
+            Theme.Sakura => SakuraThemeUri,
+            Theme.MidnightVelvet => MidnightVelvetThemeUri,
+            Theme.ForestWhisper => ForestWhisperThemeUri,
             _ => BaseThemeUri
         };
 
@@ -456,6 +561,11 @@ public static class ThemeManager
             Theme.NeonCyberpunk => NeonCyberpunkThemeUri,
             Theme.Aurora => AuroraThemeUri,
             Theme.SunsetTropics => SunsetTropicsThemeUri,
+            Theme.RoseQuartz => RoseQuartzThemeUri,
+            Theme.DeepOcean => DeepOceanThemeUri,
+            Theme.Sakura => SakuraThemeUri,
+            Theme.MidnightVelvet => MidnightVelvetThemeUri,
+            Theme.ForestWhisper => ForestWhisperThemeUri,
             _ => BaseThemeUri
         };
 

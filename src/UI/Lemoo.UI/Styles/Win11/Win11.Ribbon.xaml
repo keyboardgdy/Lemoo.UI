@@ -1,0 +1,227 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <!-- Ribbon 样式 -->
+    <Style x:Key="Win11.RibbonStyle" TargetType="ui:Ribbon">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="MinHeight" Value="120"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:Ribbon">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 选项卡栏 -->
+                                <Border Grid.Row="0"
+                                        Background="{DynamicResource TitleBarBackgroundBrush}"
+                                        BorderBrush="{DynamicResource TitleBarBorderBrush}"
+                                        BorderThickness="0,0,0,1"
+                                        Padding="8,0">
+                            <StackPanel x:Name="TabPanel"
+                                        Orientation="Horizontal"
+                                        IsItemsHost="True"/>
+                        </Border>
+
+                        <!-- 内容区域 -->
+                        <Border Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}"
+                                MinHeight="{TemplateBinding MinHeight}">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                  Content="{TemplateBinding SelectedTab}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RibbonTab 样式 -->
+    <Style x:Key="Win11.RibbonTabStyle" TargetType="ui:RibbonTab">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="Margin" Value="0,0,2,0"/>
+        <Setter Property="MinWidth" Value="80"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:RibbonTab">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}">
+                        <ContentPresenter x:Name="ContentSite"
+                                          ContentSource="Header"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabSelectedBackgroundBrush}"/>
+                            <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource TabSelectedForegroundBrush}"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,2"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabHoverBackgroundBrush}"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RibbonGroup 样式 -->
+    <Style x:Key="Win11.RibbonGroupStyle" TargetType="ui:RibbonGroup">
+        <Setter Property="Background" Value="{DynamicResource CardHoverBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,0"/>
+        <Setter Property="Padding" Value="8,8"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MinWidth" Value="80"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:RibbonGroup">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="{TemplateBinding Margin}">
+                        <StackPanel>
+                            <!-- 分组标题 -->
+                                <TextBlock Text="{TemplateBinding Header}"
+                                           FontSize="{StaticResource FontSize.Small}"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           Margin="0,0,0,8"
+                                           HorizontalAlignment="Center"/>
+
+                            <!-- 分组内容 -->
+                            <ItemsPresenter/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RibbonButton 样式 -->
+    <Style x:Key="Win11.RibbonButtonStyle" TargetType="ui:RibbonButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="MinWidth" Value="32"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:RibbonButton">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            Padding="{TemplateBinding Padding}"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            MinHeight="{TemplateBinding MinHeight}"
+                            Margin="{TemplateBinding Margin}">
+                        <StackPanel>
+                            <!-- 图标 -->
+                                <ContentPresenter x:Name="IconPresenter"
+                                                  Content="{TemplateBinding Image}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Margin="0,0,0,4"/>
+                            <!-- 标签 -->
+                                <TextBlock x:Name="LabelPresenter"
+                                           Text="{TemplateBinding Label}"
+                                           FontSize="{StaticResource FontSize.Small}"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"
+                                           HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                        <!-- 大按钮模式 -->
+                        <Trigger Property="IsLarge" Value="True">
+                            <Setter Property="MinWidth" Value="64"/>
+                            <Setter Property="MinHeight" Value="64"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RibbonSeparator 样式 -->
+    <Style x:Key="Win11.RibbonSeparatorStyle" TargetType="ui:RibbonSeparator">
+        <Setter Property="Background" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="Width" Value="1"/>
+        <Setter Property="Margin" Value="4,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:RibbonSeparator">
+                    <Border Background="{TemplateBinding Background}"
+                            Width="{TemplateBinding Width}"
+                            Margin="{TemplateBinding Margin}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- QuickAccessToolBar 样式 -->
+    <Style x:Key="Win11.QuickAccessToolBarStyle" TargetType="ui:QuickAccessToolBar">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="4,0"/>
+        <Setter Property="Height" Value="32"/>
+    </Style>
+
+    <!-- 默认样式 -->
+    <Style TargetType="ui:Ribbon" BasedOn="{StaticResource Win11.RibbonStyle}"/>
+    <Style TargetType="ui:RibbonTab" BasedOn="{StaticResource Win11.RibbonTabStyle}"/>
+    <Style TargetType="ui:RibbonGroup" BasedOn="{StaticResource Win11.RibbonGroupStyle}"/>
+    <Style TargetType="ui:RibbonButton" BasedOn="{StaticResource Win11.RibbonButtonStyle}"/>
+    <Style TargetType="ui:RibbonSeparator" BasedOn="{StaticResource Win11.RibbonSeparatorStyle}"/>
+    <Style TargetType="ui:QuickAccessToolBar" BasedOn="{StaticResource Win11.QuickAccessToolBarStyle}"/>
+
+</ResourceDictionary>

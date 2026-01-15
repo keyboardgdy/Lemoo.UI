@@ -1,0 +1,214 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============================================
+         ToggleButton 样式 (Win11)
+         ============================================ -->
+
+    <!-- 基础 ToggleButton 样式 -->
+    <Style x:Key="Win11.ToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                       To="{StaticResource button.hoverBackground}"
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                       To="{StaticResource button.background}"
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Primary ToggleButton 样式 -->
+    <Style x:Key="Win11.ToggleButton.Primary" TargetType="ToggleButton" BasedOn="{StaticResource Win11.ToggleButtonStyle}">
+        <Setter Property="Background" Value="{DynamicResource AccentPrimaryBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPressedBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPressedBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Outline ToggleButton 样式 -->
+    <Style x:Key="Win11.ToggleButton.Outline" TargetType="ToggleButton" BasedOn="{StaticResource Win11.ToggleButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+    </Style>
+
+    <!-- Ghost ToggleButton 样式 -->
+    <Style x:Key="Win11.ToggleButton.Ghost" TargetType="ToggleButton" BasedOn="{StaticResource Win11.ToggleButtonStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 图标 ToggleButton 样式 -->
+    <Style x:Key="Win11.ToggleButton.Icon" TargetType="ToggleButton">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8"/>
+        <Setter Property="Width" Value="36"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="{TemplateBinding Padding}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPrimaryBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

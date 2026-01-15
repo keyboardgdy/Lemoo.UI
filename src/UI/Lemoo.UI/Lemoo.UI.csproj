@@ -25,6 +25,8 @@
     <Page Include="Controls\Chrome\MainTitleBar.xaml" />
     <Page Include="Controls\Navigation\Sidebar.xaml" />
     <Page Include="Controls\Tabs\DocumentTabHost.xaml" />
+    <Page Include="Controls\Dialogs\MessageBoxWindow.xaml" />
+    <Page Include="Controls\Toolbox\ToolboxView.xaml" />
   </ItemGroup>
   
   <!-- 显式包含资源字典文件 -->
@@ -51,7 +53,30 @@
     <Page Include="Styles\Win11\Win11.Expander.xaml" />
     <Page Include="Styles\Win11\Win11.SearchBox.xaml" />
     <Page Include="Styles\Win11\Win11.NumericUpDown.xaml" />
-    
+    <Page Include="Styles\Win11\Win11.DialogHost.xaml" />
+    <Page Include="Styles\Win11\Win11.Snackbar.xaml" />
+
+    <!-- 新增控件样式 -->
+    <Page Include="Styles\Win11\Win11.AutoCompleteBox.xaml" />
+    <Page Include="Styles\Win11\Win11.DataGrid.xaml" />
+    <Page Include="Styles\Win11\Win11.TreeView.xaml" />
+    <Page Include="Styles\Win11\Win11.TabControl.xaml" />
+    <Page Include="Styles\Win11\Win11.ListView.xaml" />
+    <Page Include="Styles\Win11\Win11.DatePicker.xaml" />
+    <Page Include="Styles\Win11\Win11.TimePicker.xaml" />
+    <Page Include="Styles\Win11\Win11.SplitView.xaml" />
+    <Page Include="Styles\Win11\Win11.RichTextBox.xaml" />
+    <Page Include="Styles\Win11\Win11.MenuBar.xaml" />
+    <Page Include="Styles\Win11\Win11.StatusBar.xaml" />
+    <Page Include="Styles\Win11\Win11.ToolBar.xaml" />
+    <Page Include="Styles\Win11\Win11.Ribbon.xaml" />
+    <Page Include="Styles\Win11\Win11.ComboBox.xaml" />
+    <Page Include="Styles\Win11\Win11.ListBox.xaml" />
+    <Page Include="Styles\Win11\Win11.MenuItem.xaml" />
+    <Page Include="Styles\Win11\Win11.Slider.xaml" />
+    <Page Include="Styles\Win11\Win11.ToggleButton.xaml" />
+    <Page Include="Styles\Win11\Win11.ToolTip.xaml" />
+
     <!-- Themes/Base -->
     <Page Include="Themes\Base\ColorPalette.xaml" />
     <Page Include="Themes\Base\SemanticTokens.xaml" />
@@ -87,11 +112,42 @@
     <Page Include="Themes\SunsetTropics\SemanticTokens.xaml" />
     <Page Include="Themes\SunsetTropics\ComponentBrushes.xaml" />
     <Page Include="Themes\SunsetTropics\SunsetTropics.xaml" />
+
+    <!-- Themes/RoseQuartz -->
+    <Page Include="Themes\RoseQuartz\ColorPalette.xaml" />
+    <Page Include="Themes\RoseQuartz\SemanticTokens.xaml" />
+    <Page Include="Themes\RoseQuartz\ComponentBrushes.xaml" />
+    <Page Include="Themes\RoseQuartz\RoseQuartz.xaml" />
+
+    <!-- Themes/DeepOcean -->
+    <Page Include="Themes\DeepOcean\ColorPalette.xaml" />
+    <Page Include="Themes\DeepOcean\SemanticTokens.xaml" />
+    <Page Include="Themes\DeepOcean\ComponentBrushes.xaml" />
+    <Page Include="Themes\DeepOcean\DeepOcean.xaml" />
+
+    <!-- Themes/Sakura -->
+    <Page Include="Themes\Sakura\ColorPalette.xaml" />
+    <Page Include="Themes\Sakura\SemanticTokens.xaml" />
+    <Page Include="Themes\Sakura\ComponentBrushes.xaml" />
+    <Page Include="Themes\Sakura\Sakura.xaml" />
+
+    <!-- Themes/MidnightVelvet -->
+    <Page Include="Themes\MidnightVelvet\ColorPalette.xaml" />
+    <Page Include="Themes\MidnightVelvet\SemanticTokens.xaml" />
+    <Page Include="Themes\MidnightVelvet\ComponentBrushes.xaml" />
+    <Page Include="Themes\MidnightVelvet\MidnightVelvet.xaml" />
+
+    <!-- Themes/ForestWhisper -->
+    <Page Include="Themes\ForestWhisper\ColorPalette.xaml" />
+    <Page Include="Themes\ForestWhisper\SemanticTokens.xaml" />
+    <Page Include="Themes\ForestWhisper\ComponentBrushes.xaml" />
+    <Page Include="Themes\ForestWhisper\ForestWhisper.xaml" />
   </ItemGroup>
 
   <!-- NuGet 包 -->
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
 
 </Project>

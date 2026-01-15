@@ -1,8 +1,31 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- 为了在设计期/运行期都能解析 Win11.CornerRadius.* 等 Token 和动画资源，这里显式合并相关字典 -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- 共用的边框颜色动画 Storyboard -->
+    <Storyboard x:Key="BorderHoverEnterStoryboard">
+        <ColorAnimation Storyboard.TargetName="border"
+                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                       To="{StaticResource input.focusBorder}"
+                       Duration="{StaticResource AnimationDuration.Normal}"
+                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+    </Storyboard>
+
+    <Storyboard x:Key="BorderHoverExitStoryboard">
+        <ColorAnimation Storyboard.TargetName="border"
+                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                       To="{StaticResource input.border}"
+                       Duration="{StaticResource AnimationDuration.Normal}"
+                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+    </Storyboard>
+
     <!-- ============================================
-         文本框样式 (TextBox)
+         文本框样式 (TextBox) - 基础样式
          ============================================ -->
     <Style x:Key="Win11.TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
@@ -15,53 +38,225 @@
         <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
         <Setter Property="CaretBrush" Value="{DynamicResource InputForegroundBrush}"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
-        <Setter Property="SelectionOpacity" Value="0.3"/>
+        <Setter Property="SelectionOpacity" Value="0.4"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            SnapsToDevicePixels="True">
+                    <Grid>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                SnapsToDevicePixels="True"/>
                         <ScrollViewer x:Name="PART_ContentHost"
-                                      Margin="{TemplateBinding Padding}"/>
-                    </Border>
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsFocused" Value="True">
+                        <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.focusBorder}"
-                                                       Duration="{StaticResource AnimationDuration.Normal}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.border}"
-                                                       Duration="{StaticResource AnimationDuration.Normal}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverExitStoryboard}"/>
                             </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================
+         带图标的文本框样式 (TextBox with Icon)
+         使用 Icon 属性设置图标（支持 Path、Image 等）
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.Icon" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
+        <Setter Property="Padding" Value="40,8,12,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                SnapsToDevicePixels="True"/>
+                        <ContentControl x:Name="iconContainer"
+                                        Content="{TemplateBinding Tag}"
+                                        Margin="12,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Width="20"
+                                        Height="20"
+                                        IsHitTestVisible="False"/>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverExitStoryboard}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="iconContainer" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================
+         搜索框样式 (SearchBox)
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.Search" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
+        <Setter Property="Padding" Value="40,8,12,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                SnapsToDevicePixels="True"/>
+                        <Path x:Name="searchIcon"
+                              Width="16"
+                              Height="16"
+                              Margin="12,0,0,0"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              Stretch="Uniform"
+                              Fill="{DynamicResource TextSecondaryBrush}"
+                              Data="M11 2C6.03 2 2 6.03 2 11C2 15.97 6.03 20 11 20C13.13 20 15.07 19.21 16.54 17.94L17.54 18.94C17.83 19.23 18.17 19.38 18.54 19.38C18.91 19.38 19.25 19.23 19.54 18.94C20.13 18.35 20.13 17.39 19.54 16.8L18.54 15.8C19.81 14.33 20.6 12.39 20.6 10.26C20.6 5.29 16.57 1.26 11.6 1.26L11 2ZM11 4C14.86 4 18 7.13 18 11C18 14.86 14.86 18 11 18C7.13 18 4 14.86 4 11C4 7.13 7.13 4 11 4Z"
+                              IsHitTestVisible="False"/>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverExitStoryboard}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="searchIcon" Property="Fill" Value="{DynamicResource TextDisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================
+         只读文本框样式 (ReadOnly TextBox)
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.ReadOnly" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="{TemplateBinding Padding}"
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  Background="{TemplateBinding Background}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================
+         多行文本框样式 (MultiLine TextBox)
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.MultiLine" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
+        <Setter Property="MinHeight" Value="80"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- ============================================
+         内联文本框样式 (Inline TextBox - 无边框)
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.Inline" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="MinHeight" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="0"
+                                SnapsToDevicePixels="True"/>
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -70,5 +265,3 @@
     </Style>
 
 </ResourceDictionary>
-
-

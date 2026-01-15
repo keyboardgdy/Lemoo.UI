@@ -1,0 +1,178 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============================================
+         ListBox 样式 (Win11)
+         ============================================ -->
+
+    <!-- 基础 ListBox 样式 -->
+    <Style x:Key="Win11.ListBoxStyle" TargetType="ListBox">
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer Focusable="False"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                    VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 无边框 ListBox 样式 -->
+    <Style x:Key="Win11.ListBox.Borderless" TargetType="ListBox" BasedOn="{StaticResource Win11.ListBoxStyle}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!-- 卡片样式 ListBox -->
+    <Style x:Key="Win11.ListBox.Card" TargetType="ListBox" BasedOn="{StaticResource Win11.ListBoxStyle}">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+    </Style>
+
+    <!-- ============================================
+         ListBoxItem 样式 (Win11)
+         ============================================ -->
+
+    <Style x:Key="Win11.ListBoxItemStyle" TargetType="ListBoxItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                       To="{StaticResource listItem.hoverBackground}"
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="border"
+                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                       To="{StaticResource listItem.background}"
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuSelectedBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource MenuSelectedForegroundBrush}"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 无边框 ListBoxItem 样式 -->
+    <Style x:Key="Win11.ListBoxItem.Flat" TargetType="ListBoxItem" BasedOn="{StaticResource Win11.ListBoxItemStyle}">
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuSelectedBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource MenuSelectedForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 分组标题样式 -->
+    <Style x:Key="Win11.ListBoxGroupStyle" TargetType="GroupItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupItem">
+                    <StackPanel>
+                        <ContentPresenter Content="{TemplateBinding Name}"
+                                        TextBlock.FontWeight="SemiBold"
+                                        TextBlock.Foreground="{DynamicResource TextSecondaryBrush}"
+                                        TextBlock.FontSize="12"
+                                        Margin="12,8,12,4"/>
+                        <ItemsPresenter/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

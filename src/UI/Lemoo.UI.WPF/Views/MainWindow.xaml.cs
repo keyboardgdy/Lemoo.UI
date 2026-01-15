@@ -199,10 +199,10 @@ public partial class MainWindow : Window
             // 首次启动时自动打开默认页面
             if (DocumentTabHost.Tabs.Count == 0 && _pageRegistry != null && _serviceProvider != null)
             {
-                var defaultPageObject = _pageRegistry.CreatePage(PageKeys.Dashboard, _serviceProvider);
+                var defaultPageObject = _pageRegistry.CreatePage(PageKeys.Settings, _serviceProvider);
                 if (defaultPageObject is Page defaultPage)
                 {
-                    DocumentTabHost.OpenPage(NavigationConstants.MenuText.Dashboard, defaultPage, PageKeys.Dashboard);
+                    DocumentTabHost.OpenPage(NavigationConstants.MenuText.SettingsSample, defaultPage, PageKeys.Settings);
                 }
             }
         }

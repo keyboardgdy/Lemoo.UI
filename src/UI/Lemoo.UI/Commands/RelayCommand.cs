@@ -53,7 +53,10 @@ namespace Lemoo.UI.Commands
         /// </summary>
         public void Execute(object? parameter)
         {
-            _execute(parameter);
+            if (CanExecute(parameter))
+            {
+                _execute(parameter);
+            }
         }
     }
 
@@ -108,7 +111,10 @@ namespace Lemoo.UI.Commands
         /// </summary>
         public void Execute(object? parameter)
         {
-            _execute((T?)parameter);
+            if (CanExecute(parameter))
+            {
+                _execute((T?)parameter);
+            }
         }
     }
 

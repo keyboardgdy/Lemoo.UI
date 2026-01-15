@@ -1,0 +1,195 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Menu 样式 -->
+    <Style x:Key="Win11.MenuStyle" TargetType="Menu">
+        <Setter Property="Background" Value="{DynamicResource MenuBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MenuForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="4,0"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+    </Style>
+
+    <!-- Menu 样式 (作为 MenuBar 使用) -->
+    <Style x:Key="Win11.MenuBarStyle" TargetType="Menu" BasedOn="{StaticResource Win11.MenuStyle}">
+        <Setter Property="Background" Value="{DynamicResource TitleBarBackgroundBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TitleBarBorderBrush}"/>
+    </Style>
+
+    <!-- MenuItem 样式 (顶层菜单项) -->
+    <Style x:Key="Win11.TopLevelMenuItemStyle" TargetType="MenuItem">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="HeaderHost"
+                                              ContentSource="Header"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+
+                        <!-- 子菜单弹出窗口 -->
+                        <Popup x:Name="SubMenuPopup"
+                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Bottom"
+                               PlacementTarget="{Binding ElementName=Border}"
+                               StaysOpen="False"
+                               AllowsTransparency="True">
+                            <Border Background="{DynamicResource MenuBackgroundBrush}"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
+                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Margin="0,4,0,0"
+                                    Padding="4">
+                                <StackPanel x:Name="SubMenuPanel"
+                                            IsItemsHost="True"
+                                            Margin="4"/>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- MenuItem 样式 (子菜单项) -->
+    <Style x:Key="Win11.SubMenuItemStyle" TargetType="MenuItem">
+        <Setter Property="Background" Value="{DynamicResource MenuItemBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MenuItemForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24,8,12,8"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                Padding="{TemplateBinding Padding}"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 图标 -->
+                                <ContentPresenter x:Name="Icon"
+                                                  Grid.Column="0"
+                                                  ContentSource="Icon"
+                                                  Margin="0,0,12,0"
+                                                  VerticalAlignment="Center"/>
+
+                                <!-- 头部文本 -->
+                                    <ContentPresenter x:Name="HeaderHost"
+                                                      Grid.Column="1"
+                                                      ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      RecognizesAccessKey="True"/>
+
+                                <!-- 快捷键 -->
+                                    <ContentPresenter x:Name="InputGestureText"
+                                                      Grid.Column="2"
+                                                      ContentSource="InputGestureText"
+                                                      Margin="12,0,0,0"
+                                                      VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- 子菜单弹出窗口 -->
+                        <Popup x:Name="SubMenuPopup"
+                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Right"
+                               PlacementTarget="{Binding ElementName=Border}"
+                               StaysOpen="False"
+                               AllowsTransparency="True">
+                            <Border Background="{DynamicResource MenuBackgroundBrush}"
+                                    BorderBrush="{DynamicResource MenuBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
+                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Margin="4,0,0,0"
+                                    Padding="4">
+                                <StackPanel x:Name="SubMenuPanel"
+                                            IsItemsHost="True"
+                                            Margin="4"/>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemHoverBackgroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource MenuItemSelectedBackgroundBrush}"/>
+                            <Setter TargetName="HeaderHost" Property="TextElement.Foreground" Value="{DynamicResource MenuItemSelectedForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Separator 样式 (用于菜单分隔) -->
+    <Style x:Key="Win11.MenuSeparatorStyle" TargetType="Separator">
+        <Setter Property="Background" Value="{DynamicResource MenuSeparatorBrush}"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="4,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Separator">
+                    <Border Background="{TemplateBinding Background}"
+                            Height="{TemplateBinding Height}"
+                            Margin="{TemplateBinding Margin}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 默认样式 - 不能在 Style 中设置 Style 属性，需要移除触发器 -->
+    <Style TargetType="Menu" BasedOn="{StaticResource Win11.MenuBarStyle}"/>
+    <!-- MenuItem 默认不设置样式，用户需要显式指定或使用 BasedOn -->
+    <Style TargetType="Separator" BasedOn="{StaticResource Win11.MenuSeparatorStyle}"/>
+
+</ResourceDictionary>

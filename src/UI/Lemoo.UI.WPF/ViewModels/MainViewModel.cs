@@ -103,18 +103,12 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     /// </summary>
     private void InitializeNavigation()
     {
+        // 顶部菜单
         var samplesMenu = new MenuItemModel
         {
-            Header = NavigationConstants.MenuText.Samples,
-            Icon = NavigationConstants.Icons.Browse
+            Header = "示例",
+            Icon = NavigationConstants.Icons.Settings
         };
-
-        samplesMenu.Children.Add(new MenuItemModel
-        {
-            Header = NavigationConstants.MenuText.Dashboard,
-            PageKey = PageKeys.Dashboard,
-            Icon = NavigationConstants.Icons.Home
-        });
 
         samplesMenu.Children.Add(new MenuItemModel
         {
@@ -123,31 +117,31 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
             Icon = NavigationConstants.Icons.Settings
         });
 
-        MenuItems.Add(samplesMenu);
-
-        NavigationItems.Add(new NavigationItem
+        samplesMenu.Children.Add(new MenuItemModel
         {
-            Title = NavigationConstants.MenuText.Overview,
-            Icon = NavigationConstants.Icons.Home,
-            PageKey = PageKeys.Dashboard
+            Header = NavigationConstants.MenuText.ToolboxSample,
+            PageKey = PageKeys.ToolboxSample,
+            Icon = NavigationConstants.Icons.Toolbox
         });
 
-        var examplesGroup = new NavigationItem
-        {
-            Title = NavigationConstants.MenuText.SampleFeatures,
-            Icon = NavigationConstants.Icons.Browse,
-            IsExpanded = true
-        };
+        MenuItems.Add(samplesMenu);
 
-        examplesGroup.Children.Add(new NavigationItem
+        // 左侧主导航
+        NavigationItems.Add(new NavigationItem
         {
             Title = NavigationConstants.MenuText.SettingsSample,
             Icon = NavigationConstants.Icons.Settings,
             PageKey = PageKeys.Settings
         });
 
-        NavigationItems.Add(examplesGroup);
+        NavigationItems.Add(new NavigationItem
+        {
+            Title = NavigationConstants.MenuText.ToolboxSample,
+            Icon = NavigationConstants.Icons.Toolbox,
+            PageKey = PageKeys.ToolboxSample
+        });
 
+        // 底部导航
         BottomNavigationItems.Add(new NavigationItem
         {
             Title = NavigationConstants.MenuText.Settings,

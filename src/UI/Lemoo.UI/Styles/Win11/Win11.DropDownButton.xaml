@@ -143,11 +143,6 @@
                                             Duration="0">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.FocusBorder}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="(Border.BitmapEffect).Input"
-                                            To="1"
-                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

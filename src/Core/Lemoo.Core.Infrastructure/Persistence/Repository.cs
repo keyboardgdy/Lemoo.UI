@@ -22,7 +22,7 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     protected readonly ISpecificationEvaluator SpecificationEvaluator;
 
     public Repository(DbContext dbContext, ILogger<Repository<TEntity, TKey>> logger)
-        : this(dbContext, logger, SpecificationEvaluator.Instance)
+        : this(dbContext, logger, Lemoo.Core.Abstractions.Specifications.SpecificationEvaluator.Instance)
     {
     }
 
@@ -200,6 +200,44 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
     {
         return SpecificationEvaluator.GetQuery(DbSet.AsQueryable(), specification);
+    }
+
+    // Additional interface methods
+    public virtual async Task<IReadOnlyList<TEntity>> GetByIdsAsync(
+        IEnumerable<TKey> ids,
+        CancellationToken cancellationToken = default)
+    {
+        var idList = ids.ToList();
+        return await DbSet.Where(e => idList.Contains(e.Id))
+            .ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<PagedResult<TEntity>> GetPagedAsync(
+        PagedRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var totalCount = await DbSet.CountAsync(cancellationToken);
+        var items = await DbSet
+            .Skip(request.Skip)
+            .Take(request.Take)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<TEntity>(items, totalCount, request.Skip, request.Take);
+    }
+
+    public virtual async Task<PagedResult<TEntity>> GetPagedAsync(
+        ISpecification<TEntity> specification,
+        PagedRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var items = await query
+            .Skip(request.Skip)
+            .Take(request.Take)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<TEntity>(items, totalCount, request.Skip, request.Take);
     }
 }
 

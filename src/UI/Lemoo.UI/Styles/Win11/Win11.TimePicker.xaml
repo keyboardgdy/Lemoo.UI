@@ -1,0 +1,403 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <!-- TimePicker 样式 -->
+    <Style x:Key="Win11.TimePickerStyle" TargetType="ui:TimePicker">
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:TimePicker">
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 时间显示 -->
+                                    <TextBlock Grid.Column="0"
+                                               VerticalAlignment="Center"
+                                               Padding="{TemplateBinding Padding}"
+                                               FontSize="{TemplateBinding FontSize}"
+                                               FontFamily="{TemplateBinding FontFamily}">
+                                    <Run x:Name="PART_HourTextBlock" Text="00"/>
+                                    <Run Text=":"/>
+                                    <Run x:Name="PART_MinuteTextBlock" Text="00"/>
+                                    <Run x:Name="PART_SecondTextBlock" Text=":00"/>
+                                </TextBlock>
+
+                                <!-- 时钟图标按钮 -->
+                                    <Button x:Name="PART_Button"
+                                            Grid.Column="1"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Width="32"
+                                            Margin="0,0,4,0">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="{TemplateBinding Background}" Width="32" Height="32">
+                                                <Path Data="M12 2 A10 10 0 0 0 12 22 A10 10 0 0 0 12 2 M12 4 A8 8 0 0 1 12 20 A8 8 0 0 1 12 4 M12 7 L12 12 L15 14"
+                                                      Stroke="{DynamicResource TextSecondaryBrush}"
+                                                      StrokeThickness="1.5"
+                                                      StrokeLineJoin="Round"
+                                                      StrokeStartLineCap="Round"
+                                                      StrokeEndLineCap="Round"
+                                                      Fill="None"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="0.8"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </Grid>
+                        </Border>
+
+                        <!-- 时间选择弹出窗口 -->
+                        <Popup x:Name="PART_Popup"
+                               Placement="Bottom"
+                               PlacementTarget="{Binding ElementName=Border}"
+                               StaysOpen="False"
+                               AllowsTransparency="True">
+                            <Border Background="{DynamicResource CardBackgroundBrush}"
+                                    BorderBrush="{DynamicResource CardBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
+                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Margin="0,4,0,0"
+                                    Padding="16">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto" x:Name="SecondColumn"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- 小时选择 -->
+                                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
+                                        <TextBlock Text="小时"
+                                                   FontSize="{StaticResource FontSize.Small}"
+                                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,0,0,4"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Button x:Name="PART_HourUpButton"
+                                                    Grid.Row="0"
+                                                    Content="▲"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,0,0,2">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 12 L 18 20 L 30 20 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+
+                                            <Border x:Name="HourDisplayTextBlock"
+                                                    Grid.Row="1"
+                                                    Background="{DynamicResource InputBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                                    Width="48"
+                                                    Height="40"
+                                                    Margin="0,2">
+                                                <TextBlock Text="00"
+                                                           FontSize="{StaticResource FontSize.Large}"
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <Button x:Name="PART_HourDownButton"
+                                                    Grid.Row="2"
+                                                    Content="▼"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,2,0,0">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 20 L 18 12 L 30 12 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+
+                                    <!-- 分隔符 -->
+                                    <TextBlock Grid.Column="1"
+                                               Text=":"
+                                               FontSize="{StaticResource FontSize.Large}"
+                                               FontWeight="SemiBold"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,8,0"/>
+
+                                    <!-- 分钟选择 -->
+                                        <StackPanel Grid.Column="2" Margin="0,0,8,0">
+                                        <TextBlock Text="分钟"
+                                                   FontSize="{StaticResource FontSize.Small}"
+                                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,0,0,4"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Button x:Name="PART_MinuteUpButton"
+                                                    Grid.Row="0"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,0,0,2">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 12 L 18 20 L 30 20 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+
+                                            <Border x:Name="MinuteDisplayTextBlock"
+                                                    Grid.Row="1"
+                                                    Background="{DynamicResource InputBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                                    Width="48"
+                                                    Height="40"
+                                                    Margin="0,2">
+                                                <TextBlock Text="00"
+                                                           FontSize="{StaticResource FontSize.Large}"
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <Button x:Name="PART_MinuteDownButton"
+                                                    Grid.Row="2"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,2,0,0">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 20 L 18 12 L 30 12 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+
+                                    <!-- 秒选择 (可选) -->
+                                        <StackPanel Grid.Column="3"
+                                                    x:Name="SecondPanel"
+                                                    Visibility="Collapsed">
+                                        <TextBlock Text="秒"
+                                                   FontSize="{StaticResource FontSize.Small}"
+                                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,0,0,4"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Button x:Name="PART_SecondUpButton"
+                                                    Grid.Row="0"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,0,0,2">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 12 L 18 20 L 30 20 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+
+                                            <Border x:Name="SecondDisplayTextBlock"
+                                                    Grid.Row="1"
+                                                    Background="{DynamicResource InputBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                                    Width="48"
+                                                    Height="40"
+                                                    Margin="0,2">
+                                                <TextBlock Text="00"
+                                                           FontSize="{StaticResource FontSize.Large}"
+                                                           FontWeight="SemiBold"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <Button x:Name="PART_SecondDownButton"
+                                                    Grid.Row="2"
+                                                    Background="{DynamicResource NumericUpDownButtonBackgroundBrush}"
+                                                    Foreground="{DynamicResource TextPrimaryBrush}"
+                                                    BorderThickness="0"
+                                                    Width="48"
+                                                    Height="32"
+                                                    FontSize="10"
+                                                    Margin="0,2,0,0">
+                                                <Button.Template>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Grid Background="{TemplateBinding Background}" Width="48" Height="32">
+                                                            <Path Data="M 24 20 L 18 12 L 30 12 Z"
+                                                                  Fill="{TemplateBinding Foreground}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"/>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonHoverBackgroundBrush}"/>
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter Property="Background" Value="{DynamicResource NumericUpDownButtonPressedBackgroundBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSecondsEnabled" Value="True">
+                            <Setter TargetName="SecondPanel" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Medium}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 默认样式 -->
+    <Style TargetType="ui:TimePicker" BasedOn="{StaticResource Win11.TimePickerStyle}"/>
+
+</ResourceDictionary>

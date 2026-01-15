@@ -1,0 +1,103 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- TabControl 样式 -->
+    <Style x:Key="Win11.TabControlStyle" TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabControl">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tab 面板 -->
+                        <TabPanel Grid.Row="0"
+                                  IsItemsHost="True"
+                                  Panel.ZIndex="1"
+                                  Margin="0,0,0,0"/>
+
+                        <!-- 内容区域 -->
+                        <Border Grid.Row="1"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Medium}">
+                            <ContentPresenter x:Name="PART_SelectedContentHost"
+                                              ContentSource="SelectedContent"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- TabItem 样式 -->
+    <Style x:Key="Win11.TabItemStyle" TargetType="TabItem">
+        <Setter Property="Background" Value="{DynamicResource TabBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TabForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TabBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="16,8"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid>
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                Margin="{TemplateBinding Margin}"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="ContentSite"
+                                              ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabSelectedBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TabSelectedForegroundBrush}"/>
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource TabHoverBackgroundBrush}"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.6"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 默认样式 -->
+    <Style TargetType="TabControl" BasedOn="{StaticResource Win11.TabControlStyle}"/>
+    <Style TargetType="TabItem" BasedOn="{StaticResource Win11.TabItemStyle}"/>
+
+</ResourceDictionary>

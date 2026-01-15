@@ -22,9 +22,45 @@
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TextBox.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.PasswordBox.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.CheckBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ScrollBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Badge.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToggleSwitch.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ProgressRing.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DropDownButton.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.NumericUpDown.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Card.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Expander.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.SearchBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DialogHost.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Snackbar.xaml"/>
+
+        <!-- 增强的控件样式 -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ComboBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ListBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.MenuItem.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Slider.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToggleButton.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToolTip.xaml"/>
+
+        <!-- 新增控件样式 -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.AutoCompleteBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DataGrid.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TreeView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TabControl.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ListView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DatePicker.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TimePicker.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.SplitView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.RichTextBox.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.MenuBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.StatusBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToolBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Ribbon.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- 其余 Win11 控件样式（暂时保留在入口中，后续可继续拆分） -->
+    <!-- ============================================
+         其他 Win11 控件样式（保留在此文件中）
+         ============================================ -->
 
     <!-- 单选按钮样式 (RadioButton) -->
     <Style x:Key="Win11.RadioButtonStyle" TargetType="RadioButton" BasedOn="{StaticResource {x:Type RadioButton}}">
@@ -81,19 +117,13 @@
                                         <DoubleAnimation Storyboard.TargetName="innerScale"
                                                        Storyboard.TargetProperty="ScaleX"
                                                        To="1"
-                                                       Duration="{StaticResource AnimationDuration.Normal}">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                       Duration="{StaticResource AnimationDuration.Normal}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
                                         <DoubleAnimation Storyboard.TargetName="innerScale"
                                                        Storyboard.TargetProperty="ScaleY"
                                                        To="1"
-                                                       Duration="{StaticResource AnimationDuration.Normal}">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
+                                                       Duration="{StaticResource AnimationDuration.Normal}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -105,11 +135,8 @@
                                         <ColorAnimation Storyboard.TargetName="outerEllipse"
                                                        Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
                                                        To="{StaticResource input.focusBorder}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
@@ -119,11 +146,8 @@
                                         <ColorAnimation Storyboard.TargetName="outerEllipse"
                                                        Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
                                                        To="{StaticResource input.border}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
+                                                       Duration="{StaticResource AnimationDuration.Fast}"
+                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -132,156 +156,6 @@
                             <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
                             <Setter TargetName="outerEllipse" Property="Fill" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
                             <Setter TargetName="outerEllipse" Property="Stroke" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 组合框、列表、菜单、滑块、进度条等 Win11 样式
-         继续沿用原有实现（从旧 Win11Controls.xaml 迁移而来），
-         如需更细拆分可以后续再按控件拆到独立 XAML 中。 -->
-
-    <!-- 组合框样式 (ComboBox) -->
-    <Style x:Key="Win11.ComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="MinHeight" Value="36"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBox">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Border x:Name="border"
-                                Grid.ColumnSpan="2"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                                SnapsToDevicePixels="True"/>
-                        <ContentPresenter x:Name="ContentSite"
-                                          Grid.Column="0"
-                                          IsHitTestVisible="False"
-                                          Content="{TemplateBinding SelectionBoxItem}"
-                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                          Margin="{TemplateBinding Padding}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <ToggleButton x:Name="ToggleButton"
-                                     Grid.Column="1"
-                                     Focusable="False"
-                                     ClickMode="Press"
-                                     IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ToggleButton.Template>
-                                <ControlTemplate TargetType="ToggleButton">
-                                    <Border Background="Transparent"
-                                          BorderThickness="0"
-                                          Width="32">
-                                        <Path x:Name="Arrow"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Data="M 0 0 L 4 4 L 8 0 Z"
-                                            Fill="{DynamicResource InputForegroundBrush}"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </ToggleButton.Template>
-                        </ToggleButton>
-                        <Popup x:Name="Popup"
-                             Placement="Bottom"
-                             IsOpen="{TemplateBinding IsDropDownOpen}"
-                             AllowsTransparency="True"
-                             Focusable="False"
-                             PopupAnimation="Fade">
-                            <Border x:Name="DropDownBorder"
-                                  Background="{DynamicResource DropdownBackgroundBrush}"
-                                  BorderBrush="{DynamicResource DropdownBorderBrush}"
-                                  BorderThickness="{StaticResource Win11.BorderThickness.Thin}"
-                                  CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                                  Effect="{StaticResource Shadow.Medium}">
-                                <ScrollViewer Margin="4,0">
-                                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
-                                </ScrollViewer>
-                            </Border>
-                        </Popup>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.focusBorder}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.border}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 组合框项样式 (ComboBoxItem) -->
-    <Style x:Key="Win11.ComboBoxItemStyle" TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource DropdownForegroundBrush}"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ComboBoxItem">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource DropdownHoverBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuSelectedBackgroundBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource MenuSelectedForegroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -314,57 +188,7 @@
         </Setter>
     </Style>
 
-    <!-- 滑块样式 (Slider) -->
-    <Style x:Key="Win11.SliderStyle" TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
-        <Setter Property="Foreground" Value="{DynamicResource AccentPrimaryBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
-        <Setter Property="Height" Value="20"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Slider">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Track x:Name="PART_Track" Grid.Row="1">
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource {x:Type RepeatButton}}"
-                                             Command="Slider.DecreaseLarge"
-                                             Background="{TemplateBinding Background}"
-                                             Height="4"
-                                             Margin="0,8,0,8"/>
-                            </Track.DecreaseRepeatButton>
-                            <Track.Thumb>
-                                <Thumb Style="{StaticResource {x:Type Thumb}}"
-                                     Width="12"
-                                     Height="12"
-                                     Background="{TemplateBinding Foreground}"
-                                     BorderThickness="0">
-                                    <Thumb.Template>
-                                        <ControlTemplate TargetType="Thumb">
-                                            <Ellipse Fill="{TemplateBinding Background}"
-                                                   Stroke="{DynamicResource InputBorderBrush}"
-                                                   StrokeThickness="1"/>
-                                        </ControlTemplate>
-                                    </Thumb.Template>
-                                </Thumb>
-                            </Track.Thumb>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource {x:Type RepeatButton}}"
-                                             Command="Slider.IncreaseLarge"
-                                             Background="{TemplateBinding Background}"
-                                             Height="4"
-                                             Margin="0,8,0,8"/>
-                            </Track.IncreaseRepeatButton>
-                        </Track>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
+    <!-- 滑块样式 (Slider) - 已移至 Win11.Slider.xaml -->
     <!-- 分隔符样式 (Separator) -->
     <Style x:Key="Win11.SeparatorStyle" TargetType="Separator" BasedOn="{StaticResource {x:Type Separator}}">
         <Setter Property="Background" Value="{DynamicResource SeparatorBrush}"/>
@@ -372,172 +196,11 @@
         <Setter Property="Margin" Value="0,8"/>
     </Style>
 
-    <!-- 列表框样式 (ListBox) -->
-    <Style x:Key="Win11.ListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
-        <Setter Property="Padding" Value="4"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBox">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            SnapsToDevicePixels="True">
-                        <ScrollViewer Focusable="False"
-                                    Padding="{TemplateBinding Padding}">
-                            <ItemsPresenter/>
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 列表框项样式 (ListBoxItem) -->
-    <Style x:Key="Win11.ListBoxItemStyle" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuHoverBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuSelectedBackgroundBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource MenuSelectedForegroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 菜单项样式 (MenuItem) -->
-    <Style x:Key="Win11.MenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-        <Setter Property="Background" Value="{DynamicResource MenuItemBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource MenuItemForegroundBrush}"/>
-        <Setter Property="Padding" Value="12,8"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="MenuItem">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            SnapsToDevicePixels="True">
-                        <Grid>
-                            <ContentPresenter Content="{TemplateBinding Header}"
-                                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                            Margin="{TemplateBinding Padding}"
-                                            RecognizesAccessKey="True"/>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuItemHoverBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsHighlighted" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuItemHighlightedBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 切换按钮样式 (ToggleButton) -->
-    <Style x:Key="Win11.ToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
-        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Margin="{TemplateBinding Padding}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPrimaryBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- 工具提示样式 (ToolTip) -->
-    <Style x:Key="Win11.ToolTipStyle" TargetType="ToolTip" BasedOn="{StaticResource {x:Type ToolTip}}">
-        <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource NotificationForegroundBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
-        <Setter Property="Padding" Value="8,6"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize.Small}"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToolTip">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                            Effect="{StaticResource Shadow.Tooltip}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <!-- 列表框样式 (ListBox) - 已移至 Win11.ListBox.xaml -->
+    <!-- 列表框项样式 (ListBoxItem) - 已移至 Win11.ListBox.xaml -->
+    <!-- 菜单项样式 (MenuItem) - 已移至 Win11.MenuItem.xaml -->
+    <!-- 切换按钮样式 (ToggleButton) - 已移至 Win11.ToggleButton.xaml -->
+    <!-- 工具提示样式 (ToolTip) - 已移至 Win11.ToolTip.xaml -->
 
 </ResourceDictionary>
 

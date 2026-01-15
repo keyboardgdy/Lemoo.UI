@@ -6,12 +6,12 @@ namespace Lemoo.UI.WPF.Constants;
 public static class PageKeys
 {
     /// <summary>
-    /// 仪表盘页面
-    /// </summary>
-    public const string Dashboard = "dashboard";
-
-    /// <summary>
     /// 设置页面
     /// </summary>
     public const string Settings = "settings";
+
+    /// <summary>
+    /// 工具箱示例页面
+    /// </summary>
+    public const string ToolboxSample = "toolbox-sample";
 }

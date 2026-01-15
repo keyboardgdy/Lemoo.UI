@@ -57,7 +57,7 @@ namespace Lemoo.UI.Controls
                 nameof(Value),
                 typeof(double),
                 typeof(NumericUpDown),
-                new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged));
+                new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
 
         /// <summary>
         /// 获取或设置当前值。
@@ -74,6 +74,13 @@ namespace Lemoo.UI.Controls
             nud.CoerceValue(MinimumProperty);
             nud.CoerceValue(MaximumProperty);
             nud.OnValueChanged((double)e.OldValue, (double)e.NewValue);
+        }
+
+        private static object CoerceValue(DependencyObject d, object baseValue)
+        {
+            var nud = (NumericUpDown)d;
+            var value = (double)baseValue;
+            return Math.Max(nud.Minimum, Math.Min(nud.Maximum, value));
         }
 
         #endregion

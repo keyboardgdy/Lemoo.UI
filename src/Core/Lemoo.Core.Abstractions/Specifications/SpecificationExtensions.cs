@@ -341,7 +341,7 @@ public class NotSpecification<T> : Specification<T>
     {
         if (specification.Criteria != null)
         {
-            AddCriteria(System.Linq.Expressions.Expression.Not(specification.Criteria));
+            AddCriteria(specification.Criteria.Not());
         }
 
         if (specification is Specification<T> spec)

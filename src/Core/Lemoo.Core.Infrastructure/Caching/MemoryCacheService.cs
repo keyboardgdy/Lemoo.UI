@@ -91,5 +91,87 @@ public class MemoryCacheService : ICacheService
         var exists = _memoryCache.TryGetValue(key, out _);
         return Task.FromResult(exists);
     }
+
+    public Task RefreshAsync(string key, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+    {
+        if (_memoryCache.TryGetValue(key, out var value))
+        {
+            var options = new MemoryCacheEntryOptions();
+
+            if (expiration.HasValue)
+            {
+                options.AbsoluteExpirationRelativeToNow = expiration;
+            }
+            else
+            {
+                options.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+            }
+
+            options.RegisterPostEvictionCallback((k, v, reason, state) =>
+            {
+                if (k is string keyString)
+                {
+                    _keyIndex.TryRemove(keyString, out _);
+                }
+            });
+
+            _memoryCache.Set(key, value, options);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task<IDictionary<string, T?>> GetManyAsync<T>(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        var result = new Dictionary<string, T?>();
+        foreach (var key in keys)
+        {
+            if (_memoryCache.TryGetValue(key, out T? value))
+            {
+                result[key] = value;
+            }
+        }
+        return Task.FromResult<IDictionary<string, T?>>(result);
+    }
+
+    public Task SetManyAsync<T>(IDictionary<string, T> items, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
+    {
+        var options = new MemoryCacheEntryOptions();
+
+        if (expiration.HasValue)
+        {
+            options.AbsoluteExpirationRelativeToNow = expiration;
+        }
+        else
+        {
+            options.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
+        }
+
+        options.RegisterPostEvictionCallback((key, value, reason, state) =>
+        {
+            if (key is string keyString)
+            {
+                _keyIndex.TryRemove(keyString, out _);
+            }
+        });
+
+        foreach (var item in items)
+        {
+            _memoryCache.Set(item.Key, item.Value, options);
+            _keyIndex.TryAdd(item.Key, null!);
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public Task RemoveManyAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        foreach (var key in keys)
+        {
+            _memoryCache.Remove(key);
+            _keyIndex.TryRemove(key, out _);
+        }
+        return Task.CompletedTask;
+    }
 }
 

@@ -1,0 +1,101 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- DataGrid 样式 -->
+    <Style x:Key="Win11.DataGridStyle" TargetType="DataGrid">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="RowBackground" Value="{DynamicResource ListItemBackgroundBrush}"/>
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource CardHoverBackgroundBrush}"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+    </Style>
+
+    <!-- DataGridColumnHeader 样式 -->
+    <Style x:Key="Win11.DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+        <Setter Property="Background" Value="{DynamicResource CardHoverBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Small}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Height" Value="36"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ListItemHoverBackgroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGridRow 样式 -->
+    <Style x:Key="Win11.DataGridRowStyle" TargetType="DataGridRow">
+        <Setter Property="Background" Value="{DynamicResource ListItemBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Margin" Value="0"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ListItemHoverBackgroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ListItemSelectedBackgroundBrush}"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentPrimaryForegroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.6"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGridCell 样式 -->
+    <Style x:Key="Win11.DataGridCellStyle" TargetType="DataGridCell">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource AccentPrimaryForegroundBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- DataGridRowHeader 样式 -->
+    <Style x:Key="Win11.DataGridRowHeaderStyle" TargetType="DataGridRowHeader">
+        <Setter Property="Background" Value="{DynamicResource CardHoverBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="Width" Value="0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <!-- 默认样式 -->
+    <Style TargetType="DataGrid" BasedOn="{StaticResource Win11.DataGridStyle}"/>
+    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource Win11.DataGridColumnHeaderStyle}"/>
+    <Style TargetType="DataGridRow" BasedOn="{StaticResource Win11.DataGridRowStyle}"/>
+    <Style TargetType="DataGridCell" BasedOn="{StaticResource Win11.DataGridCellStyle}"/>
+    <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource Win11.DataGridRowHeaderStyle}"/>
+
+</ResourceDictionary>

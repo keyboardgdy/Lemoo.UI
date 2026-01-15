@@ -1,0 +1,389 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============================================
+         Slider 样式 (Win11)
+         ============================================ -->
+
+    <!-- 水平滑块样式 -->
+    <Style x:Key="Win11.SliderStyle" TargetType="Slider">
+        <Setter Property="Foreground" Value="{DynamicResource AccentPrimaryBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
+        <Setter Property="SelectionEnd" Value="{x:Static sys:Double.NaN}"/>
+        <Setter Property="IsMoveToPointEnabled" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TickBar x:Name="TopTick"
+                                 Visibility="Collapsed"
+                                 Fill="{DynamicResource TextSecondaryBrush}"
+                                 Placement="Top"
+                                 Height="4"
+                                 Grid.Row="0"/>
+                        <Track x:Name="PART_Track" Grid.Row="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge"
+                                             Background="{TemplateBinding Foreground}"
+                                             Height="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Height="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge"
+                                             Background="{TemplateBinding Background}"
+                                             Height="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Height="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb"
+                                       Width="16"
+                                       Height="16"
+                                       Focusable="False">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid>
+                                                <!-- 外圈光晕 -->
+                                                <Ellipse x:Name="outerGlow"
+                                                         Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Opacity="0"
+                                                         Width="24"
+                                                         Height="24"/>
+                                                <!-- 主滑块 -->
+                                                <Ellipse x:Name="mainEllipse"
+                                                         Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Stroke="{DynamicResource InputBorderBrush}"
+                                                         StrokeThickness="1"/>
+                                                <!-- 内圈 -->
+                                                <Ellipse x:Name="innerEllipse"
+                                                         Fill="White"
+                                                         Width="6"
+                                                         Height="6"
+                                                         Opacity="0"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0.2"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsDragging" Value="True">
+                                                    <Setter TargetName="outerGlow" Property="Opacity" Value="0.3"/>
+                                                    <Setter TargetName="innerEllipse" Property="Opacity" Value="1"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                        <TickBar x:Name="BottomTick"
+                                 Visibility="Collapsed"
+                                 Fill="{DynamicResource TextSecondaryBrush}"
+                                 Placement="Bottom"
+                                 Height="4"
+                                 Grid.Row="2"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="TickPlacement" Value="TopLeft">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="BottomRight">
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="Both">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 垂直滑块样式 -->
+    <Style x:Key="Win11.Slider.Vertical" TargetType="Slider" BasedOn="{StaticResource Win11.SliderStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TickBar x:Name="TopTick"
+                                 Visibility="Collapsed"
+                                 Fill="{DynamicResource TextSecondaryBrush}"
+                                 Placement="Left"
+                                 Width="4"
+                                 Grid.Column="0"/>
+                        <Track x:Name="PART_Track" Grid.Column="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge"
+                                             Background="{TemplateBinding Foreground}"
+                                             Width="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Width="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge"
+                                             Background="{TemplateBinding Background}"
+                                             Width="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Width="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Width="16"
+                                       Height="16"
+                                       Focusable="False">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid>
+                                                <Ellipse x:Name="outerGlow"
+                                                         Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Opacity="0"
+                                                         Width="24"
+                                                         Height="24"/>
+                                                <Ellipse x:Name="mainEllipse"
+                                                         Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Stroke="{DynamicResource InputBorderBrush}"
+                                                         StrokeThickness="1"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0.2"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                        <TickBar x:Name="BottomTick"
+                                 Visibility="Collapsed"
+                                 Fill="{DynamicResource TextSecondaryBrush}"
+                                 Placement="Right"
+                                 Width="4"
+                                 Grid.Column="2"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="TickPlacement" Value="TopLeft">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="BottomRight">
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="TickPlacement" Value="Both">
+                            <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 显示工具提示的滑块 -->
+    <Style x:Key="Win11.Slider.WithTooltip" TargetType="Slider" BasedOn="{StaticResource Win11.SliderStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <!-- 工具提示 -->
+                        <Border x:Name="tooltipBorder"
+                                Grid.Row="0"
+                                Background="{DynamicResource NotificationBackgroundBrush}"
+                                BorderBrush="{DynamicResource NotificationBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                Padding="8,4"
+                                HorizontalAlignment="Center"
+                                Visibility="Collapsed"
+                                Margin="0,0,0,8"
+                                Effect="{StaticResource Shadow.Tooltip}">
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value, StringFormat={}{0:F0}}"
+                                       FontSize="{StaticResource FontSize.Small}"
+                                       Foreground="{DynamicResource NotificationForegroundBrush}"/>
+                        </Border>
+                        <Track x:Name="PART_Track" Grid.Row="1">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge"
+                                             Background="{TemplateBinding Foreground}"
+                                             Height="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Height="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge"
+                                             Background="{TemplateBinding Background}"
+                                             Height="4"
+                                             Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    CornerRadius="2"
+                                                    Height="4"/>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Width="16"
+                                       Height="16"
+                                       Focusable="False">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid>
+                                                <Ellipse x:Name="outerGlow"
+                                                         Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Opacity="0"
+                                                         Width="24"
+                                                         Height="24"/>
+                                                <Ellipse Fill="{DynamicResource AccentPrimaryBrush}"
+                                                         Stroke="{DynamicResource InputBorderBrush}"
+                                                         StrokeThickness="1"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0.2"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="outerGlow"
+                                                                               Storyboard.TargetProperty="Opacity"
+                                                                               To="0"
+                                                                               Duration="{StaticResource AnimationDuration.Fast}"
+                                                                               EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsDragging" Value="True">
+                                                    <Setter TargetName="outerGlow" Property="Opacity" Value="0.3"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="tooltipBorder" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

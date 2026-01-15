@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 深海幽蓝主题入口 -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/DeepOcean/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/DeepOcean/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/DeepOcean/ComponentBrushes.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

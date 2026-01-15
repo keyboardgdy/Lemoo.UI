@@ -1,0 +1,85 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ============================================
+         玫瑰石英主题语义化令牌
+         Rose Quartz Theme - Semantic Tokens
+         ============================================ -->
+
+    <!-- 背景色令牌 -->
+    <Color x:Key="Semantic.Background.Base">#1A1520</Color>
+    <Color x:Key="Semantic.Background.Layer1">#2A2232</Color>
+    <Color x:Key="Semantic.Background.Layer2">#342A3E</Color>
+    <Color x:Key="Semantic.Background.Layer3">#3E324A</Color>
+    <Color x:Key="Semantic.Background.Layer4">#4A3C56</Color>
+    <Color x:Key="Semantic.Background.Layer5">#5A4666</Color>
+
+    <!-- 表面色令牌 -->
+    <Color x:Key="Semantic.Surface.Default">#2A2232</Color>
+    <Color x:Key="Semantic.Surface.Hover">#342A3E</Color>
+    <Color x:Key="Semantic.Surface.Pressed">#3E324A</Color>
+    <Color x:Key="Semantic.Surface.Selected">#E8B4BC</Color>
+    <Color x:Key="Semantic.Surface.Disabled">#1F1828</Color>
+
+    <!-- 强调色令牌 -->
+    <Color x:Key="Semantic.Accent.Default">#E8B4BC</Color>
+    <Color x:Key="Semantic.Accent.Hover">#F0C4CC</Color>
+    <Color x:Key="Semantic.Accent.Pressed">#D09A9C</Color>
+    <Color x:Key="Semantic.Accent.Selected">#C9A2CA</Color>
+    <Color x:Key="Semantic.Accent.Disabled">#4A3C56</Color>
+    <Color x:Key="Semantic.Accent.Contrast">#1A1520</Color>
+
+    <!-- 文本色令牌 -->
+    <Color x:Key="Semantic.Text.Primary">#F5E6E8</Color>
+    <Color x:Key="Semantic.Text.Secondary">#E0D0D8</Color>
+    <Color x:Key="Semantic.Text.Tertiary">#9A8A98</Color>
+    <Color x:Key="Semantic.Text.Disabled">#5A4A58</Color>
+    <Color x:Key="Semantic.Text.Inverse">#FFFFFF</Color>
+    <Color x:Key="Semantic.Text.OnAccent">#1A1520</Color>
+
+    <!-- 边框色令牌 -->
+    <Color x:Key="Semantic.Border.Default">#3A3248</Color>
+    <Color x:Key="Semantic.Border.Hover">#E8B4BC</Color>
+    <Color x:Key="Semantic.Border.Pressed">#E8B4BC</Color>
+    <Color x:Key="Semantic.Border.Focus">#E8B4BC</Color>
+    <Color x:Key="Semantic.Border.Disabled">#2A2232</Color>
+
+    <!-- 分隔符令牌 -->
+    <Color x:Key="Semantic.Divider.Default">#3A3248</Color>
+    <Color x:Key="Semantic.Divider.Thick">#4A3C56</Color>
+
+    <!-- 状态色令牌 -->
+    <Color x:Key="Semantic.State.Hover">#342A3E</Color>
+    <Color x:Key="Semantic.State.Pressed">#3E324A</Color>
+    <Color x:Key="Semantic.State.Selected">#E8B4BC</Color>
+    <Color x:Key="Semantic.State.Disabled">#2A2232</Color>
+    <Color x:Key="Semantic.State.Indeterminate">#6A5A78</Color>
+
+    <!-- 成功色令牌 -->
+    <Color x:Key="Semantic.Success.Default">#B8D4B8</Color>
+    <Color x:Key="Semantic.Success.Hover">#C8E4C8</Color>
+    <Color x:Key="Semantic.Success.Pressed">#A8C4A8</Color>
+    <Color x:Key="Semantic.Success.Disabled">#3A4A3A</Color>
+
+    <!-- 警告色令牌 -->
+    <Color x:Key="Semantic.Warning.Default">#F0D8A8</Color>
+    <Color x:Key="Semantic.Warning.Hover">#FFE8B8</Color>
+    <Color x:Key="Semantic.Warning.Pressed">#E0C898</Color>
+    <Color x:Key="Semantic.Warning.Disabled">#4A3A2A</Color>
+
+    <!-- 错误色令牌 -->
+    <Color x:Key="Semantic.Error.Default">#E8A8A8</Color>
+    <Color x:Key="Semantic.Error.Hover">#F8B8B8</Color>
+    <Color x:Key="Semantic.Error.Pressed">#D89898</Color>
+    <Color x:Key="Semantic.Error.Disabled">#4A2A2A</Color>
+
+    <!-- 信息色令牌 -->
+    <Color x:Key="Semantic.Info.Default">#B8C8E8</Color>
+    <Color x:Key="Semantic.Info.Hover">#C8D8F8</Color>
+    <Color x:Key="Semantic.Info.Pressed">#A8B8D8</Color>
+    <Color x:Key="Semantic.Info.Disabled">#2A3A4A</Color>
+
+    <!-- 阴影令牌 -->
+    <Color x:Key="Semantic.Shadow.Base">#000000</Color>
+
+</ResourceDictionary>

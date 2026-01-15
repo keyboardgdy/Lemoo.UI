@@ -1,0 +1,323 @@
+<Page x:Class="Lemoo.UI.WPF.Views.Pages.ToolboxSamplePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:ui="clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI"
+      xmlns:toolbox="clr-namespace:Lemoo.UI.Controls.Toolbox;assembly=Lemoo.UI"
+      xmlns:models="clr-namespace:Lemoo.UI.Models;assembly=Lemoo.UI"
+      xmlns:converters="clr-namespace:Lemoo.UI.Converters;assembly=Lemoo.UI"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="Transparent"
+      Loaded="OnLoaded">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <!-- 样式变体项模板 -->
+            <DataTemplate x:Key="StyleVariantTemplate" DataType="{x:Type models:ControlStyleVariant}">
+                <Border Background="{DynamicResource InputBackgroundBrush}"
+                        BorderBrush="{DynamicResource InputBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="12,8"
+                        Margin="0,0,0,8"
+                        Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick"
+                                    Command="{Binding DataContext.SelectStyleVariantCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                    CommandParameter="{Binding}" />
+                    </Border.InputBindings>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CardHoverBackgroundBrush}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- 单选按钮 -->
+                        <RadioButton Grid.Column="0"
+                                    GroupName="StyleVariantGroup"
+                                    Margin="0,0,12,0"
+                                    VerticalAlignment="Center">
+                            <RadioButton.CommandParameter>
+                                <Binding />
+                            </RadioButton.CommandParameter>
+                            <RadioButton.Command>
+                                <Binding Path="DataContext.SelectStyleVariantCommand" RelativeSource="{RelativeSource AncestorType=Page}" />
+                            </RadioButton.Command>
+                        </RadioButton>
+
+                        <!-- 样式变体信息 -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding DisplayName}"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock Text="{Binding StyleKey}"
+                                       FontSize="11"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                       FontFamily="Consolas"
+                                       Margin="0,2,0,0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Margin="24">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="16" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧：工具箱控件 -->
+        <Border Grid.Column="0"
+                Background="{DynamicResource WorkbenchSurfaceBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <toolbox:ToolboxView x:Name="ToolboxViewControl" />
+        </Border>
+
+        <!-- 右侧：控件详情 -->
+        <Border Grid.Column="2"
+                Background="{DynamicResource WorkbenchSurfaceBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="16">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedControl}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <!-- 控件标题 -->
+                    <TextBlock Text="{Binding SelectedControl.DisplayName}"
+                               FontSize="24"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource InputForegroundBrush}"
+                               Margin="0,0,0,8" />
+
+                    <!-- 控件描述 -->
+                    <TextBlock Text="{Binding SelectedControl.Description}"
+                               FontSize="14"
+                               Foreground="{DynamicResource InputForegroundBrush}"
+                               Opacity="0.7"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,24" />
+
+                    <!-- 分类信息 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12"
+                            Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="分类信息"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                       Opacity="0.6"
+                                       Margin="0,0,0,8" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text="控件名称:"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}"
+                                           Margin="0,0,0,4" />
+                                <TextBlock Grid.Row="0" Grid.Column="1"
+                                           Text="{Binding SelectedControl.Name}"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}"
+                                           FontFamily="Consolas"
+                                           Margin="0,0,0,4" />
+
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                                           Text="分类:"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}"
+                                           Margin="0,0,0,4" />
+                                <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding SelectedControl.Category, Converter={StaticResource CategoryToDisplayNameConverter}}"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}"
+                                           Margin="0,0,0,4" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                                           Text="类型:"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}" />
+                                <TextBlock Grid.Row="2" Grid.Column="1"
+                                           Text="{Binding SelectedControl.Type, Converter={StaticResource EnumToStringConverter}}"
+                                           FontSize="13"
+                                           Foreground="{DynamicResource InputForegroundBrush}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 控件预览 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12"
+                            Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="控件预览"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                       Opacity="0.6"
+                                       Margin="0,0,0,8" />
+
+                            <Border Background="{DynamicResource EditorBackgroundBrush}"
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="16"
+                                    MinHeight="80">
+                                <ContentControl Content="{Binding PreviewControl}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 样式变体 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12"
+                            Margin="0,0,0,16">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StyleVariants.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <StackPanel>
+                            <TextBlock Text="样式变体"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                       Opacity="0.6"
+                                       Margin="0,0,0,8" />
+
+                            <ItemsControl ItemsSource="{Binding StyleVariants}"
+                                          ItemTemplate="{StaticResource StyleVariantTemplate}" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 示例代码 -->
+                    <Border Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,8">
+                                <TextBlock Text="示例代码"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="{DynamicResource InputForegroundBrush}"
+                                           Opacity="0.6"
+                                           VerticalAlignment="Center" />
+
+                                <Button Content="复制"
+                                        Command="{Binding CopySampleCodeCommand}"
+                                        Style="{StaticResource Win11.Button.Ghost}"
+                                        Padding="8,4"
+                                        HorizontalAlignment="Right"
+                                        FontSize="11" />
+                            </Grid>
+
+                            <Border Background="{DynamicResource EditorBackgroundBrush}"
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Padding="12">
+                                <TextBlock Text="{Binding SampleCode}"
+                                           FontFamily="Consolas"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource TextPrimaryBrush}"
+                                           TextWrapping="Wrap" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 未选中状态提示 -->
+        <Border Grid.Column="2"
+                Background="{DynamicResource WorkbenchSurfaceBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="24">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Hidden" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedControl}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path Width="64"
+                      Height="64"
+                      Stretch="Uniform"
+                      Fill="{DynamicResource TextSecondaryBrush}"
+                      Opacity="0.3"
+                      Data="M19 13H5v-2h14v2z" />
+                <TextBlock Text="从工具箱中选择一个控件查看详细信息"
+                           FontSize="14"
+                           Foreground="{DynamicResource InputForegroundBrush}"
+                           Opacity="0.6"
+                           TextAlignment="Center"
+                           Margin="0,16,0,0" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

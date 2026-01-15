@@ -37,9 +37,10 @@ public class ResilienceStrategy : IResilienceStrategy
         Func<Task> action,
         CancellationToken cancellationToken = default)
     {
-        await _circuitBreaker.ExecuteAsync(async () =>
+        await _circuitBreaker.ExecuteAsync<bool>(async () =>
         {
             await _retryPolicy.ExecuteAsync(action, cancellationToken);
+            return true;
         }, cancellationToken);
     }
 }

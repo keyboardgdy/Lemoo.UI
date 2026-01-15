@@ -137,4 +137,21 @@
     <!-- 阴影（Shadow） -->
     <Color x:Key="shadow.color">#000000</Color>
 
+    <!-- 语义颜色（Semantic） -->
+    <Color x:Key="semantic.success.background">#0E632C</Color>
+    <Color x:Key="semantic.success.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.success.border">#0B4D21</Color>
+
+    <Color x:Key="semantic.warning.background">#797710</Color>
+    <Color x:Key="semantic.warning.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.warning.border">#5C5B0C</Color>
+
+    <Color x:Key="semantic.error.background">#A1260D</Color>
+    <Color x:Key="semantic.error.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.error.border">#801D09</Color>
+
+    <Color x:Key="semantic.info.background">#004275</Color>
+    <Color x:Key="semantic.info.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.info.border">#003359</Color>
+
 </ResourceDictionary>

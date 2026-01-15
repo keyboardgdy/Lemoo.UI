@@ -99,7 +99,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Add include expression
     /// </summary>
-    protected void AddInclude(Expression<Func<T, object>> includeExpression)
+    public void AddInclude(Expression<Func<T, object>> includeExpression)
     {
         Includes.Add(includeExpression);
     }
@@ -107,7 +107,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Add include string for complex navigation
     /// </summary>
-    protected void AddInclude(string includeString)
+    public void AddInclude(string includeString)
     {
         IncludeStrings.Add(includeString);
     }
@@ -115,7 +115,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Apply ordering
     /// </summary>
-    protected void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
+    public void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)
     {
         OrderBy = orderByExpression;
     }
@@ -123,7 +123,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Apply ordering descending
     /// </summary>
-    protected void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+    public void ApplyOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
     {
         OrderByDescending = orderByDescendingExpression;
     }
@@ -131,7 +131,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Apply grouping
     /// </summary>
-    protected void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
+    public void ApplyGroupBy(Expression<Func<T, object>> groupByExpression)
     {
         GroupBy = groupByExpression;
     }
@@ -139,7 +139,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Apply paging
     /// </summary>
-    protected void ApplyPaging(int skip, int take)
+    public void ApplyPaging(int skip, int take)
     {
         Skip = skip;
         Take = take;
@@ -149,7 +149,7 @@ public abstract class Specification<T> : ISpecification<T>
     /// <summary>
     /// Apply distinct
     /// </summary>
-    protected void ApplyDistinct()
+    public void ApplyDistinct()
     {
         IsDistinct = true;
     }
@@ -192,6 +192,20 @@ public static class ExpressionExtensions
 
         return Expression.Lambda<Func<T, bool>>(
             Expression.OrElse(left, right), parameter);
+    }
+
+    /// <summary>
+    /// Negates an expression
+    /// </summary>
+    public static Expression<Func<T, bool>> Not<T>(this Expression<Func<T, bool>> expression)
+    {
+        var parameter = Expression.Parameter(typeof(T));
+
+        var visitor = new ReplaceExpressionVisitor(expression.Parameters[0], parameter);
+        var body = visitor.Visit(expression.Body);
+
+        return Expression.Lambda<Func<T, bool>>(
+            Expression.Not(body!), parameter);
     }
 
     private class ReplaceExpressionVisitor : ExpressionVisitor

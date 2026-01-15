@@ -101,6 +101,9 @@
     <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource card.border}"/>
     <SolidColorBrush x:Key="CardHoverBackgroundBrush" Color="{StaticResource card.hoverBackground}"/>
 
+    <!-- 编辑器画刷 -->
+    <SolidColorBrush x:Key="EditorBackgroundBrush" Color="{StaticResource input.background}"/>
+
     <!-- 列表项画刷 -->
     <SolidColorBrush x:Key="ListItemBackgroundBrush" Color="{StaticResource listItem.background}"/>
     <SolidColorBrush x:Key="ListItemHoverBackgroundBrush" Color="{StaticResource listItem.hoverBackground}"/>
@@ -144,6 +147,48 @@
     <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource Palette.Accent.Hover}"/>
     <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource Palette.Accent.Pressed}"/>
 
+    <!-- 语义颜色画刷 -->
+    <SolidColorBrush x:Key="Brush.Semantic.Success.Background" Color="{StaticResource semantic.success.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Success.Foreground" Color="{StaticResource semantic.success.foreground}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Success.Border" Color="{StaticResource semantic.success.border}"/>
+
+    <SolidColorBrush x:Key="Brush.Semantic.Warning.Background" Color="{StaticResource semantic.warning.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Warning.Foreground" Color="{StaticResource semantic.warning.foreground}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Warning.Border" Color="{StaticResource semantic.warning.border}"/>
+
+    <SolidColorBrush x:Key="Brush.Semantic.Error.Background" Color="{StaticResource semantic.error.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Error.Foreground" Color="{StaticResource semantic.error.foreground}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Error.Border" Color="{StaticResource semantic.error.border}"/>
+
+    <SolidColorBrush x:Key="Brush.Semantic.Info.Background" Color="{StaticResource semantic.info.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Info.Foreground" Color="{StaticResource semantic.info.foreground}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Info.Border" Color="{StaticResource semantic.info.border}"/>
+
+    <!-- 语义颜色画刷（简化名称，用于 Badge 等控件） -->
+    <SolidColorBrush x:Key="Brush.Semantic.Error" Color="{StaticResource semantic.error.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Success" Color="{StaticResource semantic.success.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Warning" Color="{StaticResource semantic.warning.background}"/>
+    <SolidColorBrush x:Key="Brush.Semantic.Info" Color="{StaticResource semantic.info.background}"/>
+    <SolidColorBrush x:Key="Brush.Primary" Color="{StaticResource Palette.Accent.Primary}"/>
+
+    <!-- 按钮画刷（兼容性） -->
+    <SolidColorBrush x:Key="Brush.Button.Background" Color="{StaticResource button.background}"/>
+    <SolidColorBrush x:Key="Brush.Button.Foreground" Color="{StaticResource button.foreground}"/>
+    <SolidColorBrush x:Key="Brush.Button.Border" Color="{StaticResource button.border}"/>
+    <SolidColorBrush x:Key="Brush.Button.HoverBackground" Color="{StaticResource button.hoverBackground}"/>
+    <SolidColorBrush x:Key="Brush.Button.HoverBorder" Color="{StaticResource input.focusBorder}"/>
+    <SolidColorBrush x:Key="Brush.Button.PressedBackground" Color="{StaticResource button.pressedBackground}"/>
+    <SolidColorBrush x:Key="Brush.Button.PressedBorder" Color="{StaticResource input.focusBorder}"/>
+    <SolidColorBrush x:Key="Brush.Button.FocusBorder" Color="{StaticResource border.focus}"/>
+
+    <!-- 文本框画刷（兼容性） -->
+    <SolidColorBrush x:Key="Brush.TextBox.Background" Color="{StaticResource input.background}"/>
+    <SolidColorBrush x:Key="Brush.TextBox.Foreground" Color="{StaticResource input.foreground}"/>
+    <SolidColorBrush x:Key="Brush.TextBox.Border" Color="{StaticResource input.border}"/>
+    <SolidColorBrush x:Key="Brush.TextBox.HoverBorder" Color="{StaticResource input.focusBorder}"/>
+    <SolidColorBrush x:Key="Brush.TextBox.FocusBorder" Color="{StaticResource input.focusBorder}"/>
+    <SolidColorBrush x:Key="Brush.TextBox.Caret" Color="{StaticResource text.primary}"/>
+
     <!-- 简化名称画刷（兼容性） -->
     <SolidColorBrush x:Key="Brush.WorkbenchBackground" Color="{StaticResource workbench.background}"/>
     <SolidColorBrush x:Key="Brush.Card.Background" Color="{StaticResource card.background}"/>
@@ -170,6 +215,14 @@
     <SolidColorBrush x:Key="Brush.Border.Focus" Color="{StaticResource border.focus}"/>
     <SolidColorBrush x:Key="Brush.Separator" Color="{StaticResource separator}"/>
     <SolidColorBrush x:Key="Brush.Shadow" Color="{StaticResource shadow.color}"/>
+
+    <!-- 额外画刷（用于新增控件） -->
+    <SolidColorBrush x:Key="StatusBarBorderBrush" Color="{StaticResource sidebar.border}"/>
+    <SolidColorBrush x:Key="AccentPrimaryForegroundBrush" Color="{StaticResource text.onDark}"/>
+    <SolidColorBrush x:Key="SemanticErrorBrush" Color="{StaticResource semantic.error.background}"/>
+    <SolidColorBrush x:Key="SemanticSuccessBrush" Color="{StaticResource semantic.success.background}"/>
+    <SolidColorBrush x:Key="SemanticWarningBrush" Color="{StaticResource semantic.warning.background}"/>
+    <SolidColorBrush x:Key="SemanticInfoBrush" Color="{StaticResource semantic.info.background}"/>
 
 </ResourceDictionary>
 

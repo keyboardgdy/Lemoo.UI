@@ -2,7 +2,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:Lemoo.UI.Controls"
+    xmlns:conv="clr-namespace:Lemoo.UI.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <conv:StringFormatConverter x:Key="StringFormatConverter"/>
 
     <!-- Badge 默认样式 -->
     <Style TargetType="{x:Type ui:Badge}" x:Key="{x:Type ui:Badge}">

@@ -80,15 +80,15 @@
                                                     <VisualState x:Name="Checked">
                                                         <Storyboard>
                                                             <!-- 滑块移动到右侧 -->
-                                                            <DoubleAnimation
+                                                            <ThicknessAnimation
                                                                 Storyboard.TargetName="ToggleKnob"
                                                                 Storyboard.TargetProperty="(Ellipse.Margin)"
-                                                                To="3,0,0,0"
+                                                                To="25,0,0,0"
                                                                 Duration="0:0:0.2">
-                                                                <DoubleAnimation.EasingFunction>
+                                                                <ThicknessAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseOut" />
-                                                                </DoubleAnimation.EasingFunction>
-                                                            </DoubleAnimation>
+                                                                </ThicknessAnimation.EasingFunction>
+                                                            </ThicknessAnimation>
                                                             <!-- 更改背景色 -->
                                                             <ObjectAnimationUsingKeyFrames
                                                                 Storyboard.TargetName="ToggleBorder"
@@ -114,15 +114,15 @@
                                                     <VisualState x:Name="Unchecked">
                                                         <Storyboard>
                                                             <!-- 滑块移动到左侧 -->
-                                                            <DoubleAnimation
+                                                            <ThicknessAnimation
                                                                 Storyboard.TargetName="ToggleKnob"
                                                                 Storyboard.TargetProperty="(Ellipse.Margin)"
                                                                 To="3,0,0,0"
                                                                 Duration="0:0:0.2">
-                                                                <DoubleAnimation.EasingFunction>
+                                                                <ThicknessAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseOut" />
-                                                                </DoubleAnimation.EasingFunction>
-                                                            </DoubleAnimation>
+                                                                </ThicknessAnimation.EasingFunction>
+                                                            </ThicknessAnimation>
                                                         </Storyboard>
                                                     </VisualState>
 

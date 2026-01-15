@@ -15,16 +15,23 @@ public class StrategyModuleLoader : IModuleLoader
     private readonly ILogger<StrategyModuleLoader> _logger;
     private readonly IConfiguration _configuration;
     private readonly IEnumerable<IModuleDiscoveryStrategy> _discoveryStrategies;
+    private readonly ModuleVersionCompatibilityChecker _versionChecker;
     private readonly List<IModule> _loadedModules = new();
+
+    public event EventHandler<ModuleLoadingEventArgs>? ModuleLoading;
+    public event EventHandler<ModuleLoadedEventArgs>? ModuleLoaded;
+    public event EventHandler<ModuleUnloadingEventArgs>? ModuleUnloading;
 
     public StrategyModuleLoader(
         ILogger<StrategyModuleLoader> logger,
         IConfiguration configuration,
-        IEnumerable<IModuleDiscoveryStrategy> discoveryStrategies)
+        IEnumerable<IModuleDiscoveryStrategy> discoveryStrategies,
+        ModuleVersionCompatibilityChecker versionChecker)
     {
         _logger = logger;
         _configuration = configuration;
         _discoveryStrategies = discoveryStrategies;
+        _versionChecker = versionChecker;
     }
 
     public async Task<IReadOnlyList<IModule>> LoadModulesAsync(CancellationToken cancellationToken = default)
@@ -142,9 +149,20 @@ public class StrategyModuleLoader : IModuleLoader
 
                     try
                     {
+                        var moduleLoadStopwatch = Stopwatch.StartNew();
+
+                        // 触发加载前事件
+                        ModuleLoading?.Invoke(this, new ModuleLoadingEventArgs(moduleName, assembly.Location));
+
                         var module = (IModule)Activator.CreateInstance(moduleType)!;
                         modules.Add(module);
+
+                        moduleLoadStopwatch.Stop();
+
                         _logger.LogInformation("发现模块: {ModuleName} v{Version}", module.Name, module.Version);
+
+                        // 触发加载后事件
+                        ModuleLoaded?.Invoke(this, new ModuleLoadedEventArgs(moduleName, module, moduleLoadStopwatch.Elapsed));
                     }
                     catch (Exception ex)
                     {
@@ -163,20 +181,25 @@ public class StrategyModuleLoader : IModuleLoader
 
     public void ValidateModuleDependencies(IReadOnlyList<IModule> modules)
     {
-        var moduleNames = modules.Select(m => m.Name).ToHashSet();
+        // 使用版本兼容性检查器进行完整的依赖验证
+        var compatibilityResult = _versionChecker.ValidateCompatibility(modules);
 
-        foreach (var module in modules)
+        if (!compatibilityResult.IsCompatible)
         {
-            foreach (var dependency in module.Dependencies)
-            {
-                if (!moduleNames.Contains(dependency))
-                {
-                    throw new ModuleDependencyException(
-                        module.Name,
-                        $"模块 '{module.Name}' 依赖的模块 '{dependency}' 未找到");
-                }
-            }
+            var errorMessages = compatibilityResult.Errors.Select(e => e.Message).ToList();
+            throw new ModuleDependencyException(
+                "ModuleSystem",
+                $"模块依赖验证失败:\n{string.Join("\n", errorMessages)}");
         }
+
+        // 记录警告（如缺少可选依赖）
+        foreach (var warning in compatibilityResult.Warnings)
+        {
+            _logger.LogWarning("{Message}", warning.Message);
+        }
+
+        _logger.LogInformation("模块依赖验证通过，发现 {WarningCount} 个警告",
+            compatibilityResult.Warnings.Count);
     }
 
     private IReadOnlyList<IModule> SortModulesByDependencies(IReadOnlyList<IModule> modules)
@@ -195,11 +218,20 @@ public class StrategyModuleLoader : IModuleLoader
 
             visiting.Add(module.Name);
 
+            // 处理旧版本的依赖
             foreach (var depName in module.Dependencies)
             {
                 var dep = modules.FirstOrDefault(m => m.Name == depName);
                 if (dep != null)
                     Visit(dep);
+            }
+
+            // 处理新版本的依赖
+            foreach (var dep in module.DependencyModules)
+            {
+                var depModule = modules.FirstOrDefault(m => m.Name == dep.ModuleName);
+                if (depModule != null)
+                    Visit(depModule);
             }
 
             visiting.Remove(module.Name);
@@ -220,4 +252,43 @@ public class StrategyModuleLoader : IModuleLoader
 
     public IModule? GetModule(string moduleName) =>
         _loadedModules.FirstOrDefault(m => m.Name == moduleName);
+
+    public Task<bool> UnloadModuleAsync(string moduleName, TimeSpan timeout = default)
+    {
+        var module = _loadedModules.FirstOrDefault(m => m.Name == moduleName);
+        if (module == null)
+        {
+            _logger.LogWarning("无法卸载不存在的模块: {ModuleName}", moduleName);
+            return Task.FromResult(false);
+        }
+
+        // 触发卸载前事件
+        ModuleUnloading?.Invoke(this, new ModuleUnloadingEventArgs(moduleName));
+
+        _loadedModules.Remove(module);
+        _logger.LogInformation("已卸载模块: {ModuleName}", moduleName);
+        return Task.FromResult(true);
+    }
+
+    public Task UnloadAllModulesAsync(TimeSpan timeout = default)
+    {
+        var count = _loadedModules.Count;
+        _loadedModules.Clear();
+        _logger.LogInformation("已卸载所有模块，数量: {Count}", count);
+        return Task.CompletedTask;
+    }
+
+    public async Task<IModule?> ReloadModuleAsync(string moduleName, CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("开始重新加载模块: {ModuleName}", moduleName);
+
+        // 1. 先卸载模块
+        await UnloadModuleAsync(moduleName, TimeSpan.FromSeconds(30));
+
+        // 2. 重新加载所有模块
+        await LoadModulesAsync(cancellationToken);
+
+        // 3. 返回重新加载的模块
+        return GetModule(moduleName);
+    }
 }

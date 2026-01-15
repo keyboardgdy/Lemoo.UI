@@ -1,5 +1,6 @@
 using Lemoo.Core.Abstractions.Domain;
 using Lemoo.Core.Abstractions.Persistence;
+using Lemoo.Core.Abstractions.Specifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Linq.Expressions;
@@ -18,12 +19,22 @@ public class ReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity, TK
     protected readonly DbContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
     protected readonly ILogger<ReadOnlyRepository<TEntity, TKey>> Logger;
+    protected readonly ISpecificationEvaluator SpecificationEvaluator;
 
     public ReadOnlyRepository(DbContext dbContext, ILogger<ReadOnlyRepository<TEntity, TKey>> logger)
+        : this(dbContext, logger, Lemoo.Core.Abstractions.Specifications.SpecificationEvaluator.Instance)
+    {
+    }
+
+    public ReadOnlyRepository(
+        DbContext dbContext,
+        ILogger<ReadOnlyRepository<TEntity, TKey>> logger,
+        ISpecificationEvaluator specificationEvaluator)
     {
         DbContext = dbContext;
         DbSet = dbContext.Set<TEntity>();
         Logger = logger;
+        SpecificationEvaluator = specificationEvaluator;
     }
 
     public virtual async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
@@ -77,6 +88,75 @@ public class ReadOnlyRepository<TEntity, TKey> : IReadOnlyRepository<TEntity, TK
         CancellationToken cancellationToken = default)
     {
         return await DbSet.AsNoTracking().Where(predicate).ToListAsync(cancellationToken);
+    }
+
+    // Specification pattern support
+    public virtual async Task<IEnumerable<TEntity>> GetAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<TEntity?> FirstOrDefaultAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public virtual async Task<int> CountAsync(
+        ISpecification<TEntity> specification,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        return await query.CountAsync(cancellationToken);
+    }
+
+    public virtual async Task<IReadOnlyList<TEntity>> GetByIdsAsync(
+        IEnumerable<TKey> ids,
+        CancellationToken cancellationToken = default)
+    {
+        var idList = ids.ToList();
+        return await DbSet.Where(e => idList.Contains(e.Id))
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<PagedResult<TEntity>> GetPagedAsync(
+        PagedRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var totalCount = await DbSet.CountAsync(cancellationToken);
+        var items = await DbSet
+            .Skip(request.Skip)
+            .Take(request.Take)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<TEntity>(items, totalCount, request.Skip, request.Take);
+    }
+
+    public virtual async Task<PagedResult<TEntity>> GetPagedAsync(
+        ISpecification<TEntity> specification,
+        PagedRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var query = ApplySpecification(specification);
+        var totalCount = await query.CountAsync(cancellationToken);
+        var items = await query
+            .Skip(request.Skip)
+            .Take(request.Take)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResult<TEntity>(items, totalCount, request.Skip, request.Take);
+    }
+
+    protected virtual IQueryable<TEntity> ApplySpecification(ISpecification<TEntity> specification)
+    {
+        return SpecificationEvaluator.GetQuery(DbSet.AsNoTracking(), specification);
     }
 }
 

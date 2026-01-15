@@ -9,17 +9,17 @@ namespace Lemoo.Core.Domain.Entities;
 public abstract class EntityBase<TKey> : IEntity<TKey>
     where TKey : notnull
 {
-    public TKey Id { get; protected set; } = default!;
+    public TKey Id { get; internal set; } = default!;
 
     /// <summary>
     /// Concurrency token for optimistic concurrency control
     /// </summary>
-    public byte[] RowVersion { get; protected set; } = Array.Empty<byte>();
+    public byte[] RowVersion { get; internal set; } = Array.Empty<byte>();
 
-    public DateTime CreatedAt { get; protected set; }
-    public DateTime? UpdatedAt { get; protected set; }
-    public string CreatedBy { get; protected set; } = string.Empty;
-    public string? UpdatedBy { get; protected set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
+    public string CreatedBy { get; set; } = string.Empty;
+    public string? UpdatedBy { get; set; }
 
     public override bool Equals(object? obj)
     {

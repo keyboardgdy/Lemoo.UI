@@ -2,7 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:Lemoo.UI.Controls"
+    xmlns:conv="clr-namespace:Lemoo.UI.Converters"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <conv:ArcSegmentConverter x:Key="ArcSegmentConverter"/>
+    <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
 
     <!-- ProgressRing 默认样式 -->
     <Style TargetType="{x:Type ui:ProgressRing}" x:Key="{x:Type ui:ProgressRing}">

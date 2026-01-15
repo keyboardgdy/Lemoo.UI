@@ -1,0 +1,182 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ============================================
+         ToolTip 样式 (Win11)
+         ============================================ -->
+
+    <!-- 基础 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTipStyle" TargetType="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource NotificationForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Small}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="MaxWidth" Value="400"/>
+        <Setter Property="HasDropShadow" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border x:Name="root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            Effect="{StaticResource Shadow.Tooltip}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="True">
+                            <Setter TargetName="root" Property="Effect" Value="{StaticResource Shadow.Tooltip}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 带图标的 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTip.WithIcon" TargetType="ToolTip">
+        <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource NotificationForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Small}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily.Default}"/>
+        <Setter Property="MaxWidth" Value="400"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToolTip">
+                    <Border x:Name="root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                            Effect="{StaticResource Shadow.Tooltip}"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- 图标区域 -->
+                            <ContentPresenter x:Name="iconPresenter"
+                                            Grid.Column="0"
+                                            Content="{TemplateBinding Tag}"
+                                            Margin="0,0,8,0"
+                                            VerticalAlignment="Top"/>
+                            <!-- 内容区域 -->
+                            <ContentPresenter Grid.Column="1"
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 信息 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTip.Info" TargetType="ToolTip" BasedOn="{StaticResource Win11.ToolTip.WithIcon}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Semantic.Info.Border}"/>
+        <Setter Property="Tag">
+            <Setter.Value>
+                <Grid Width="16" Height="16">
+                    <Path Data="M 8 2 A 6 6 0 1 0 8 14 A 6 6 0 1 0 8 2"
+                          Fill="{DynamicResource Brush.Semantic.Info.Background}"
+                          Stroke="{DynamicResource Brush.Semantic.Info.Border}"
+                          StrokeThickness="1"/>
+                    <Path Data="M 8 6 L 8 10 M 8 11 L 8 12"
+                          Stroke="{DynamicResource Brush.Semantic.Info.Border}"
+                          StrokeThickness="1.5"
+                          StrokeEndLineCap="Round"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 警告 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTip.Warning" TargetType="ToolTip" BasedOn="{StaticResource Win11.ToolTip.WithIcon}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Semantic.Warning.Border}"/>
+        <Setter Property="Tag">
+            <Setter.Value>
+                <Grid Width="16" Height="16">
+                    <Path Data="M 8 2 L 14 13 L 2 13 Z"
+                          Fill="{DynamicResource Brush.Semantic.Warning.Background}"
+                          Stroke="{DynamicResource Brush.Semantic.Warning.Border}"
+                          StrokeThickness="1"
+                          StrokeLineJoin="Round"/>
+                    <Path Data="M 8 5 L 8 9 M 8 10 L 8 11"
+                          Stroke="{DynamicResource Brush.Semantic.Warning.Border}"
+                          StrokeThickness="1.5"
+                          StrokeEndLineCap="Round"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 错误 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTip.Error" TargetType="ToolTip" BasedOn="{StaticResource Win11.ToolTip.WithIcon}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Semantic.Error.Border}"/>
+        <Setter Property="Tag">
+            <Setter.Value>
+                <Grid Width="16" Height="16">
+                    <Path Data="M 8 2 A 6 6 0 1 0 8 14 A 6 6 0 1 0 8 2"
+                          Fill="{DynamicResource Brush.Semantic.Error.Background}"
+                          Stroke="{DynamicResource Brush.Semantic.Error.Border}"
+                          StrokeThickness="1"/>
+                    <Path Data="M 6 6 L 10 10 M 10 6 L 6 10"
+                          Stroke="{DynamicResource Brush.Semantic.Error.Border}"
+                          StrokeThickness="1.5"
+                          StrokeEndLineCap="Round"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 成功 ToolTip 样式 -->
+    <Style x:Key="Win11.ToolTip.Success" TargetType="ToolTip" BasedOn="{StaticResource Win11.ToolTip.WithIcon}">
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Semantic.Success.Border}"/>
+        <Setter Property="Tag">
+            <Setter.Value>
+                <Grid Width="16" Height="16">
+                    <Path Data="M 8 2 A 6 6 0 1 0 8 14 A 6 6 0 1 0 8 2"
+                          Fill="{DynamicResource Brush.Semantic.Success.Background}"
+                          Stroke="{DynamicResource Brush.Semantic.Success.Border}"
+                          StrokeThickness="1"/>
+                    <Path Data="M 5 8 L 7 10 L 11 6"
+                          Stroke="{DynamicResource Brush.Semantic.Success.Border}"
+                          StrokeThickness="1.5"
+                          StrokeEndLineCap="Round"
+                          StrokeStartLineCap="Round"
+                          Fill="None"/>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 大型 ToolTip 样式（用于详细说明） -->
+    <Style x:Key="Win11.ToolTip.Large" TargetType="ToolTip" BasedOn="{StaticResource Win11.ToolTipStyle}">
+        <Setter Property="Padding" Value="16,12"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}"/>
+        <Setter Property="MaxWidth" Value="500"/>
+    </Style>
+
+</ResourceDictionary>

@@ -19,11 +19,16 @@ public class ModuleLoader : IModuleLoader
     private readonly ModuleVersionCompatibilityChecker _versionChecker;
     private bool _disposed;
 
+    public event EventHandler<ModuleLoadingEventArgs>? ModuleLoading;
+    public event EventHandler<ModuleLoadedEventArgs>? ModuleLoaded;
+    public event EventHandler<ModuleUnloadingEventArgs>? ModuleUnloading;
+
     public ModuleLoader(ILogger<ModuleLoader> logger, IConfiguration configuration)
     {
         _logger = logger;
         _configuration = configuration;
-        _versionChecker = new ModuleVersionCompatibilityChecker(logger);
+        _versionChecker = new ModuleVersionCompatibilityChecker(
+            Microsoft.Extensions.Logging.Abstractions.NullLogger<ModuleVersionCompatibilityChecker>.Instance);
     }
     
     public Task<IReadOnlyList<IModule>> LoadModulesAsync(CancellationToken cancellationToken = default)
@@ -293,6 +298,23 @@ public class ModuleLoader : IModuleLoader
 
         _loadedModules.Clear();
         _logger.LogInformation("所有模块已卸载");
+    }
+
+    /// <summary>
+    /// 重新加载指定模块
+    /// </summary>
+    public async Task<IModule?> ReloadModuleAsync(string moduleName, CancellationToken cancellationToken = default)
+    {
+        _logger.LogInformation("开始重新加载模块: {ModuleName}", moduleName);
+
+        // 1. 先卸载模块
+        await UnloadModuleAsync(moduleName, TimeSpan.FromSeconds(30));
+
+        // 2. 重新加载所有模块
+        await LoadModulesAsync(cancellationToken);
+
+        // 3. 返回重新加载的模块
+        return GetModule(moduleName);
     }
 
     /// <summary>

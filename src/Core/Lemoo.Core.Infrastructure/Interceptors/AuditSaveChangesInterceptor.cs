@@ -40,13 +40,13 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
         var currentUserId = GetCurrentUserId();
         var currentTime = DateTime.UtcNow;
 
-        foreach (var entry in context.ChangeTracker.Entries<EntityBase<Guid>>())
+        foreach (var entry in context.ChangeTracker.Entries<Lemoo.Core.Domain.Entities.EntityBase>())
         {
             switch (entry.State)
             {
                 case EntityState.Added:
                     entry.Entity.CreatedAt = currentTime;
-                    entry.Entity.CreatedBy = currentUserId;
+                    entry.Entity.CreatedBy = currentUserId ?? string.Empty;
                     entry.Entity.UpdatedAt = currentTime;
                     entry.Entity.UpdatedBy = currentUserId;
                     break;
@@ -71,7 +71,7 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
                 {
                     case EntityState.Added:
                         auditable.CreatedAt = currentTime;
-                        auditable.CreatedBy = currentUserId;
+                        auditable.CreatedBy = currentUserId ?? string.Empty;
                         auditable.UpdatedAt = currentTime;
                         auditable.UpdatedBy = currentUserId;
                         break;
@@ -87,7 +87,11 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
 
     private string? GetCurrentUserId()
     {
-        return _httpContextAccessor?.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        var user = _httpContextAccessor?.HttpContext?.User;
+        if (user == null) return null;
+
+        var claim = user.FindFirst(ClaimTypes.NameIdentifier);
+        return claim?.Value;
     }
 }
 
@@ -97,7 +101,7 @@ public class AuditSaveChangesInterceptor : SaveChangesInterceptor
 public interface IAuditable
 {
     DateTime CreatedAt { get; set; }
-    string? CreatedBy { get; set; }
-    DateTime UpdatedAt { get; set; }
+    string CreatedBy { get; set; }
+    DateTime? UpdatedAt { get; set; }
     string? UpdatedBy { get; set; }
 }

@@ -1,4 +1,5 @@
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Lemoo.UI.Abstractions;
 using Lemoo.UI.WPF.Abstractions;
 using Lemoo.UI.WPF.Constants;
@@ -17,6 +18,11 @@ namespace Lemoo.UI.WPF;
 public partial class App : Application
 {
     private IServiceProvider? _serviceProvider;
+
+    /// <summary>
+    /// 获取服务提供者（用于依赖注入）
+    /// </summary>
+    public IServiceProvider? Services => _serviceProvider;
 
     /// <summary>
     /// 应用程序启动时调用
@@ -41,8 +47,8 @@ public partial class App : Application
 
         // 注册 ViewModel（使用简化版本，不依赖 MediatR 和 Logger）
         services.AddSingleton<IMainViewModel, MainViewModel>();
-        services.AddTransient<DashboardViewModel>();
         services.AddTransient<SettingsViewModel>();
+        services.AddTransient<ToolboxSampleViewModel>();
 
         // 注册 MainWindow（使用工厂方法以便注入服务）
         services.AddTransient<MainWindow>(provider =>
@@ -52,6 +58,9 @@ public partial class App : Application
 
         // 构建服务提供者
         _serviceProvider = services.BuildServiceProvider();
+
+        // 配置 CommunityToolkit.Mvvm 的 Ioc
+        Ioc.Default.ConfigureServices(_serviceProvider);
 
         // 显示主窗口
         var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
@@ -69,28 +78,31 @@ public partial class App : Application
             disposable.Dispose();
         }
     }
-    
+
     /// <summary>
     /// 注册示例页面（用于UI框架测试，不包含业务模块）
     /// </summary>
     private void RegisterSamplePages(PageRegistryService pageRegistry)
     {
-        pageRegistry.RegisterPage(PageKeys.Dashboard, typeof(Views.Pages.DashboardPage), new NavigationItemMetadata
-        {
-            PageKey = PageKeys.Dashboard,
-            Title = NavigationConstants.MenuText.Dashboard,
-            Icon = NavigationConstants.Icons.Home,
-            Module = "UI.Framework",
-            Order = 1
-        });
-
+        // 设置示例
         pageRegistry.RegisterPage(PageKeys.Settings, typeof(Views.Pages.SettingsSamplePage), new NavigationItemMetadata
         {
             PageKey = PageKeys.Settings,
             Title = NavigationConstants.MenuText.SettingsSample,
             Icon = NavigationConstants.Icons.Settings,
             Module = "UI.Framework",
+            Order = 1
+        });
+
+        // 工具箱示例
+        pageRegistry.RegisterPage(PageKeys.ToolboxSample, typeof(Views.Pages.ToolboxSamplePage), new NavigationItemMetadata
+        {
+            PageKey = PageKeys.ToolboxSample,
+            Title = NavigationConstants.MenuText.ToolboxSample,
+            Icon = NavigationConstants.Icons.Toolbox,
+            Module = "UI.Framework",
             Order = 2
         });
+
     }
 }

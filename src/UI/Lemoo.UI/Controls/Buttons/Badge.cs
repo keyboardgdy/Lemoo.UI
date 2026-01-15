@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Lemoo.UI.Design;
 
 namespace Lemoo.UI.Controls
 {
@@ -28,6 +30,9 @@ namespace Lemoo.UI.Controls
     /// <ui:Badge Content="New" Background="{DynamicResource Brush.Semantic.Success}" />
     /// </code>
     /// </example>
+    [ToolboxItem(true)]
+    [Category(ToolboxCategories.Buttons)]
+    [Description("用于显示通知计数或状态指示的徽章控件")]
     public class Badge : ContentControl
     {
         #region Constructor

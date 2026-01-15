@@ -46,6 +46,7 @@
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Border
+                                            x:Name="HeaderBorder"
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
@@ -123,7 +124,7 @@
                                                     <VisualState x:Name="MouseOver">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="(Border).(Panel.Background)"
+                                                                Storyboard.TargetName="HeaderBorder"
                                                                 Storyboard.TargetProperty="Background"
                                                                 Duration="0">
                                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.ListItem.HoverBackground}" />
@@ -134,7 +135,7 @@
                                                     <VisualState x:Name="Disabled">
                                                         <Storyboard>
                                                             <DoubleAnimation
-                                                                Storyboard.TargetName="(Border)"
+                                                                Storyboard.TargetName="HeaderBorder"
                                                                 Storyboard.TargetProperty="Opacity"
                                                                 To="0.5"
                                                                 Duration="0" />
