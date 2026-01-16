@@ -1,258 +1,274 @@
-# Lemoo - .NET 10 模块化架构框架
+# Lemoo.UI - 现代化 WPF UI 组件库
 
 ## 项目概述
 
-Lemoo 是一个基于 .NET 10 的专业模块化架构框架，采用 DDD（领域驱动设计）、CQRS（命令查询职责分离）和插件式架构设计。
+Lemoo.UI 是一个基于 .NET 10 和 WPF 的现代化 UI 组件库，采用 Fluent Design 设计语言，提供丰富的基础控件、主题系统和图标浏览器，帮助开发者快速构建美观、一致的桌面应用程序。
 
 ## 技术栈
 
 - **.NET 10 (LTS)** - 长期支持版本
 - **C# 13** - 最新语言特性
-- **WPF + CommunityToolkit.Mvvm** - 桌面应用UI框架
-- **Microsoft.Extensions.Hosting** - 应用程序宿主
-- **Microsoft.Extensions.DependencyInjection** - 依赖注入
-- **DDD + CQRS** - 架构模式
-- **MediatR** - 中介者模式实现
-- **EF Core** - 对象关系映射
-- **FluentValidation** - 验证框架
-- **Mapster** - 对象映射（待集成）
-- **Serilog** - 结构化日志
-- **Swagger / OpenAPI** - API文档（API模式）
-
-## 架构设计
-
-### 分层架构
-
-```
-Lemoo/
-├── Lemoo.Bootstrap/              # 启动引导层
-├── Lemoo.Host/                    # 宿主层（WPF应用）
-├── Lemoo.Core/                    # 核心层
-│   ├── Lemoo.Core.Abstractions/   # 核心抽象
-│   ├── Lemoo.Core.Domain/         # 领域核心
-│   ├── Lemoo.Core.Application/    # 应用核心
-│   ├── Lemoo.Core.Infrastructure/ # 基础设施
-│   └── Lemoo.Core.Common/         # 通用能力
-├── Lemoo.Modules/                 # 模块层
-│   ├── Lemoo.Modules.Abstractions/# 模块抽象
-│   └── [业务模块]/                # 业务子域
-├── Lemoo.UI/                      # UI层
-│   ├── Lemoo.UI.WPF/              # WPF应用
-│   └── Lemoo.UI.Shared/           # UI共享组件
-└── Lemoo.Api/                     # API层（Web API）
-```
-
-## 已完成功能
-
-### ✅ 核心抽象层 (Core.Abstractions)
-- CQRS接口（ICommand, IQuery, ICommandHandler, IQueryHandler, IPipelineBehavior）
-- 领域接口（IEntity, IDomainEvent, IDomainEventHandler）
-- 持久化接口（IRepository, IUnitOfWork, IModuleDbContextFactory）
-- 模块接口（IModule, IModuleLoader）
-- 缓存、日志、配置、部署模式接口
-
-### ✅ 核心通用层 (Core.Common)
-- 异常类（BusinessException, ValidationException, NotFoundException等）
-- 扩展方法（StringExtensions, EnumerableExtensions, ServiceCollectionExtensions）
-- 工具类（Guard, DateTimeHelper）
-
-### ✅ 核心领域层 (Core.Domain)
-- EntityBase（实体基类，支持领域事件）
-- ValueObjectBase（值对象基类）
-- DomainEventBase（领域事件基类）
-- AggregateRoot（聚合根基类）
-
-### ✅ 核心应用层 (Core.Application)
-- Result（结果模式）
-- PagedResult（分页结果）
-- ValidationBehavior（验证管道行为）
-- LoggingBehavior（日志管道行为，集成性能指标）
-- CacheBehavior（缓存管道行为，支持 CacheAttribute）
-- TransactionBehavior（事务处理管道行为）
-- CacheAttribute（缓存特性）
-- PerformanceMetrics（性能指标收集器）
-- CommandExtensions / QueryExtensions（命令和查询扩展方法）
-
-### ✅ 基础设施层 (Core.Infrastructure)
-- ModuleLoader（模块加载器，支持依赖管理和拓扑排序）
-- ModuleDbContextFactory（模块数据库上下文工厂）
-- UnitOfWork（工作单元实现，支持事务管理）
-- MemoryCacheService（内存缓存服务）
-- SerilogConfiguration（Serilog日志配置）
-- ConfigurationService（配置服务）
-- DeploymentModeService（部署模式服务）
-
-### ✅ 模块抽象层 (Modules.Abstractions)
-- ModuleBase（模块基类，提供完整的生命周期管理）
-
-### ✅ 启动引导层 (Bootstrap)
-- Bootstrapper（应用程序引导器）
-- 配置验证
-- 环境检测
-- 服务注册扩展
-
-### ✅ 宿主层 (Host)
-- WPF应用程序入口
-- 模块生命周期管理
-- 依赖注入集成
-
-### ✅ 示例模块 (Modules.Example)
-- **Domain层**：ExampleEntity实体、领域事件
-- **Application层**：命令（CreateExampleCommand, UpdateExampleCommand）、查询（GetExampleQuery, GetAllExamplesQuery）、处理器、DTO、验证器
-- **Infrastructure层**：ExampleDbContext、ExampleRepository
-
-### ✅ WPF UI层 (UI.WPF)
-- MainViewModel（使用CommunityToolkit.Mvvm）
-- MainWindow（示例管理界面）
-- 与示例模块集成
-
-### ✅ API层 (Api)
-- ExamplesController（RESTful API，使用BaseController）
-- BaseController（控制器基类，提供通用功能）
-- MetricsController（性能指标API）
-- Swagger/OpenAPI集成
-- 全局异常处理中间件
-- 请求ID追踪中间件
-- 健康检查端点（/health）
-- Result扩展方法（简化API响应处理）
-- 与示例模块集成
-
-### ✅ 测试项目
-- Lemoo.Core.Tests - 核心层单元测试
-- Lemoo.Modules.Example.Tests - 示例模块测试
-- 使用 xUnit、Moq、FluentAssertions
-
-### ✅ 文档
-- 架构文档 (docs/architecture.md)
-- 快速开始指南 (docs/getting-started.md)
-- 模块开发指南 (docs/modules.md)
-- 优化建议文档 (docs/optimization-suggestions.md)
-- 最新优化总结 (docs/latest-optimizations.md)
+- **WPF** - Windows Presentation Foundation
+- **CommunityToolkit.Mvvm** - 轻量级 MVVM 框架
 
 ## 核心特性
 
-### 1. 插件式模块系统
-- 动态模块发现和加载
-- 模块依赖管理和验证
-- 拓扑排序确保正确的加载顺序
-- 循环依赖检测
+### 1. 丰富的控件库
+- 按钮控件（Button、IconButton、CircleButton、HyperlinkButton）
+- 输入控件（TextBox、ComboBox、DatePicker、CheckBox、RadioButton）
+- 容器控件（Card、GroupBox、Expander）
+- 导航控件（TabControl、Breadcrumb、TreeView、MenuItem）
+- 数据展示控件（DataGrid、ListView、Badge）
+- 反馈控件（ProgressBar、ProgressRing、ToolTip、Popup）
+- 其他控件（Image、Separator、ScrollViewer）
 
-### 2. 每个模块独立的数据库上下文
-- 每个模块拥有自己的DbContext
-- 支持多种数据库提供程序（SQL Server, PostgreSQL, SQLite, InMemory）
-- 数据库连接字符串独立配置
+### 2. 主题系统
+- 支持浅色/深色主题切换
+- 多种预设主题色（蓝色、紫色、绿色、橙色、红色、青色）
+- 运行时动态切换主题
 
-### 3. 本地与API模式统一
-- 通过配置切换部署模式
-- 统一的服务接口抽象
-- 支持本地直接调用和HTTP API调用
+### 3. 图标系统
+- 内置丰富的图标库
+- 图标浏览器工具，方便查找和使用图标
+- 图标支持多种尺寸和颜色
 
-### 4. 高可用性
-- 异步处理
-- 错误处理和恢复
-- 日志记录和监控
+### 4. 响应式设计
+- 流式布局
+- 自适应窗口大小
+- 触摸友好
 
-### 5. 模块隔离
-- 独立程序集
-- 独立数据库上下文
-- 接口契约隔离
+## 界面预览
 
-### 6. 性能优化
-- 异步/await模式
-- 缓存支持
-- 数据库连接池
-- 查询优化
+### 主窗口 - 示例展示
+![示例展示](示例图片/屏幕截图%202026-01-16%20150453.png)
 
-### 7. 测试友好
-- 依赖注入便于Mock
-- 接口抽象
-- 清晰的职责分离
+### 图标浏览器
+![图标浏览器](示例图片/屏幕截图%202026-01-16%20150516.png)
 
-## 配置示例
-
-```json
-{
-  "Lemoo": {
-    "Mode": "Local",
-    "Modules": {
-      "Enabled": [ "*" ],
-      "Path": "./Modules"
-    },
-    "Database": {
-      "Provider": "SqlServer",
-      "ConnectionStrings": {
-        "Example": "Server=localhost;Database=Lemoo_Example;..."
-      }
-    }
-  }
-}
-```
-
-## 项目完成度
-
-✅ **100% 完成** - 所有计划的功能已实现
-
-### 已完成功能清单
-
-- ✅ 完整的核心架构层（5个核心项目）
-- ✅ 插件式模块系统
-- ✅ 启动引导层和宿主层
-- ✅ 完整的示例业务模块
-- ✅ WPF用户界面
-- ✅ RESTful API支持
-- ✅ 单元测试项目
-- ✅ 完整文档
-
-### 可选扩展
-
-- [ ] 更多业务模块示例
-- [ ] 集成测试
-- [ ] 性能测试
-- [ ] Docker支持
-- [ ] CI/CD配置
-
-## 构建状态
-
-✅ **解决方案编译成功（0个警告，0个错误）**
-
-所有核心架构层、示例模块、WPF UI层和API层已完整实现并通过编译。
+### 主题切换效果
+![主题切换](示例图片/屏幕截图%202026-01-16%20150608.png)
 
 ## 快速开始
 
 ### 前置要求
 - .NET 10 SDK
-- SQL Server（可选，用于数据库）
+- Windows 10/11 操作系统
+- Visual Studio 2022 或 Rider（推荐）
 
-### 运行WPF应用
+### 运行 Lemoo.UI.WPF 示例程序
+
+#### 方法一：使用 Visual Studio
+1. 打开 `Lemoo.UI.sln` 解决方案
+2. 将 `Lemoo.UI.WPF` 设置为启动项目
+3. 按 `F5` 或点击"开始调试"按钮运行
+
+#### 方法二：使用命令行
 ```bash
-cd src/Lemoo.Host
+# 进入 WPF 项目目录
+cd src/Lemoo.UI.WPF
+
+# 还原依赖
+dotnet restore
+
+# 运行项目
 dotnet run
 ```
 
-### 运行API服务
+#### 方法三：使用 .NET CLI 发布并运行
 ```bash
-cd src/Lemoo.Api
-dotnet run
+# 发布为单文件可执行程序
+cd src/Lemoo.UI.WPF
+dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
+
+# 运行发布后的程序
+.\bin\Release\net10.0-windows\win-x64\publish\Lemoo.UI.WPF.exe
 ```
 
-访问 Swagger UI: `https://localhost:5001/swagger`
+### 在你的项目中使用 Lemoo.UI
 
-### 运行测试
+#### 1. 添加项目引用
+在你的 WPF 项目中引用 Lemoo.UI：
 ```bash
-dotnet test
+dotnet add path/to/Lemoo.UI.csproj
 ```
 
-## 文档
+#### 2. 在 App.xaml 中引入资源字典
+```xml
+<Application x:Class="YourApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- 引入 Lemoo.UI 主题资源 -->
+                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
+```
 
-- [架构文档](./docs/architecture.md) - 详细的架构说明
-- [快速开始指南](./docs/getting-started.md) - 快速上手指南
-- [模块开发指南](./docs/modules.md) - 如何开发新模块
+#### 3. 在窗口中使用控件
+```xml
+<Window x:Class="YourApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lemoo="clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI">
+    <StackPanel Margin="20">
+        <!-- 使用 Lemoo UI 控件 -->
+        <lemoo:Button Content="点击我" />
+        <lemoo:TextBox PlaceholderText="请输入内容..." />
+        <lemoo:Card Header="卡片标题">
+            <TextBlock Text="卡片内容" />
+        </lemoo:Card>
+    </StackPanel>
+</Window>
+```
+
+#### 4. 切换主题
+在代码中动态切换主题：
+```csharp
+using Lemoo.UI.Themes;
+
+// 切换到深色主题
+ThemeManager.Current.ChangeTheme(ThemeMode.Dark);
+
+// 切换主题色
+ThemeManager.Current.ChangeAccentColor(AccentColor.Purple);
+```
+
+或在 XAML 中绑定：
+```xml
+<StackPanel>
+    <Button Content="切换深色模式" Command="{Binding ToggleDarkModeCommand}" />
+    <ComboBox ItemsSource="{Binding AccentColors}"
+              SelectedItem="{Binding SelectedAccentColor}" />
+</StackPanel>
+```
+
+## 控件示例
+
+### 按钮
+```xml
+<StackPanel Orientation="Horizontal" Spacing="10">
+    <lemoo:Button Content="标准按钮" />
+    <lemoo:Button Content="主要按钮" Style="{StaticResource PrimaryButtonStyle}" />
+    <lemoo:IconButton IconKind="Home" />
+    <lemoo:CircleButton IconKind="Settings" />
+</StackPanel>
+```
+
+### 卡片
+```xml
+<lemoo:Card Header="用户信息" Width="300">
+    <StackPanel Spacing="10">
+        <lemoo:TextBox PlaceholderText="用户名" />
+        <lemoo:PasswordBox PlaceholderText="密码" />
+        <lemoo:Button Content="登录" HorizontalAlignment="Stretch" />
+    </StackPanel>
+</lemoo:Card>
+```
+
+### 数据网格
+```xml
+<lemoo:DataGrid ItemsSource="{Binding Users}" AutoGenerateColumns="False">
+    <lemoo:DataGrid.Columns>
+        <lemoo:DataGridTextColumn Header="姓名" Binding="{Binding Name}" />
+        <lemoo:DataGridTextColumn Header="邮箱" Binding="{Binding Email}" />
+        <lemoo:DataGridTemplateColumn Header="操作">
+            <lemoo:DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <lemoo:Button Content="编辑" Command="{Binding EditCommand}" />
+                </DataTemplate>
+            </lemoo:DataGridTemplateColumn.CellTemplate>
+        </lemoo:DataGridTemplateColumn>
+    </lemoo:DataGrid.Columns>
+</lemoo:DataGrid>
+```
+
+## 主题配置
+
+### 预设主题色
+- **Blue** (默认) - 蓝色主题
+- **Purple** - 紫色主题
+- **Green** - 绿色主题
+- **Orange** - 橙色主题
+- **Red** - 红色主题
+- **Cyan** - 青色主题
+
+### 自定义主题色
+```csharp
+// 使用自定义颜色
+ThemeManager.Current.ChangeAccentColor(Color.FromRgb(255, 0, 128));
+```
+
+## 图标使用
+
+### 使用图标浏览器
+1. 运行 Lemoo.UI.WPF 示例程序
+2. 点击"图标浏览器"选项卡
+3. 浏览和搜索可用图标
+4. 点击图标复制名称，在代码中使用
+
+### 在代码中使用图标
+```xml
+<!-- 使用图标按钮 -->
+<lemoo:IconButton IconKind="Home" />
+
+<!-- 在按钮中添加图标 -->
+<lemoo:Button>
+    <StackPanel Orientation="Horizontal">
+        <lemoo:Icon IconKind="Save" Margin="0,0,8,0" />
+        <TextBlock Text="保存" />
+    </StackPanel>
+</lemoo:Button>
+```
+
+## 项目结构
+
+```
+Lemoo.UI/
+├── src/
+│   ├── Lemoo.UI/              # 核心控件库
+│   │   ├── Controls/          # 自定义控件
+│   │   ├── Themes/            # 主题资源
+│   │   ├── Converters/        # 值转换器
+│   │   └── Icons/             # 图标定义
+│   ├── Lemoo.UI.WPF/          # 示例应用程序
+│   └── Lemoo.UI.Core/         # 核心基础类
+└── docs/                      # 文档
+```
+
+## 开发路线图
+
+### 已完成
+- [x] 基础控件库
+- [x] 主题系统
+- [x] 图标系统
+- [x] 图标浏览器
+- [x] 示例程序
+
+### 计划中
+- [ ] 更多高级控件（图表、日历等）
+- [ ] 动画系统增强
+- [ ] 拖放支持
+- [ ] 无障碍功能改进
+- [ ] 完整的文档和示例
+
+## 贡献指南
+
+欢迎贡献代码和建议！请遵循以下步骤：
+
+1. Fork 本项目
+2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 创建 Pull Request
 
 ## 许可证
 
 待定
 
-## 贡献
+## 联系方式
 
-欢迎贡献代码和建议！
-
+如有问题或建议，欢迎提交 Issue。
