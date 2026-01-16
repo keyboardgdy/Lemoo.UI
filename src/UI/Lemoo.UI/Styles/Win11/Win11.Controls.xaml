@@ -8,13 +8,18 @@
          - 各控件样式：Button / TextBox / PasswordBox / CheckBox 等
          ============================================ -->
     <ResourceDictionary.MergedDictionaries>
+        <!-- 转换器（必须首先加载，因为后续样式需要使用） -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Converters/Converters.xaml"/>
+
         <!-- 设计资源 -->
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml"/>
 
-        <!-- 颜色 Token（用于 ColorAnimation 等） -->
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml"/>
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml"/>
+        <!--
+            重要：主题颜色 Token 将由 ThemeManager 动态加载
+            不要在这里静态引用 Base/ColorPalette.xaml 或 Base/SemanticTokens.xaml
+            这样可以确保主题切换时，控件样式能够正确使用新主题的颜色
+        -->
 
         <!-- Win11 控件 Token & 样式 -->
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
@@ -41,6 +46,7 @@
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Slider.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToggleButton.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToolTip.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Icon.xaml"/>
 
         <!-- 新增控件样式 -->
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.AutoCompleteBox.xaml"/>

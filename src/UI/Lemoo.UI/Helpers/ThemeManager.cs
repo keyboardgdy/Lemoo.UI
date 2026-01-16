@@ -392,9 +392,11 @@ public static class ThemeManager
                 System.Diagnostics.Debug.WriteLine("ThemeManager: Resources.MergedDictionaries 为 null");
                 return;
             }
-            
-            // 添加新主题（添加到末尾，确保优先级最高）
-            resourceDict.MergedDictionaries.Add(themeDict);
+
+            // 添加新主题到开头（索引 0），确保后续的样式文件能够找到主题资源
+            // WPF 的资源查找顺序是从后往前，但为了确保 DynamicResource 能正确解析，
+            // 我们需要将主题资源放在 MergedDictionaries 的前面
+            resourceDict.MergedDictionaries.Insert(0, themeDict);
             _currentThemeDictionary = themeDict;
             
             System.Diagnostics.Debug.WriteLine($"ThemeManager: 成功应用主题 {actualTheme}");
@@ -417,7 +419,7 @@ public static class ThemeManager
                         fallbackDict = new ResourceDictionary { Source = BaseThemeUri };
                         _themeCache[Theme.Base] = fallbackDict;
                     }
-                    app.Resources.MergedDictionaries.Add(fallbackDict);
+                    app.Resources.MergedDictionaries.Insert(0, fallbackDict);
                     _currentThemeDictionary = fallbackDict;
                     System.Diagnostics.Debug.WriteLine("ThemeManager: 已回退到 Base 主题");
                     RefreshAllWindowsAsync();
