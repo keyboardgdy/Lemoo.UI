@@ -11,19 +11,19 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 确定性进度 -->
-    /// <ui:ProgressRing Value="50" Maximum="100" />
+    /// &lt;!-- 确定性进度 --&gt;
+    /// &lt;ui:ProgressRing Value="50" Maximum="100" /&gt;
     ///
-    /// <!-- 不确定性进度（加载动画） -->
-    /// <ui:ProgressRing IsIndeterminate="True" />
+    /// &lt;!-- 不确定性进度（加载动画） --&gt;
+    /// &lt;ui:ProgressRing IsIndeterminate="True" /&gt;
     ///
-    /// <!-- 自定义大小 -->
-    /// <ui:ProgressRing Width="100" Height="100" Value="75" />
+    /// &lt;!-- 自定义大小 --&gt;
+    /// &lt;ui:ProgressRing Width="100" Height="100" Value="75" /&gt;
     ///
-    /// <!-- 自定义颜色 -->
-    /// <ui:ProgressRing
+    /// &lt;!-- 自定义颜色 --&gt;
+    /// &lt;ui:ProgressRing
     ///     Value="60"
-    ///     Foreground="{DynamicResource Brush.Primary}" />
+    ///     Foreground="{DynamicResource Brush.Primary}" /&gt;
     /// </code>
     /// </example>
     public class ProgressRing : ProgressBar

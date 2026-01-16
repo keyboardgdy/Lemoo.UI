@@ -104,5 +104,15 @@ public partial class App : Application
             Order = 2
         });
 
+        // 图标浏览器
+        pageRegistry.RegisterPage(PageKeys.IconBrowser, typeof(Views.Pages.IconBrowserPage), new NavigationItemMetadata
+        {
+            PageKey = PageKeys.IconBrowser,
+            Title = NavigationConstants.MenuText.IconBrowser,
+            Icon = NavigationConstants.Icons.IconBrowser,
+            Module = "UI.Framework",
+            Order = 3
+        });
+
     }
 }

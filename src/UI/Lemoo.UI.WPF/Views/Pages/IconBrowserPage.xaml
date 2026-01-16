@@ -1,0 +1,819 @@
+<Page x:Class="Lemoo.UI.WPF.Views.Pages.IconBrowserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:icons="clr-namespace:Lemoo.UI.Controls.Icons;assembly=Lemoo.UI"
+      xmlns:converters="clr-namespace:Lemoo.UI.WPF.Converters"
+      xmlns:viewmodels="clr-namespace:Lemoo.UI.WPF.ViewModels.Pages"
+      xmlns:models="clr-namespace:Lemoo.UI.Models.Icons;assembly=Lemoo.UI"
+      mc:Ignorable="d"
+      d:DesignWidth="1280"
+      d:DesignHeight="720"
+      Background="Transparent">
+
+    <Page.Resources>
+        <!-- 自定义 TextBox 样式，带主题色光标和占位符 -->
+        <Style x:Key="ThemedTextBox" TargetType="TextBox">
+            <Setter Property="CaretBrush" Value="{DynamicResource AccentPrimaryBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <!-- 占位符文本 -->
+                            <TextBlock x:Name="PlaceholderText"
+                                       Text="{TemplateBinding Tag}"
+                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                       Opacity="0.5"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       VerticalAlignment="Center"
+                                       Margin="0"
+                                       Visibility="Collapsed" />
+                            <!-- 内容宿主 -->
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="0"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
+                                          Background="{TemplateBinding Background}"
+                                          BorderThickness="0" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <!-- 当文本为空时显示占位符 -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value="" />
+                                    <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="PlaceholderText" Property="Visibility" Value="Visible" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 图标项样式 -->
+        <Style x:Key="IconItemContainerStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ListBoxItem 样式 - 隐藏默认选中样式 -->
+        <Style x:Key="IconListBoxItemStyle" TargetType="ListBoxItem">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 分类按钮样式 -->
+        <Style x:Key="CategoryButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="Margin" Value="4,4,0,4" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="RootBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Margin}">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource AccentPrimaryBrush}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 尺寸选择按钮样式 -->
+        <Style x:Key="SizeButtonStyle" TargetType="RadioButton">
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12,6" />
+            <Setter Property="Margin" Value="4,0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="RootBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Margin}">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource AccentPrimaryBrush}" />
+                                <Setter TargetName="RootBorder" Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 复制图标按钮样式 -->
+        <Style x:Key="CopyIconButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Width" Value="28" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="RootBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}">
+                            <ContentPresenter x:Name="ContentPresenter"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource InputBorderBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="24,24,24,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0"
+                   Text="图标浏览器"
+                   FontSize="24"
+                   FontWeight="SemiBold"
+                   Foreground="{DynamicResource InputForegroundBrush}"
+                   Margin="0,0,0,16" />
+
+        <!-- 搜索和分类栏 -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource WorkbenchSurfaceBrush}"
+                BorderBrush="{DynamicResource InputBorderBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="8,8,8,8"
+                Margin="0,0,0,16">
+            <Grid MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Border}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- 搜索框和尺寸选择 -->
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 搜索框 -->
+                    <Border Grid.Column="0"
+                            Background="{DynamicResource InputBackgroundBrush}"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            MinWidth="300">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- 搜索图标 -->
+                            <icons:Icon Grid.Column="0"
+                                        IconKind="Search"
+                                        IconSize="Small"
+                                        Foreground="{DynamicResource InputForegroundBrush}"
+                                        Opacity="0.5"
+                                        VerticalAlignment="Center"
+                                        Margin="12,0,8,0" />
+
+                            <!-- 输入框 -->
+                            <TextBox x:Name="SearchTextBox"
+                                     Grid.Column="1"
+                                     Style="{StaticResource ThemedTextBox}"
+                                     Tag="搜索图标..."
+                                     TextChanged="OnSearchTextChanged" />
+                        </Grid>
+                    </Border>
+
+                    <!-- 尺寸选择 -->
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="16,0,0,0">
+                        <TextBlock Text="图标尺寸:"
+                                   Foreground="{DynamicResource InputForegroundBrush}"
+                                   Opacity="0.7"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0" />
+                        <RadioButton Style="{StaticResource SizeButtonStyle}"
+                                     Content="XS"
+                                     GroupName="IconSize"
+                                     Tag="ExtraSmall"
+                                     Checked="OnSizeChecked" />
+                        <RadioButton Style="{StaticResource SizeButtonStyle}"
+                                     Content="S"
+                                     GroupName="IconSize"
+                                     Tag="Small"
+                                     IsChecked="True"
+                                     Checked="OnSizeChecked" />
+                        <RadioButton Style="{StaticResource SizeButtonStyle}"
+                                     Content="M"
+                                     GroupName="IconSize"
+                                     Tag="Normal"
+                                     Checked="OnSizeChecked" />
+                        <RadioButton Style="{StaticResource SizeButtonStyle}"
+                                     Content="L"
+                                     GroupName="IconSize"
+                                     Tag="Medium"
+                                     Checked="OnSizeChecked" />
+                        <RadioButton Style="{StaticResource SizeButtonStyle}"
+                                     Content="XL"
+                                     GroupName="IconSize"
+                                     Tag="Large"
+                                     Checked="OnSizeChecked" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- 分类标签 -->
+                <ScrollViewer Grid.Row="1"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled">
+                    <ItemsControl ItemsSource="{Binding Categories}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type viewmodels:IconCategoryItemViewModel}">
+                                <RadioButton Style="{StaticResource CategoryButtonStyle}"
+                                             Content="{Binding DisplayName}"
+                                             GroupName="Category"
+                                             IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}"
+                                             Click="OnCategoryClick" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <!-- 主内容区域：图标列表 + 详情面板 -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- 内容区域：图标列表 + 详情面板 -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="380" />
+                </Grid.ColumnDefinitions>
+
+                <!-- 图标网格（带虚拟化支持） -->
+                <Border Grid.Column="0"
+                        Background="{DynamicResource WorkbenchSurfaceBrush}"
+                        BorderBrush="{DynamicResource InputBorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <ListBox x:Name="IconListBox"
+                             ItemsSource="{Binding FilteredIcons}"
+                             HorizontalAlignment="Center"
+                             HorizontalContentAlignment="Center"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             ItemContainerStyle="{StaticResource IconListBoxItemStyle}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             VirtualizingPanel.IsVirtualizing="True"
+                             VirtualizingPanel.VirtualizationMode="Recycling"
+                             VirtualizingPanel.ScrollUnit="Pixel"
+                             SelectionChanged="OnIconSelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type models:IconInfo}">
+                                <Border x:Name="IconBorder"
+                                        Style="{StaticResource IconItemContainerStyle}"
+                                        Width="100"
+                                        Height="100">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- 图标 -->
+                                        <icons:Icon x:Name="IconControl"
+                                                    Grid.Row="0"
+                                                    IconKind="{Binding Kind}"
+                                                    IconSize="Normal"
+                                                    Foreground="{DynamicResource InputForegroundBrush}"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center" />
+
+                                        <!-- 名称 -->
+                                        <TextBlock x:Name="IconName"
+                                                   Grid.Row="1"
+                                                   Text="{Binding Name}"
+                                                   FontSize="10"
+                                                   Foreground="{DynamicResource InputForegroundBrush}"
+                                                   Opacity="0.7"
+                                                   TextAlignment="Center"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,4,0,0" />
+                                    </Grid>
+                                </Border>
+                                <DataTemplate.Triggers>
+                                    <!-- 选中时改变图标和文字颜色 -->
+                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                        <Setter TargetName="IconBorder" Property="Background" Value="{DynamicResource AccentPrimaryBrush}" />
+                                        <Setter TargetName="IconBorder" Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}" />
+                                        <Setter TargetName="IconBorder" Property="BorderThickness" Value="2" />
+                                        <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                                        <Setter TargetName="IconName" Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                                        <Setter TargetName="IconName" Property="Opacity" Value="1.0" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+
+            <!-- 图标详情面板 -->
+            <Border Grid.Column="2"
+                    Background="{DynamicResource WorkbenchSurfaceBrush}"
+                    BorderBrush="{DynamicResource InputBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="16,0,16,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- 标题栏 -->
+                    <Border Grid.Row="0"
+                            BorderBrush="{DynamicResource InputBorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            Padding="0,12,0,12">
+                        <TextBlock Text="图标详情"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource InputForegroundBrush}" />
+                    </Border>
+
+                    <!-- 内容区域 -->
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Padding="0,16,0,16">
+                        <StackPanel>
+                            <!-- 图标预览区 -->
+                            <Border x:Name="PreviewContainer"
+                                    Background="{DynamicResource InputBackgroundBrush}"
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="20"
+                                    Margin="0,0,0,16">
+                                <Grid>
+                                    <!-- 主预览 -->
+                                    <icons:Icon x:Name="DetailIcon"
+                                                IconKind="None"
+                                                IconSize="ExtraLarge"
+                                                Foreground="{DynamicResource AccentPrimaryBrush}"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+
+                                    <!-- 空状态提示 -->
+                                    <StackPanel x:Name="EmptyState"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Visibility="Collapsed">
+                                        <icons:Icon IconKind="Info"
+                                                    IconSize="Medium"
+                                                    Foreground="{DynamicResource InputForegroundBrush}"
+                                                    Opacity="0.4"
+                                                    HorizontalAlignment="Center"
+                                                    Margin="0,0,0,8" />
+                                        <TextBlock Text="点击左侧图标查看详情"
+                                                   Foreground="{DynamicResource InputForegroundBrush}"
+                                                   Opacity="0.5"
+                                                   FontSize="12"
+                                                   HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <!-- 尺寸预览 -->
+                            <Border x:Name="SizePreviewContainer"
+                                    Background="{DynamicResource InputBackgroundBrush}"
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="12"
+                                    Margin="0,0,0,16"
+                                    Visibility="Collapsed">
+                                <StackPanel>
+                                    <TextBlock Text="尺寸预览"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.7"
+                                               FontSize="11"
+                                               Margin="0,0,0,8" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0" Margin="4">
+                                            <TextBlock Text="XS"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       Opacity="0.5"
+                                                       FontSize="10"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="0,0,0,4" />
+                                            <Border Background="{DynamicResource WorkbenchSurfaceBrush}"
+                                                    CornerRadius="4"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Center">
+                                                <icons:Icon x:Name="SizePreviewXS"
+                                                            IconKind="None"
+                                                            IconSize="ExtraSmall"
+                                                            Foreground="{DynamicResource InputForegroundBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" Margin="4">
+                                            <TextBlock Text="S"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       Opacity="0.5"
+                                                       FontSize="10"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="0,0,0,4" />
+                                            <Border Background="{DynamicResource WorkbenchSurfaceBrush}"
+                                                    CornerRadius="4"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Center">
+                                                <icons:Icon x:Name="SizePreviewS"
+                                                            IconKind="None"
+                                                            IconSize="Small"
+                                                            Foreground="{DynamicResource InputForegroundBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Margin="4">
+                                            <TextBlock Text="M"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       Opacity="0.5"
+                                                       FontSize="10"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="0,0,0,4" />
+                                            <Border Background="{DynamicResource WorkbenchSurfaceBrush}"
+                                                    CornerRadius="4"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Center">
+                                                <icons:Icon x:Name="SizePreviewM"
+                                                            IconKind="None"
+                                                            IconSize="Normal"
+                                                            Foreground="{DynamicResource InputForegroundBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="3" Margin="4">
+                                            <TextBlock Text="L"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       Opacity="0.5"
+                                                       FontSize="10"
+                                                       HorizontalAlignment="Center"
+                                                       Margin="0,0,0,4" />
+                                            <Border Background="{DynamicResource WorkbenchSurfaceBrush}"
+                                                    CornerRadius="4"
+                                                    Padding="8"
+                                                    HorizontalAlignment="Center">
+                                                <icons:Icon x:Name="SizePreviewL"
+                                                            IconKind="None"
+                                                            IconSize="Medium"
+                                                            Foreground="{DynamicResource InputForegroundBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
+                                    </StackPanel>
+                            </Border>
+
+                            <!-- 颜色预览 -->
+                            <Border x:Name="ColorPreviewContainer"
+                                    Background="{DynamicResource InputBackgroundBrush}"
+                                    BorderBrush="{DynamicResource InputBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="12"
+                                    Margin="0,0,0,16"
+                                    Visibility="Collapsed">
+                                <StackPanel>
+                                    <TextBlock Text="颜色预览"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.7"
+                                               FontSize="11"
+                                               Margin="0,0,0,8" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border Grid.Column="0"
+                                                Background="#FF212121"
+                                                CornerRadius="4"
+                                                Padding="12"
+                                                Margin="4">
+                                            <icons:Icon x:Name="ColorPreviewDark"
+                                                        IconKind="None"
+                                                        IconSize="Medium"
+                                                        Foreground="#FFFFFFFF" />
+                                        </Border>
+                                        <Border Grid.Column="1"
+                                                Background="{DynamicResource AccentPrimaryBrush}"
+                                                CornerRadius="4"
+                                                Padding="12"
+                                                Margin="4">
+                                            <icons:Icon x:Name="ColorPreviewAccent"
+                                                        IconKind="None"
+                                                        IconSize="Medium"
+                                                        Foreground="{DynamicResource OnAccentForegroundBrush}" />
+                                        </Border>
+                                        <Border Grid.Column="2"
+                                                Background="#FFFFFFFF"
+                                                BorderBrush="{DynamicResource InputBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Padding="12"
+                                                Margin="4">
+                                            <icons:Icon x:Name="ColorPreviewLight"
+                                                        IconKind="None"
+                                                        IconSize="Medium"
+                                                        Foreground="#FF212121" />
+                                        </Border>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- 图标信息 -->
+                            <StackPanel x:Name="InfoContainer" Visibility="Collapsed">
+                                <!-- 图标名称 -->
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="名称"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <TextBlock x:Name="DetailName"
+                                               Text="-"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               FontSize="14"
+                                               FontWeight="SemiBold" />
+                                </StackPanel>
+
+                                <!-- 图标分类 -->
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="分类"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <TextBlock x:Name="DetailCategory"
+                                               Text="-"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               FontSize="13" />
+                                </StackPanel>
+
+                                <!-- 图标代码 -->
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="图标代码"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <Grid>
+                                        <Border Background="{DynamicResource InputBackgroundBrush}"
+                                                BorderBrush="{DynamicResource InputBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Padding="8,6">
+                                            <TextBlock x:Name="DetailKind"
+                                                       Text="-"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12" />
+                                        </Border>
+                                        <Button x:Name="CopyKindButton"
+                                                Style="{StaticResource CopyIconButton}"
+                                                Click="OnCopyKindClick"
+                                                Margin="0,0,4,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center">
+                                            <icons:Icon IconKind="Copy"
+                                                        IconSize="ExtraSmall"
+                                                        Foreground="{DynamicResource InputForegroundBrush}" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- Unicode -->
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="Unicode"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <Grid>
+                                        <Border Background="{DynamicResource InputBackgroundBrush}"
+                                                BorderBrush="{DynamicResource InputBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Padding="8,6">
+                                            <TextBlock x:Name="DetailUnicode"
+                                                       Text="-"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12" />
+                                        </Border>
+                                        <Button x:Name="CopyUnicodeButton"
+                                                Style="{StaticResource CopyIconButton}"
+                                                Click="OnCopyUnicodeClick"
+                                                Margin="0,0,4,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center">
+                                            <icons:Icon IconKind="Copy"
+                                                        IconSize="ExtraSmall"
+                                                        Foreground="{DynamicResource InputForegroundBrush}" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- 字形 -->
+                                <StackPanel Margin="0,0,0,12">
+                                    <TextBlock Text="字形"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <Grid>
+                                        <Border Background="{DynamicResource InputBackgroundBrush}"
+                                                BorderBrush="{DynamicResource InputBorderBrush}"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Padding="8,6">
+                                            <TextBlock x:Name="DetailGlyph"
+                                                       Text="-"
+                                                       Foreground="{DynamicResource InputForegroundBrush}"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12" />
+                                        </Border>
+                                        <Button x:Name="CopyGlyphButton"
+                                                Style="{StaticResource CopyIconButton}"
+                                                Click="OnCopyGlyphClick"
+                                                Margin="0,0,4,0"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center">
+                                            <icons:Icon IconKind="Copy"
+                                                        IconSize="ExtraSmall"
+                                                        Foreground="{DynamicResource InputForegroundBrush}" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- 关键词 -->
+                                <StackPanel>
+                                    <TextBlock Text="关键词"
+                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                               Opacity="0.6"
+                                               FontSize="11"
+                                               Margin="0,0,0,4" />
+                                    <ItemsControl x:Name="DetailKeywords">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{DynamicResource InputBackgroundBrush}"
+                                                        BorderBrush="{DynamicResource InputBorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="3"
+                                                        Padding="6,3"
+                                                        Margin="0,0,4,4">
+                                                    <TextBlock Text="{Binding}"
+                                                               Foreground="{DynamicResource InputForegroundBrush}"
+                                                               FontSize="11" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            </Grid>
+
+            <!-- 统计信息 - 右下角 -->
+            <TextBlock Grid.Row="1"
+                       Foreground="{DynamicResource InputForegroundBrush}"
+                       Opacity="0.7"
+                       FontSize="12"
+                       HorizontalAlignment="Right"
+                       Margin="0,12,0,0">
+                <Run Text="总计" />
+                <Run Text="·" />
+                <Run Text="{Binding TotalIconCount, Mode=OneWay}" FontWeight="SemiBold" />
+                <Run Text="个图标" />
+                <Run Text="·" />
+                <Run Text="{Binding DisplayedIconCount, Mode=OneWay}" FontWeight="SemiBold" />
+                <Run Text="个显示" />
+            </TextBlock>
+        </Grid>
+    </Grid>
+</Page>

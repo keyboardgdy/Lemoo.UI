@@ -27,7 +27,7 @@ namespace Lemoo.UI.Converters
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             var compareValue = parameter ?? CompareValue;
-            return (bool)value == true ? compareValue : Binding.DoNothing;
+            return value is bool boolValue && boolValue ? compareValue : Binding.DoNothing;
         }
     }
 

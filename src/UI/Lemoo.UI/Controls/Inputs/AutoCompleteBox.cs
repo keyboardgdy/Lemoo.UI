@@ -18,18 +18,18 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:AutoCompleteBox
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:AutoCompleteBox
     ///     ItemsSource="{Binding Suggestions}"
     ///     SelectedItem="{Binding SelectedItem}"
-    ///     Text="{Binding SearchText}" />
+    ///     Text="{Binding SearchText}" /&gt;
     ///
-    /// <!-- 自定义显示 -->
-    /// <ui:AutoCompleteBox
+    /// &lt;!-- 自定义显示 --&gt;
+    /// &lt;ui:AutoCompleteBox
     ///     ItemsSource="{Binding Users}"
     ///     DisplayMemberPath="Name"
     ///     ValueMemberPath="Id"
-    ///     Text="{Binding UserName}" />
+    ///     Text="{Binding UserName}" /&gt;
     /// </code>
     /// </example>
     public class AutoCompleteBox : Control

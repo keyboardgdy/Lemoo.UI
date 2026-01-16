@@ -11,23 +11,23 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:Expander Header="详细信息">
-    ///     <TextBlock Text="这是展开的内容" />
-    /// </ui:Expander>
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:Expander Header="详细信息"&gt;
+    ///     &lt;TextBlock Text="这是展开的内容" /&gt;
+    /// &lt;/ui:Expander&gt;
     ///
-    /// <!-- 默认展开 -->
-    /// <ui:Expander Header="选项" IsExpanded="True">
-    ///     <StackPanel>
-    ///         <CheckBox Content="选项 1" />
-    ///         <CheckBox Content="选项 2" />
-    ///     </StackPanel>
-    /// </ui:Expander>
+    /// &lt;!-- 默认展开 --&gt;
+    /// &lt;ui:Expander Header="选项" IsExpanded="True"&gt;
+    ///     &lt;StackPanel&gt;
+    ///         &lt;CheckBox Content="选项 1" /&gt;
+    ///         &lt;CheckBox Content="选项 2" /&gt;
+    ///     &lt;/StackPanel&gt;
+    /// &lt;/ui:Expander&gt;
     ///
-    /// <!-- 自定义展开方向 -->
-    /// <ui:Expander Header="向右展开" ExpandDirection="Right">
-    ///     <TextBlock Text="从左侧展开的内容" />
-    /// </ui:Expander>
+    /// &lt;!-- 自定义展开方向 --&gt;
+    /// &lt;ui:Expander Header="向右展开" ExpandDirection="Right"&gt;
+    ///     &lt;TextBlock Text="从左侧展开的内容" /&gt;
+    /// &lt;/ui:Expander&gt;
     /// </code>
     /// </example>
     public class Expander : HeaderedContentControl

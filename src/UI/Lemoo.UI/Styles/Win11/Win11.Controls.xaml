@@ -41,6 +41,7 @@
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Slider.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToggleButton.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToolTip.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Icon.xaml"/>
 
         <!-- 新增控件样式 -->
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.AutoCompleteBox.xaml"/>

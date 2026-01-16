@@ -124,6 +124,13 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
             Icon = NavigationConstants.Icons.Toolbox
         });
 
+        samplesMenu.Children.Add(new MenuItemModel
+        {
+            Header = NavigationConstants.MenuText.IconBrowser,
+            PageKey = PageKeys.IconBrowser,
+            Icon = NavigationConstants.Icons.IconBrowser
+        });
+
         MenuItems.Add(samplesMenu);
 
         // 左侧主导航
@@ -139,6 +146,13 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
             Title = NavigationConstants.MenuText.ToolboxSample,
             Icon = NavigationConstants.Icons.Toolbox,
             PageKey = PageKeys.ToolboxSample
+        });
+
+        NavigationItems.Add(new NavigationItem
+        {
+            Title = NavigationConstants.MenuText.IconBrowser,
+            Icon = NavigationConstants.Icons.IconBrowser,
+            PageKey = PageKeys.IconBrowser
         });
 
         // 底部导航

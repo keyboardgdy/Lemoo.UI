@@ -14,4 +14,9 @@ public static class PageKeys
     /// 工具箱示例页面
     /// </summary>
     public const string ToolboxSample = "toolbox-sample";
+
+    /// <summary>
+    /// 图标浏览器页面
+    /// </summary>
+    public const string IconBrowser = "icon-browser";
 }

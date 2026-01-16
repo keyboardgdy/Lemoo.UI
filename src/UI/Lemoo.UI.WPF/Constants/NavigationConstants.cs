@@ -19,6 +19,11 @@ public static class NavigationConstants
         /// 工具箱图标
         /// </summary>
         public const string Toolbox = "\uE8C9";
+
+        /// <summary>
+        /// 图标浏览器图标
+        /// </summary>
+        public const string IconBrowser = "\uE8F9";
     }
 
     /// <summary>
@@ -40,5 +45,10 @@ public static class NavigationConstants
         /// 工具箱
         /// </summary>
         public const string ToolboxSample = "工具箱";
+
+        /// <summary>
+        /// 图标浏览器
+        /// </summary>
+        public const string IconBrowser = "图标浏览器";
     }
 }

@@ -14,20 +14,20 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:Badge Content="5" />
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:Badge Content="5" /&gt;
     ///
-    /// <!-- 附加到按钮 -->
-    /// <Grid>
-    ///     <Button Content="消息" />
-    ///     <ui:Badge Content="99" BadgePlacement="TopRight" />
-    /// </Grid>
+    /// &lt;!-- 附加到按钮 --&gt;
+    /// &lt;Grid&gt;
+    ///     &lt;Button Content="消息" /&gt;
+    ///     &lt;ui:Badge Content="99" BadgePlacement="TopRight" /&gt;
+    /// &lt;/Grid&gt;
     ///
-    /// <!-- 点状徽章 -->
-    /// <ui:Badge BadgeShape="Dot" />
+    /// &lt;!-- 点状徽章 --&gt;
+    /// &lt;ui:Badge BadgeShape="Dot" /&gt;
     ///
-    /// <!-- 自定义颜色 -->
-    /// <ui:Badge Content="New" Background="{DynamicResource Brush.Semantic.Success}" />
+    /// &lt;!-- 自定义颜色 --&gt;
+    /// &lt;ui:Badge Content="New" Background="{DynamicResource Brush.Semantic.Success}" /&gt;
     /// </code>
     /// </example>
     [ToolboxItem(true)]

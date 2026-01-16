@@ -15,15 +15,15 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:TimePicker
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:TimePicker
     ///     SelectedTime="{Binding StartTime}"
-    ///     IsSecondsEnabled="False" />
+    ///     IsSecondsEnabled="False" /&gt;
     ///
-    /// <!-- 带秒选择 -->
-    /// <ui:TimePicker
+    /// &lt;!-- 带秒选择 --&gt;
+    /// &lt;ui:TimePicker
     ///     SelectedTime="{Binding StartTime}"
-    ///     IsSecondsEnabled="True" />
+    ///     IsSecondsEnabled="True" /&gt;
     /// </code>
     /// </example>
     public class TimePicker : Control

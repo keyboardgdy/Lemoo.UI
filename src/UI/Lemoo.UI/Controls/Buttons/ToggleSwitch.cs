@@ -12,18 +12,18 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:ToggleSwitch Header="无线网络" IsChecked="{Binding IsWifiEnabled}" />
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:ToggleSwitch Header="无线网络" IsChecked="{Binding IsWifiEnabled}" /&gt;
     ///
-    /// <!-- 带标签文本 -->
-    /// <ui:ToggleSwitch
+    /// &lt;!-- 带标签文本 --&gt;
+    /// &lt;ui:ToggleSwitch
     ///     Header="飞行模式"
     ///     OnLabel="开"
     ///     OffLabel="关"
-    ///     IsChecked="{Binding IsAirplaneModeEnabled}" />
+    ///     IsChecked="{Binding IsAirplaneModeEnabled}" /&gt;
     ///
-    /// <!-- 禁用状态 -->
-    /// <ui:ToggleSwitch Header="蓝牙" IsEnabled="False" />
+    /// &lt;!-- 禁用状态 --&gt;
+    /// &lt;ui:ToggleSwitch Header="蓝牙" IsEnabled="False" /&gt;
     /// </code>
     /// </example>
     public class ToggleSwitch : ContentControl

@@ -14,18 +14,18 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:SearchBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:SearchBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" /&gt;
     ///
-    /// <!-- 带水印 -->
-    /// <ui:SearchBox
+    /// &lt;!-- 带水印 --&gt;
+    /// &lt;ui:SearchBox
     ///     PlaceholderText="搜索..."
-    ///     Text="{Binding SearchText}" />
+    ///     Text="{Binding SearchText}" /&gt;
     ///
-    /// <!-- 带命令 -->
-    /// <ui:SearchBox
+    /// &lt;!-- 带命令 --&gt;
+    /// &lt;ui:SearchBox
     ///     SearchCommand="{Binding SearchCommand}"
-    ///     SearchCommandParameter="{Binding SearchText}" />
+    ///     SearchCommandParameter="{Binding SearchText}" /&gt;
     /// </code>
     /// </example>
     public class SearchBox : Control

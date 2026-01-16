@@ -12,18 +12,18 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:SplitView IsPaneOpen="True">
-    ///     <ui:SplitView.Pane>
-    ///         <StackPanel>
-    ///             <Button Content="选项 1"/>
-    ///             <Button Content="选项 2"/>
-    ///         </StackPanel>
-    ///     </ui:SplitView.Pane>
-    ///     <ui:SplitView.Content>
-    ///         <TextBlock Text="主内容区域"/>
-    ///     </ui:SplitView.Content>
-    /// </ui:SplitView>
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:SplitView IsPaneOpen="True"&gt;
+    ///     &lt;ui:SplitView.Pane&gt;
+    ///         &lt;StackPanel&gt;
+    ///             &lt;Button Content="选项 1"/&gt;
+    ///             &lt;Button Content="选项 2"/&gt;
+    ///         &lt;/StackPanel&gt;
+    ///     &lt;/ui:SplitView.Pane&gt;
+    ///     &lt;ui:SplitView.Content&gt;
+    ///         &lt;TextBlock Text="主内容区域"/&gt;
+    ///     &lt;/ui:SplitView.Content&gt;
+    /// &lt;/ui:SplitView&gt;
     /// </code>
     /// </example>
     public class SplitView : ContentControl

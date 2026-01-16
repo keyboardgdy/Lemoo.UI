@@ -12,26 +12,26 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:Card Header="标题">
-    ///     <TextBlock Text="内容" />
-    /// </ui:Card>
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:Card Header="标题"&gt;
+    ///     &lt;TextBlock Text="内容" /&gt;
+    /// &lt;/ui:Card&gt;
     ///
-    /// <!-- 带尾部 -->
-    /// <ui:Card>
-    ///     <ui:Card.Header>自定义头部</ui:Card.Header>
-    ///     <TextBlock Text="内容" />
-    ///     <ui:Card.Footer>自定义尾部</ui:Card.Footer>
-    /// </ui:Card>
+    /// &lt;!-- 带尾部 --&gt;
+    /// &lt;ui:Card&gt;
+    ///     &lt;ui:Card.Header&gt;自定义头部&lt;/ui:Card.Header&gt;
+    ///     &lt;TextBlock Text="内容" /&gt;
+    ///     &lt;ui:Card.Footer&gt;自定义尾部&lt;/ui:Card.Footer&gt;
+    /// &lt;/ui:Card&gt;
     ///
-    /// <!-- 使用变体样式 -->
-    /// <ui:Card Style="{StaticResource Card.Outlined}" Header="轮廓卡片">
-    ///     <TextBlock Text="内容" />
-    /// </ui:Card>
+    /// &lt;!-- 使用变体样式 --&gt;
+    /// &lt;ui:Card Style="{StaticResource Card.Outlined}" Header="轮廓卡片"&gt;
+    ///     &lt;TextBlock Text="内容" /&gt;
+    /// &lt;/ui:Card&gt;
     ///
-    /// <ui:Card Style="{StaticResource Card.Elevated}" Header="抬升卡片">
-    ///     <TextBlock Text="内容" />
-    /// </ui:Card>
+    /// &lt;ui:Card Style="{StaticResource Card.Elevated}" Header="抬升卡片"&gt;
+    ///     &lt;TextBlock Text="内容" /&gt;
+    /// &lt;/ui:Card&gt;
     /// </code>
     /// </example>
     public class Card : ContentControl

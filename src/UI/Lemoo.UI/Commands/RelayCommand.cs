@@ -55,7 +55,7 @@ namespace Lemoo.UI.Commands
         {
             if (CanExecute(parameter))
             {
-                _execute(parameter);
+                _execute!(parameter);
             }
         }
     }
@@ -113,7 +113,7 @@ namespace Lemoo.UI.Commands
         {
             if (CanExecute(parameter))
             {
-                _execute((T?)parameter);
+                _execute!((T?)parameter);
             }
         }
     }
@@ -124,7 +124,7 @@ namespace Lemoo.UI.Commands
     public interface IRelayCommand : ICommand
     {
         /// <summary>
-        /// 引发 <see cref="CanExecuteChanged"/> 事件。
+        /// 引发 <see cref="ICommand.CanExecuteChanged"/> 事件。
         /// </summary>
         void RaiseCanExecuteChanged();
     }

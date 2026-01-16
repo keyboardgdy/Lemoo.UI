@@ -14,20 +14,20 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:Ribbon>
-    ///     <ui:RibbonTab Header="主页">
-    ///         <ui:RibbonGroup Header="剪贴板">
-    ///             <Button Content="粘贴" Command="{Binding PasteCommand}"/>
-    ///             <Button Content="复制" Command="{Binding CopyCommand}"/>
-    ///         </ui:RibbonGroup>
-    ///     </ui:RibbonTab>
-    ///     <ui:RibbonTab Header="插入">
-    ///         <ui:RibbonGroup Header="表格">
-    ///             <Button Content="表格" Command="{Binding TableCommand}"/>
-    ///         </ui:RibbonGroup>
-    ///     </ui:RibbonTab>
-    /// </ui:Ribbon>
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:Ribbon&gt;
+    ///     &lt;ui:RibbonTab Header="主页"&gt;
+    ///         &lt;ui:RibbonGroup Header="剪贴板"&gt;
+    ///             &lt;Button Content="粘贴" Command="{Binding PasteCommand}"/&gt;
+    ///             &lt;Button Content="复制" Command="{Binding CopyCommand}"/&gt;
+    ///         &lt;/ui:RibbonGroup&gt;
+    ///     &lt;/ui:RibbonTab&gt;
+    ///     &lt;ui:RibbonTab Header="插入"&gt;
+    ///         &lt;ui:RibbonGroup Header="表格"&gt;
+    ///             &lt;Button Content="表格" Command="{Binding TableCommand}"/&gt;
+    ///         &lt;/ui:RibbonGroup&gt;
+    ///     &lt;/ui:RibbonTab&gt;
+    /// &lt;/ui:Ribbon&gt;
     /// </code>
     /// </example>
     public class Ribbon : HeaderedItemsControl

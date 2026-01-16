@@ -13,27 +13,27 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:DropDownButton Content="操作">
-    ///     <ui:DropDownButton.DropDownContent>
-    ///         <ContextMenu>
-    ///             <MenuItem Header="新建" Command="{Binding NewCommand}" />
-    ///             <MenuItem Header="打开" Command="{Binding OpenCommand}" />
-    ///             <Separator />
-    ///             <MenuItem Header="退出" Command="{Binding ExitCommand}" />
-    ///         </ContextMenu>
-    ///     </ui:DropDownButton.DropDownContent>
-    /// </ui:DropDownButton>
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:DropDownButton Content="操作"&gt;
+    ///     &lt;ui:DropDownButton.DropDownContent&gt;
+    ///         &lt;ContextMenu&gt;
+    ///             &lt;MenuItem Header="新建" Command="{Binding NewCommand}" /&gt;
+    ///             &lt;MenuItem Header="打开" Command="{Binding OpenCommand}" /&gt;
+    ///             &lt;Separator /&gt;
+    ///             &lt;MenuItem Header="退出" Command="{Binding ExitCommand}" /&gt;
+    ///         &lt;/ContextMenu&gt;
+    ///     &lt;/ui:DropDownButton.DropDownContent&gt;
+    /// &lt;/ui:DropDownButton&gt;
     ///
-    /// <!-- 使用工具条菜单 -->
-    /// <ui:DropDownButton Content="保存">
-    ///     <ui:DropDownButton.DropDownContent>
-    ///         <Menu>
-    ///             <MenuItem Header="保存" Command="{Binding SaveCommand}" />
-    ///             <MenuItem Header="另存为" Command="{Binding SaveAsCommand}" />
-    ///         </Menu>
-    ///     </ui:DropDownButton.DropDownContent>
-    /// </ui:DropDownButton>
+    /// &lt;!-- 使用工具条菜单 --&gt;
+    /// &lt;ui:DropDownButton Content="保存"&gt;
+    ///     &lt;ui:DropDownButton.DropDownContent&gt;
+    ///         &lt;Menu&gt;
+    ///             &lt;MenuItem Header="保存" Command="{Binding SaveCommand}" /&gt;
+    ///             &lt;MenuItem Header="另存为" Command="{Binding SaveAsCommand}" /&gt;
+    ///         &lt;/Menu&gt;
+    ///     &lt;/ui:DropDownButton.DropDownContent&gt;
+    /// &lt;/ui:DropDownButton&gt;
     /// </code>
     /// </example>
     public class DropDownButton : Button

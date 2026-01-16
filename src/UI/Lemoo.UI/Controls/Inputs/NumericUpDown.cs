@@ -14,21 +14,21 @@ namespace Lemoo.UI.Controls
     /// </remarks>
     /// <example>
     /// <code>
-    /// <!-- 基础用法 -->
-    /// <ui:NumericUpDown Value="{Binding Quantity}" />
+    /// &lt;!-- 基础用法 --&gt;
+    /// &lt;ui:NumericUpDown Value="{Binding Quantity}" /&gt;
     ///
-    /// <!-- 设置范围 -->
-    /// <ui:NumericUpDown
+    /// &lt;!-- 设置范围 --&gt;
+    /// &lt;ui:NumericUpDown
     ///     Value="{Binding Quantity}"
     ///     Minimum="0"
     ///     Maximum="100"
-    ///     Increment="5" />
+    ///     Increment="5" /&gt;
     ///
-    /// <!-- 小数支持 -->
-    /// <ui:NumericUpDown
+    /// &lt;!-- 小数支持 --&gt;
+    /// &lt;ui:NumericUpDown
     ///     Value="{Binding Price}"
     ///     DecimalPlaces="2"
-    ///     Increment="0.01" />
+    ///     Increment="0.01" /&gt;
     /// </code>
     /// </example>
     public class NumericUpDown : Control
