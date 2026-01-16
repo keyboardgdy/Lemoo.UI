@@ -31,9 +31,6 @@
   
   <!-- 显式包含资源字典文件 -->
   <ItemGroup>
-    <!-- Converters -->
-    <Page Include="Converters\Converters.xaml" />
-
     <!-- Styles -->
     <Page Include="Styles\CommonStyles.xaml" />
     <Page Include="Styles\Design\Typography.xaml" />
@@ -79,7 +76,6 @@
     <Page Include="Styles\Win11\Win11.Slider.xaml" />
     <Page Include="Styles\Win11\Win11.ToggleButton.xaml" />
     <Page Include="Styles\Win11\Win11.ToolTip.xaml" />
-    <Page Include="Styles\Win11\Win11.Icon.xaml" />
 
     <!-- Themes/Base -->
     <Page Include="Themes\Base\ColorPalette.xaml" />

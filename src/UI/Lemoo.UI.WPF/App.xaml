@@ -7,35 +7,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- ============================================ -->
-                <!-- 重要：资源加载顺序至关重要 -->
-                <!-- 1. 主题资源字典（由 ThemeManager 动态加载） -->
-                <!-- 2. 设计基线资源（与主题无关） -->
-                <!-- 3. Win11 控件样式（依赖主题资源） -->
-                <!-- ============================================ -->
+                <!-- 通用样式（按钮、文本等，不包含主题） -->
+                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/CommonStyles.xaml" />
 
-                <!-- 设计基线（颜色无关的通用设计规则） -->
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Typography.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Spacing.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml" />
-
-                <!-- Win11 控件样式（使用主题后的颜色 Token） -->
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ScrollBar.xaml" />
-
-                <!-- 注意：主题资源字典将由 ThemeManager.Initialize() 在运行时动态添加到最前面 -->
-                <!-- 这样可以确保主题资源能够正确覆盖所有控件样式 -->
+                <!-- 注意：主题资源字典由 ThemeManager 在运行时动态添加，不在这里静态合并 -->
+                <!-- 这样可以确保主题切换能够正确应用到整个应用程序 -->
             </ResourceDictionary.MergedDictionaries>
 
             <!-- 全局转换器 -->
-            <converters:IconKindToGlyphConverter x:Key="IconKindToGlyphConverter" />
-            <converters:IconSizeToFontSizeConverter x:Key="IconSizeToFontSizeConverter" />
-            <converters:IconKindToVisibilityConverter x:Key="IconKindToVisibilityConverter" />
-            <converters:IconBoolToVisibilityConverter x:Key="IconBoolToVisibilityConverter" />
             <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
-            <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
             <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisConverter" />
             <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
