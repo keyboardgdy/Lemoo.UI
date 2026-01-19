@@ -47,7 +47,7 @@
                                     BorderBrush="{DynamicResource PopupBorderBrush}"
                                     BorderThickness="1"
                                     CornerRadius="{StaticResource Win11.CornerRadius.Small}"
-                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Effect="{StaticResource Shadow.Small}"
                                     MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                     MinWidth="{Binding ActualWidth, ElementName=Border}"
                                     Margin="0,4,0,0">

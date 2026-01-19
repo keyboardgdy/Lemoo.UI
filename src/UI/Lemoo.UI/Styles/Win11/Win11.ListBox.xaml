@@ -82,28 +82,8 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                       To="{StaticResource listItem.hoverBackground}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}"
-                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="border"
-                                                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                       To="{StaticResource listItem.background}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}"
-                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <!-- 使用 Setter 替代 ColorAnimation，确保主题切换时颜色正确更新 -->
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ListItemHoverBackgroundBrush}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="border" Property="Background" Value="{DynamicResource MenuSelectedBackgroundBrush}"/>

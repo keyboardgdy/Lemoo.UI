@@ -81,7 +81,7 @@
                                     BorderBrush="{DynamicResource CardBorderBrush}"
                                     BorderThickness="1"
                                     CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
-                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Effect="{StaticResource Shadow.Small}"
                                     Margin="0,4,0,0"
                                     Padding="16">
                                 <Grid>

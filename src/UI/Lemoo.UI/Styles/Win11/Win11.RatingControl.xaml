@@ -1,0 +1,209 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Lemoo.UI.Controls.Inputs"
+                    xmlns:converters="clr-namespace:Lemoo.UI.Converters">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Typography.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Converters/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- RatingControl 样式 -->
+    <Style x:Key="Win11.RatingControlStyle" TargetType="controls:RatingControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:RatingControl">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <!-- 评分图标容器 -->
+                        <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Margin" Value="0,0,4,0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                            <Setter Property="Margin" Value="0"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="controls:RatingItem">
+                                    <Grid Width="{TemplateBinding IconSize, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                                          Height="{TemplateBinding IconSize, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                                          Background="Transparent">
+                                        <!-- 未激活的图标 -->
+                                        <ContentPresenter x:Name="InactiveIcon"
+                                                          Content="{Binding IconType, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                                                          Opacity="1"/>
+
+                                        <!-- 激活的图标（使用Clip实现部分填充） -->
+                                        <ContentPresenter x:Name="ActiveIcon"
+                                                          Content="{Binding IconType, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}">
+                                            <ContentPresenter.Clip>
+                                                <RectangleGeometry x:Name="ClipRect">
+                                                    <RectangleGeometry.Rect>
+                                                        <Rect X="0" Y="0"
+                                                             Width="{Binding ActualWidth, ElementName=ActiveIcon}"
+                                                             Height="{Binding ActualHeight, ElementName=ActiveIcon}"/>
+                                                    </RectangleGeometry.Rect>
+                                                </RectangleGeometry>
+                                            </ContentPresenter.Clip>
+                                        </ContentPresenter>
+
+                                        <!-- 悬停遮罩 -->
+                                        <Border x:Name="HoverOverlay"
+                                                Background="{TemplateBinding HoverColor, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                                                Opacity="0"
+                                                IsHitTestVisible="False"/>
+                                    </Grid>
+
+                                    <DataTemplate.Triggers>
+                                        <!-- 根据填充比例更新激活图标的可见区域 -->
+                                        <DataTrigger Binding="{Binding FillRatio}" Value="0">
+                                            <Setter TargetName="ActiveIcon" Property="Opacity" Value="0"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding FillRatio}" Value="1">
+                                            <Setter TargetName="ActiveIcon" Property="Opacity" Value="1"/>
+                                        </DataTrigger>
+
+                                        <!-- 鼠标悬停效果 -->
+                                        <EventTrigger RoutedEvent="MouseEnter">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                                   Storyboard.TargetProperty="Opacity"
+                                                                   To="0.3"
+                                                                   Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="HoverOverlay"
+                                                                   Storyboard.TargetProperty="Opacity"
+                                                                   To="0"
+                                                                   Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+
+                                        <!-- 点击事件 -->
+                                        <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="ActiveIcon"
+                                                                   Storyboard.TargetProperty="Opacity"
+                                                                   To="0.7"
+                                                                   Duration="0:0:0.1"
+                                                                   AutoReverse="True"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- 数值显示 -->
+                        <TextBlock x:Name="ValueText"
+                                   Text="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}{0:F1}}"
+                                   Margin="8,0,0,0"
+                                   FontSize="{StaticResource FontSize.Small}"
+                                   FontWeight="SemiBold"
+                                   VerticalAlignment="Center"
+                                   Visibility="{Binding ShowValue, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <!-- 只读状态 -->
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+
+                        <!-- 禁用状态 -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 星形图标模板 -->
+    <DataTemplate x:Key="StarIconTemplate">
+        <Grid>
+            <Path Data="M 12 2 L 15 9 L 22 9 L 17 14 L 19 21 L 12 17 L 5 21 L 7 14 L 2 9 L 9 9 Z"
+                  Fill="{Binding ActiveColor, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                  Stretch="Uniform"
+                  Width="24"
+                  Height="24"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 心形图标模板 -->
+    <DataTemplate x:Key="HeartIconTemplate">
+        <Grid>
+            <Path Data="M 12 21.35 L 10.55 20.03 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7.5 3 C 9.24 3 10.91 3.81 12 5.09 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 C 22 12.28 18.6 15.36 13.45 20.04 L 12 21.35 Z"
+                  Fill="{Binding ActiveColor, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                  Stretch="Uniform"
+                  Width="24"
+                  Height="24"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 点赞图标模板 -->
+    <DataTemplate x:Key="ThumbIconTemplate">
+        <Grid>
+            <Path Data="M 12 2 C 10.5 2 9 3 8.5 4 C 7.5 2 5.5 2 4.5 3 C 3 4.5 3 7 4 8 L 12 16 L 20 8 C 21 7 21 4.5 19.5 3 C 18.5 2 16.5 2 15.5 4 C 15 3 13.5 2 12 2 Z"
+                  Fill="{Binding ActiveColor, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                  Stretch="Uniform"
+                  Width="24"
+                  Height="24"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 表情图标模板 -->
+    <DataTemplate x:Key="EmojiIconTemplate">
+        <Grid>
+            <Ellipse Fill="{Binding ActiveColor, RelativeSource={RelativeSource AncestorType=controls:RatingControl}}"
+                     Width="24"
+                     Height="24"/>
+            <Ellipse Fill="Black"
+                     Width="3"
+                     Height="3"
+                     HorizontalAlignment="Left"
+                     VerticalAlignment="Top"
+                     Margin="6,6,0,0"/>
+            <Ellipse Fill="Black"
+                     Width="3"
+                     Height="3"
+                     HorizontalAlignment="Right"
+                     VerticalAlignment="Top"
+                     Margin="0,6,6,0"/>
+            <Path Data="M 8 12 Q 12 16 16 12"
+                  Stroke="Black"
+                  StrokeThickness="1.5"
+                  Fill="Transparent"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 默认样式 -->
+    <Style TargetType="controls:RatingControl" BasedOn="{StaticResource Win11.RatingControlStyle}"/>
+
+</ResourceDictionary>

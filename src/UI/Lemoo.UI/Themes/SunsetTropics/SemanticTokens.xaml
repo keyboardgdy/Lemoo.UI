@@ -95,4 +95,64 @@
     <Color x:Key="dropdown.border">#FFCCBA</Color>
     <Color x:Key="dropdown.hoverBackground">#FFF0E6</Color>
 
+    <!-- 卡片（Card） -->
+    <Color x:Key="card.background">#FFFBF5</Color>
+    <Color x:Key="card.border">#FFCCBA</Color>
+    <Color x:Key="card.hoverBackground">#FFF5EB</Color>
+
+    <!-- 列表项（ListItem） -->
+    <Color x:Key="listItem.background">#00000000</Color>
+    <Color x:Key="listItem.hoverBackground">#FFF5EB</Color>
+    <Color x:Key="listItem.selectedBackground">#4ECDC4</Color>
+
+    <!-- 弹出层（Popup） -->
+    <Color x:Key="popup.background">#FFFFFF</Color>
+    <Color x:Key="popup.border">#FFCCBA</Color>
+
+    <!-- 开关（ToggleSwitch） -->
+    <Color x:Key="toggleSwitch.offBackground">#FFE5D9</Color>
+    <Color x:Key="toggleSwitch.offBorder">#FFCCBA</Color>
+    <Color x:Key="toggleSwitch.onBackground">#4ECDC4</Color>
+    <Color x:Key="toggleSwitch.onBorder">#4ECDC4</Color>
+    <Color x:Key="toggleSwitch.knob">#FFFFFF</Color>
+    <Color x:Key="toggleSwitch.knobOn">#FFFFFF</Color>
+    <Color x:Key="toggleSwitch.hoverBorder">#3DBDB5</Color>
+    <Color x:Key="toggleSwitch.pressedBorder">#2BA39B</Color>
+
+    <!-- NumericUpDown -->
+    <Color x:Key="numericUpDown.buttonBackground">#FFE5D9</Color>
+    <Color x:Key="numericUpDown.buttonHoverBackground">#FFD4C4</Color>
+    <Color x:Key="numericUpDown.buttonPressedBackground">#FFC3AF</Color>
+
+    <!-- 文本（Text） -->
+    <Color x:Key="text.primary">#2C3E50</Color>
+    <Color x:Key="text.secondary">#7F8C8D</Color>
+    <Color x:Key="text.disabled">#B0A090</Color>
+    <Color x:Key="text.onDark">#FFFFFF</Color>
+
+    <!-- 边框（Border） -->
+    <Color x:Key="border.default">#FFCCBA</Color>
+    <Color x:Key="border.focus">#4ECDC4</Color>
+    <Color x:Key="separator">#FFCCBA</Color>
+
+    <!-- 阴影（Shadow） -->
+    <Color x:Key="shadow.color">#000000</Color>
+
+    <!-- 语义颜色（Semantic） -->
+    <Color x:Key="semantic.success.background">#27AE60</Color>
+    <Color x:Key="semantic.success.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.success.border">#229954</Color>
+
+    <Color x:Key="semantic.warning.background">#F39C12</Color>
+    <Color x:Key="semantic.warning.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.warning.border">#E67E22</Color>
+
+    <Color x:Key="semantic.error.background">#E74C3C</Color>
+    <Color x:Key="semantic.error.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.error.border">#C0392B</Color>
+
+    <Color x:Key="semantic.info.background">#3498DB</Color>
+    <Color x:Key="semantic.info.foreground">#FFFFFF</Color>
+    <Color x:Key="semantic.info.border">#2980B9</Color>
+
 </ResourceDictionary>

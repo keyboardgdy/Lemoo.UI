@@ -8,9 +8,10 @@ namespace Lemoo.UI.Behaviors
     /// <summary>
     /// 将事件绑定到命令的行为。
     /// </summary>
-    public class EventToCommandBehavior : Behavior<FrameworkElement>
+    public class EventToCommandBehavior : Behavior<FrameworkElement>, IDisposable
     {
         private Delegate? _eventHandler;
+        private bool _disposed;
 
         /// <summary>
         /// 获取或设置要监听的事件名称。
@@ -40,7 +41,7 @@ namespace Lemoo.UI.Behaviors
 
         protected override void OnDetaching()
         {
-            UnregisterEvent();
+            Dispose();
             base.OnDetaching();
         }
 
@@ -68,10 +69,19 @@ namespace Lemoo.UI.Behaviors
             if (_eventHandler == null || AssociatedObject == null)
                 return;
 
-            var eventInfo = AssociatedObject.GetType().GetEvent(EventName);
-            eventInfo?.RemoveEventHandler(AssociatedObject, _eventHandler);
-
-            _eventHandler = null;
+            try
+            {
+                var eventInfo = AssociatedObject.GetType().GetEvent(EventName);
+                eventInfo?.RemoveEventHandler(AssociatedObject, _eventHandler);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"EventToCommandBehavior: UnregisterEvent failed: {ex.Message}");
+            }
+            finally
+            {
+                _eventHandler = null;
+            }
         }
 
         private void OnEventRaised(object? sender, EventArgs e)
@@ -89,6 +99,41 @@ namespace Lemoo.UI.Behaviors
             {
                 Command.Execute(parameter);
             }
+        }
+
+        /// <summary>
+        /// 释放行为占用的资源。
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 释放行为占用的资源。
+        /// </summary>
+        /// <param name="disposing">是否正在释放托管资源</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                // 清理托管资源
+                UnregisterEvent();
+            }
+
+            _disposed = true;
+        }
+
+        /// <summary>
+        /// 析构函数。
+        /// </summary>
+        ~EventToCommandBehavior()
+        {
+            Dispose(false);
         }
     }
 }

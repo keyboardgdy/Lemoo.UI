@@ -47,34 +47,8 @@
                             <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="checkBoxBorder"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.focusBorder}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="checkBoxBorder"
-                                                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.border}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}">
-                                            <ColorAnimation.EasingFunction>
-                                                <CubicEase EasingMode="EaseOut"/>
-                                            </ColorAnimation.EasingFunction>
-                                        </ColorAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <!-- 使用 Setter 替代 ColorAnimation，确保主题切换时颜色正确更新 -->
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>

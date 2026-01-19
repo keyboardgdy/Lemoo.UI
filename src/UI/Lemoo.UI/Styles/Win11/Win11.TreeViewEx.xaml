@@ -1,0 +1,199 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Lemoo.UI.Controls.Navigation">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- TreeViewEx 样式 -->
+    <Style x:Key="Win11.TreeViewExStyle" TargetType="controls:TreeViewEx">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="{StaticResource Win11.FontSize.Body}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Win11.FontFamily.Default}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+        <Setter Property="VirtualizingPanel.ScrollUnit" Value="Pixel"/>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="TreeViewItem">
+                    <Setter Property="Padding" Value="4,2"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="MinHeight" Value="32"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TreeViewItem">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- 展开/折叠按钮和内容 -->
+                                    <Border x:Name="ItemBorder"
+                                            Grid.Column="1"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Padding="{TemplateBinding Padding}"
+                                            MinHeight="{TemplateBinding MinHeight}"
+                                            CornerRadius="4"
+                                            Margin="0,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- 展开/折叠按钮 -->
+                                            <ToggleButton x:Name="ExpandToggle"
+                                                          Grid.Column="0"
+                                                          IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                                          ClickMode="Press"
+                                                          Width="20"
+                                                          Height="20"
+                                                          Margin="0,0,4,0">
+                                                <ToggleButton.Template>
+                                                    <ControlTemplate TargetType="ToggleButton">
+                                                        <Grid Background="Transparent" Width="16" Height="16">
+                                                            <Path x:Name="ExpandArrow"
+                                                                  Data="M 4 6 L 8 10 L 12 6"
+                                                                  Stroke="{DynamicResource Brush.Text.Secondary}"
+                                                                  StrokeThickness="1.5"
+                                                                  StrokeLineJoin="Round"
+                                                                  StrokeStartLineCap="Round"
+                                                                  StrokeEndLineCap="Round"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
+                                                                  RenderTransformOrigin="0.5,0.5">
+                                                                <Path.RenderTransform>
+                                                                    <RotateTransform Angle="0"/>
+                                                                </Path.RenderTransform>
+                                                            </Path>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Trigger.EnterActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="ExpandArrow"
+                                                                                           Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                                           To="90"
+                                                                                           Duration="0:0:0.2"
+                                                                                           EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.EnterActions>
+                                                                <Trigger.ExitActions>
+                                                                    <BeginStoryboard>
+                                                                        <Storyboard>
+                                                                            <DoubleAnimation Storyboard.TargetName="ExpandArrow"
+                                                                                           Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                                                           To="0"
+                                                                                           Duration="0:0:0.2"
+                                                                                           EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+                                                                        </Storyboard>
+                                                                    </BeginStoryboard>
+                                                                </Trigger.ExitActions>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="ExpandArrow" Property="Stroke" Value="{DynamicResource Brush.Text.Primary}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </ToggleButton.Template>
+                                            </ToggleButton>
+
+                                            <!-- 内容 -->
+                                            <ContentPresenter x:Name="PART_Header"
+                                                              Grid.Column="1"
+                                                              ContentSource="Header"
+                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 子项 -->
+                                    <ItemsPresenter x:Name="ItemsHost"
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Visibility="Collapsed"/>
+                                </Grid>
+
+                                <ControlTemplate.Triggers>
+                                    <!-- 展开状态 -->
+                                    <Trigger Property="IsExpanded" Value="True">
+                                        <Setter TargetName="ItemsHost" Property="Visibility" Value="Visible"/>
+                                    </Trigger>
+
+                                    <!-- 无子项时隐藏展开按钮 -->
+                                    <Trigger Property="HasItems" Value="False">
+                                        <Setter TargetName="ExpandToggle" Property="Visibility" Value="Hidden"/>
+                                    </Trigger>
+
+                                    <!-- 选中状态 -->
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource Brush.List.Item.SelectedBackground}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource Brush.Accent.PrimaryForeground}"/>
+                                    </Trigger>
+
+                                    <!-- 鼠标悬停 -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource Brush.List.Item.HoverBackground}"/>
+                                    </Trigger>
+
+                                    <!-- 同时选中和悬停 -->
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="IsSelected" Value="True"/>
+                                            <Condition Property="IsMouseOver" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource Brush.List.Item.SelectedBackground}"/>
+                                    </MultiTrigger>
+
+                                    <!-- 禁用状态 -->
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:TreeViewEx">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <ScrollViewer x:Name="_tv_scrollviewer_"
+                                      CanContentScroll="False"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      Focusable="False">
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 默认样式 -->
+    <Style TargetType="controls:TreeViewEx" BasedOn="{StaticResource Win11.TreeViewExStyle}"/>
+
+</ResourceDictionary>

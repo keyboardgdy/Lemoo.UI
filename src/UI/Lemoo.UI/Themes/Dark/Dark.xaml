@@ -1,33 +1,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- 深色主题入口：
-         - 设计基线：Styles/Design/*
-         - Base：Themes/Base/*
-         - 当前主题：Themes/Dark/*
-         - Win11 控件样式：Styles/Win11/Win11.Controls.xaml -->
+    <!-- 深色主题入口 -->
     <ResourceDictionary.MergedDictionaries>
-        <!-- 设计基线（颜色无关的通用设计规则） -->
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Typography.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Spacing.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml" />
-
-        <!-- Base 主题（基础色板/语义色/组件基准样式） -->
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ColorPalette.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/SemanticTokens.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ComponentBrushes.xaml" />
-
-        <!-- 深色主题自身资源（覆盖 Base） -->
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/ColorPalette.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/SemanticTokens.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/ComponentBrushes.xaml" />
-
-        <!-- Win11 控件样式（使用主题后的颜色 Token） -->
-        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/SemanticTokens.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/ColorPalette.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Dark/ComponentBrushes.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-
-    <!-- 深色主题特定资源 - 待实现 -->
 
 </ResourceDictionary>
 

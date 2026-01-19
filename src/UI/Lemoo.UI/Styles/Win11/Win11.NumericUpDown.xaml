@@ -97,22 +97,20 @@
                                                                         <VisualState x:Name="Normal" />
                                                                         <VisualState x:Name="MouseOver">
                                                                             <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames
+                                                                                <ColorAnimation
                                                                                     Storyboard.TargetName="ButtonBorder"
-                                                                                    Storyboard.TargetProperty="Background"
-                                                                                    Duration="0">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.NumericUpDown.ButtonHoverBackground}" />
-                                                                                </ObjectAnimationUsingKeyFrames>
+                                                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                                    To="#E8E8E8"
+                                                                                    Duration="0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                         <VisualState x:Name="Pressed">
                                                                             <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames
+                                                                                <ColorAnimation
                                                                                     Storyboard.TargetName="ButtonBorder"
-                                                                                    Storyboard.TargetProperty="Background"
-                                                                                    Duration="0">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.NumericUpDown.ButtonPressedBackground}" />
-                                                                                </ObjectAnimationUsingKeyFrames>
+                                                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                                    To="#D0D0D0"
+                                                                                    Duration="0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                         <VisualState x:Name="Disabled">
@@ -183,22 +181,20 @@
                                                                         <VisualState x:Name="Normal" />
                                                                         <VisualState x:Name="MouseOver">
                                                                             <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames
+                                                                                <ColorAnimation
                                                                                     Storyboard.TargetName="ButtonBorder"
-                                                                                    Storyboard.TargetProperty="Background"
-                                                                                    Duration="0">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.NumericUpDown.ButtonHoverBackground}" />
-                                                                                </ObjectAnimationUsingKeyFrames>
+                                                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                                    To="#E8E8E8"
+                                                                                    Duration="0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                         <VisualState x:Name="Pressed">
                                                                             <Storyboard>
-                                                                                <ObjectAnimationUsingKeyFrames
+                                                                                <ColorAnimation
                                                                                     Storyboard.TargetName="ButtonBorder"
-                                                                                    Storyboard.TargetProperty="Background"
-                                                                                    Duration="0">
-                                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.NumericUpDown.ButtonPressedBackground}" />
-                                                                                </ObjectAnimationUsingKeyFrames>
+                                                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                                    To="#D0D0D0"
+                                                                                    Duration="0" />
                                                                             </Storyboard>
                                                                         </VisualState>
                                                                         <VisualState x:Name="Disabled">
@@ -228,12 +224,11 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
+                                        <ColorAnimation
                                             Storyboard.TargetName="Border"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.TextBox.HoverBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#0078D4"
+                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -251,12 +246,11 @@
                                 <VisualState x:Name="Unfocused" />
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
+                                        <ColorAnimation
                                             Storyboard.TargetName="Border"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.TextBox.FocusBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#0078D4"
+                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

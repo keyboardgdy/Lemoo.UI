@@ -1,11 +1,13 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lemoo.UI.Controls;
+using Lemoo.UI.Controls.Inputs;
 using Lemoo.UI.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using LemooExpander = Lemoo.UI.Controls.Expander;
 
 namespace Lemoo.UI.WPF.ViewModels.Pages;
 
@@ -259,9 +261,9 @@ public partial class ToolboxSampleViewModel : ObservableObject, IDisposable
         return textBox;
     }
 
-    private Controls.NumericUpDown CreateNumericUpDownPreview(string? styleKey)
+    private NumericUpDown CreateNumericUpDownPreview(string? styleKey)
     {
-        var nud = new Controls.NumericUpDown
+        var nud = new NumericUpDown
         {
             Value = 42,
             Width = 120,
@@ -328,9 +330,9 @@ public partial class ToolboxSampleViewModel : ObservableObject, IDisposable
         };
     }
 
-    private Controls.Expander CreateExpanderPreview(string? styleKey)
+    private LemooExpander CreateExpanderPreview(string? styleKey)
     {
-        return new Controls.Expander
+        return new LemooExpander
         {
             Header = "展开器示例",
             Content = new TextBlock { Text = "这是展开器的内容", Margin = new Thickness(8) },

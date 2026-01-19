@@ -58,7 +58,7 @@
                                     BorderBrush="{DynamicResource MenuBorderBrush}"
                                     BorderThickness="1"
                                     CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
-                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Effect="{StaticResource Shadow.Menu}"
                                     Margin="0,4,0,0"
                                     Padding="4">
                                 <StackPanel x:Name="SubMenuPanel"
@@ -144,7 +144,7 @@
                                     BorderBrush="{DynamicResource MenuBorderBrush}"
                                     BorderThickness="1"
                                     CornerRadius="{StaticResource Win11.CornerRadius.Medium}"
-                                    Effect="{DynamicResource ShadowDepth.Small}"
+                                    Effect="{StaticResource Shadow.Menu}"
                                     Margin="4,0,0,0"
                                     Padding="4">
                                 <StackPanel x:Name="SubMenuPanel"

@@ -7,9 +7,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <!-- 通用样式（按钮、文本等） -->
                 <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/CommonStyles.xaml" />
-                
-                <!-- 主题资源（颜色、字体等），使用 Base 主题作为默认主题 -->
-                <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/Base.xaml" />
+
+                <!-- 注意：主题资源由 ThemeManager 动态管理，不要在此处静态加载 -->
+                <!-- 静态加载主题会导致与 ThemeManager 的动态管理冲突，造成主题切换不完全生效 -->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

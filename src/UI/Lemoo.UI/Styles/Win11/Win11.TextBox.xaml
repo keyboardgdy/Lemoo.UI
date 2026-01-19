@@ -7,21 +7,13 @@
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!-- 共用的边框颜色动画 Storyboard -->
+    <!-- 共用的边框颜色动画 Storyboard（已移除颜色动画，使用 Setter 替代） -->
     <Storyboard x:Key="BorderHoverEnterStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                       To="{StaticResource input.focusBorder}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter -->
     </Storyboard>
 
     <Storyboard x:Key="BorderHoverExitStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                       To="{StaticResource input.border}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter -->
     </Storyboard>
 
     <!-- ============================================
@@ -58,12 +50,8 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource BorderHoverExitStoryboard}"/>
-                            </Trigger.ExitActions>
+                            <!-- 使用 Setter 替代 ColorAnimation，确保主题切换时颜色正确更新 -->
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
@@ -134,9 +122,11 @@
 
     <!-- ============================================
          搜索框样式 (SearchBox)
+         增强版：支持占位符文本和内置清除按钮
+         使用方式：设置 Tag 属性为占位符文本
          ============================================ -->
     <Style x:Key="Win11.TextBox.Search" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBoxStyle}">
-        <Setter Property="Padding" Value="40,8,12,8"/>
+        <Setter Property="Padding" Value="40,8,40,8"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -147,6 +137,8 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="{StaticResource Win11.CornerRadius.Small}"
                                 SnapsToDevicePixels="True"/>
+
+                        <!-- 搜索图标 -->
                         <Path x:Name="searchIcon"
                               Width="16"
                               Height="16"
@@ -157,12 +149,69 @@
                               Fill="{DynamicResource TextSecondaryBrush}"
                               Data="M11 2C6.03 2 2 6.03 2 11C2 15.97 6.03 20 11 20C13.13 20 15.07 19.21 16.54 17.94L17.54 18.94C17.83 19.23 18.17 19.38 18.54 19.38C18.91 19.38 19.25 19.23 19.54 18.94C20.13 18.35 20.13 17.39 19.54 16.8L18.54 15.8C19.81 14.33 20.6 12.39 20.6 10.26C20.6 5.29 16.57 1.26 11.6 1.26L11 2ZM11 4C14.86 4 18 7.13 18 11C18 14.86 14.86 18 11 18C7.13 18 4 14.86 4 11C4 7.13 7.13 4 11 4Z"
                               IsHitTestVisible="False"/>
+
+                        <!-- 占位符文本 -->
+                        <TextBlock x:Name="placeholderText"
+                                   Text="{TemplateBinding Tag}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Margin="40,0,40,0"
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"
+                                   Opacity="0.6"
+                                   Visibility="Collapsed"/>
+
+                        <!-- 内容主机 -->
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Margin="{TemplateBinding Padding}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+                        <!-- 清除按钮区域 -->
+                        <Grid x:Name="clearButtonArea"
+                              Width="28"
+                              Height="28"
+                              Margin="0,0,6,0"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Center"
+                              Cursor="Hand"
+                              Background="Transparent"
+                              Visibility="Collapsed">
+                            <Border x:Name="clearButtonBackground"
+                                    CornerRadius="4"
+                                    Padding="4"
+                                    Background="Transparent">
+                                <Path Width="14"
+                                      Height="14"
+                                      Stretch="Uniform"
+                                      Fill="{DynamicResource TextSecondaryBrush}"
+                                      Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                            </Border>
+                        </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <!-- 占位符显示逻辑 -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="IsFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="placeholderText" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+
+                        <!-- 清除按钮显示逻辑 -->
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="clearButtonArea" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="Text" Value="x:Static sys:String.Empty"/>
+                            </MultiTrigger.Conditions>
+                        </MultiTrigger>
+
+                        <!-- 焦点和悬停效果 -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
@@ -179,6 +228,159 @@
                             <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
                             <Setter TargetName="border" Property="Opacity" Value="0.6"/>
                             <Setter TargetName="searchIcon" Property="Fill" Value="{DynamicResource TextDisabledBrush}"/>
+                            <Setter TargetName="placeholderText" Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================
+         工具箱搜索框样式 (ToolboxSearchBox)
+         专用于工具箱的搜索框样式，支持清除命令绑定
+         ============================================ -->
+    <Style x:Key="Win11.TextBox.Search.Toolbox" TargetType="TextBox" BasedOn="{StaticResource Win11.TextBox.Search}">
+        <Setter Property="Padding" Value="40,8,40,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
+                                SnapsToDevicePixels="True"/>
+
+                        <!-- 搜索图标 -->
+                        <Path x:Name="searchIcon"
+                              Width="16"
+                              Height="16"
+                              Margin="12,0,0,0"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              Stretch="Uniform"
+                              Fill="{DynamicResource TextSecondaryBrush}"
+                              Data="M11 2C6.03 2 2 6.03 2 11C2 15.97 6.03 20 11 20C13.13 20 15.07 19.21 16.54 17.94L17.54 18.94C17.83 19.23 18.17 19.38 18.54 19.38C18.91 19.38 19.25 19.23 19.54 18.94C20.13 18.35 20.13 17.39 19.54 16.8L18.54 15.8C19.81 14.33 20.6 12.39 20.6 10.26C20.6 5.29 16.57 1.26 11.6 1.26L11 2ZM11 4C14.86 4 18 7.13 18 11C18 14.86 14.86 18 11 18C7.13 18 4 14.86 4 11C4 7.13 7.13 4 11 4Z"
+                              IsHitTestVisible="False"/>
+
+                        <!-- 占位符文本 -->
+                        <TextBlock x:Name="placeholderText"
+                                   Text="{TemplateBinding Tag}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
+                                   FontSize="{TemplateBinding FontSize}"
+                                   Margin="40,0,40,0"
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"
+                                   Opacity="0.6"
+                                   Visibility="Collapsed"/>
+
+                        <!-- 内容主机 -->
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+
+                        <!-- 清除按钮 - 使用附加属性绑定命令 -->
+                        <Button x:Name="clearButton"
+                                Width="28"
+                                Height="28"
+                                Margin="0,0,6,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Command="{TemplateBinding Tag}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                Visibility="Collapsed"
+                                Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="Transparent"
+                                            CornerRadius="4"
+                                            Padding="4">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Path Width="14"
+                                              Height="14"
+                                              Stretch="Uniform"
+                                              Fill="{DynamicResource TextSecondaryBrush}"
+                                              Data="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!-- 占位符显示逻辑 -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                                <Condition Property="IsFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="placeholderText" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+
+                        <!-- 清除按钮显示逻辑：当有文本且获得焦点或悬停时显示 -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="clearButton" Property="Visibility" Value="Collapsed"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="clearButton" Property="Visibility" Value="Collapsed"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="clearButton" Property="Visibility" Value="Collapsed"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="clearButton" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="clearButton" Property="Visibility" Value="Visible"/>
+                        </MultiTrigger>
+
+                        <!-- 焦点和悬停效果 -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverEnterStoryboard}"/>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource BorderHoverExitStoryboard}"/>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{DynamicResource ButtonDisabledBackgroundBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="searchIcon" Property="Fill" Value="{DynamicResource TextDisabledBrush}"/>
+                            <Setter TargetName="placeholderText" Property="Foreground" Value="{DynamicResource TextDisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

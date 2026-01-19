@@ -78,13 +78,14 @@
                                 Height="28"
                                 Margin="0,0,4,0"
                                 Padding="0"
-                                Command="{Binding Clear, RelativeSource={RelativeSource AncestorType={x:Type ui:SearchBox}}}"
+                                Command="{Binding ClearCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Visibility="Collapsed"
-                                Cursor="Arrow">
+                                Cursor="Hand">
 
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border
+                                            x:Name="ButtonBorder"
                                             Background="Transparent"
                                             CornerRadius="4"
                                             Width="24"
@@ -107,22 +108,20 @@
                                                     <VisualState x:Name="Normal" />
                                                     <VisualState x:Name="MouseOver">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="(Border)"
-                                                                Storyboard.TargetProperty="Background"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.HoverBackground}" />
-                                                            </ObjectAnimationUsingKeyFrames>
+                                                            <ColorAnimation
+                                                                Storyboard.TargetName="ButtonBorder"
+                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                To="#F0F0F0"
+                                                                Duration="0" />
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState x:Name="Pressed">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="(Border)"
-                                                                Storyboard.TargetProperty="Background"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.PressedBackground}" />
-                                                            </ObjectAnimationUsingKeyFrames>
+                                                            <ColorAnimation
+                                                                Storyboard.TargetName="ButtonBorder"
+                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                To="#E0E0E0"
+                                                                Duration="0" />
                                                         </Storyboard>
                                                     </VisualState>
                                                 </VisualStateGroup>
@@ -138,12 +137,11 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
+                                        <ColorAnimation
                                             Storyboard.TargetName="Border"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.TextBox.HoverBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#0078D4"
+                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -161,12 +159,11 @@
                                 <VisualState x:Name="Unfocused" />
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
+                                        <ColorAnimation
                                             Storyboard.TargetName="Border"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.TextBox.FocusBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
+                                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                            To="#0078D4"
+                                            Duration="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

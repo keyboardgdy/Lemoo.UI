@@ -1,6 +1,6 @@
-using Lemoo.UI.ViewModels;
+using Lemoo.UI.WPF.ViewModels;
 
-namespace Lemoo.UI.Controls.Toolbox;
+namespace Lemoo.UI.WPF.Controls;
 
 /// <summary>
 /// ToolboxView.xaml 的交互逻辑

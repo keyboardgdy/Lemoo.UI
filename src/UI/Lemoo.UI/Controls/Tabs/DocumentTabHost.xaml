@@ -5,6 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Lemoo.UI.Controls.Tabs"
              mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="400"
              Height="Auto"
              MinHeight="200">
 
@@ -116,6 +118,36 @@
                        Margin="0" />
             </Border>
         </DataTemplate>
+
+        <!-- 图标按钮样式 -->
+        <Style x:Key="TabIconButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Padding="{TemplateBinding Padding}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -251,13 +283,11 @@
                 <!-- 右侧最大化/恢复按钮 -->
                 <Button DockPanel.Dock="Right"
                         x:Name="FullscreenButton"
+                        Style="{StaticResource TabIconButtonStyle}"
                         Width="28"
                         Height="24"
                         Margin="8,4,8,4"
                         VerticalAlignment="Center"
-                        Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
                         ToolTip="切换全屏"
                         Click="FullscreenButton_Click">
                     <TextBlock x:Name="FullscreenIcon"
@@ -265,18 +295,17 @@
                                Text="&#xE740;"
                                FontSize="14"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Center" />
+                               HorizontalAlignment="Center"
+                               Foreground="{DynamicResource ButtonForegroundBrush}" />
                 </Button>
                 <!-- 窗口级别全屏 -->
                 <Button DockPanel.Dock="Right"
                         x:Name="WindowFullscreenButton"
+                        Style="{StaticResource TabIconButtonStyle}"
                         Width="28"
                         Height="24"
                         Margin="0,4,8,4"
                         VerticalAlignment="Center"
-                        Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
                         ToolTip="窗口全屏 (F11)"
                         Click="WindowFullscreenButton_Click">
                     <TextBlock x:Name="WindowFullscreenIcon"
@@ -284,7 +313,8 @@
                                Text="&#xE922;"
                                FontSize="14"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Center" />
+                               HorizontalAlignment="Center"
+                               Foreground="{DynamicResource ButtonForegroundBrush}" />
                 </Button>
             </DockPanel>
         </Border>

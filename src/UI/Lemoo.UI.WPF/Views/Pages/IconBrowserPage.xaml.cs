@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Lemoo.UI.Models.Icons;
 using Lemoo.UI.WPF.ViewModels.Pages;
 
@@ -8,29 +9,68 @@ namespace Lemoo.UI.WPF.Views.Pages
 {
     /// <summary>
     /// IconBrowserPage.xaml 的交互逻辑
+    /// 支持使用新的 IconBrowserPageViewModelV2（基于 IconMetadata.json）
     /// </summary>
     public partial class IconBrowserPage : Page
     {
-        private readonly IconBrowserPageViewModel _viewModel;
+        private readonly IconBrowserPageViewModelV2 _viewModel;
+        private DispatcherTimer? _searchDebounceTimer;
+
+        // 标志：是否使用新的 V2 ViewModel（默认 true）
+        private const bool UseV2ViewModel = true;
 
         public IconBrowserPage()
         {
             InitializeComponent();
-            _viewModel = new IconBrowserPageViewModel();
+
+            // 使用新的 V2 ViewModel，支持中英文搜索和 IconMetadata.json
+            _viewModel = new IconBrowserPageViewModelV2();
             DataContext = _viewModel;
 
             // 初始化空状态
             ShowEmptyState();
+
+            // 初始化搜索防抖计时器（300ms延迟）
+            _searchDebounceTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(300)
+            };
+            _searchDebounceTimer.Tick += OnSearchDebounceTick;
         }
 
         /// <summary>
-        /// 搜索文本变化
+        /// 搜索文本变化（带防抖）
         /// </summary>
         private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
         {
             if (sender is TextBox textBox && _viewModel != null)
             {
-                _viewModel.SearchCommand?.Execute(textBox.Text);
+                // 重置计时器
+                _searchDebounceTimer?.Stop();
+
+                // 如果文本为空，立即执行搜索
+                if (string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    _viewModel.SearchCommand?.Execute(textBox.Text);
+                }
+                else
+                {
+                    // 否则延迟执行搜索
+                    _searchDebounceTimer?.Start();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 防抖计时器触发
+        /// </summary>
+        private void OnSearchDebounceTick(object? sender, EventArgs e)
+        {
+            _searchDebounceTimer?.Stop();
+
+            if (SearchTextBox != null && _viewModel != null)
+            {
+                _viewModel.SearchCommand?.Execute(SearchTextBox.Text);
             }
         }
 
@@ -236,7 +276,7 @@ namespace Lemoo.UI.WPF.Views.Pages
 
             if (DetailKind != null)
             {
-                DetailKind.Text = icon.Kind.ToString();
+                DetailKind.Text = $"IconKind.{icon.Kind}";
             }
 
             if (DetailUnicode != null)
@@ -255,10 +295,16 @@ namespace Lemoo.UI.WPF.Views.Pages
 
             if (DetailKeywords != null)
             {
-                // 使用图标的关键词
+                // 使用图标的关键词（现在包含中英文）
                 DetailKeywords.ItemsSource = icon.Keywords?.Length > 0
-                    ? icon.Keywords
+                    ? icon.Keywords.Take(10) // 限制显示前10个
                     : new[] { icon.Name, icon.Category };
+            }
+
+            // 更新 ViewModel 的选中图标（用于双向绑定）
+            if (_viewModel != null)
+            {
+                _viewModel.SelectedIcon = icon;
             }
         }
     }

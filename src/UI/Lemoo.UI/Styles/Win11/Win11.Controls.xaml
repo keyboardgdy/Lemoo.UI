@@ -57,6 +57,23 @@
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.StatusBar.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToolBar.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Ribbon.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.CardView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TagInput.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ToastNotification.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ProgressDialog.xaml"/>
+
+        <!-- 增强控件样式 -->
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DataGridEx.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.DataGridPager.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TimelineView.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.CodeEditor.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.TreeViewEx.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ImageGallery.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Carousel.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.RatingControl.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.ChartControl.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.EmptyState.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.SplitViewEx.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <!-- ============================================
@@ -130,28 +147,8 @@
                             </Trigger.EnterActions>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="outerEllipse"
-                                                       Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.focusBorder}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}"
-                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="outerEllipse"
-                                                       Storyboard.TargetProperty="(Ellipse.Stroke).(SolidColorBrush.Color)"
-                                                       To="{StaticResource input.border}"
-                                                       Duration="{StaticResource AnimationDuration.Fast}"
-                                                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
+                            <!-- 使用 Setter 替代 ColorAnimation，确保主题切换时颜色正确更新 -->
+                            <Setter TargetName="outerEllipse" Property="Stroke" Value="{DynamicResource InputFocusBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>

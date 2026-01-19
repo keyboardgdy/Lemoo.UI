@@ -9,7 +9,7 @@
     <converters:IconBoolToVisibilityConverter x:Key="IconBoolToVisibilityConverter" />
 
     <!-- 通用转换器 -->
-    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
     <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
@@ -20,5 +20,11 @@
     <converters:CategoryExpandedConverter x:Key="CategoryExpandedConverter" />
     <converters:StaticResourceConverter x:Key="StaticResourceConverter" />
     <converters:EqualityConverter x:Key="EqualityConverter" />
+
+    <!-- 阶段3新增转换器 -->
+    <converters:TimelineNodeStateToColorConverter x:Key="NodeStateToColorConverter" />
+    <converters:TimelineNodeStateToIconConverter x:Key="NodeStateToIconConverter" />
+    <converters:SubtractConverter x:Key="SubtractConverter" />
+    <converters:BoolToTextWrappingConverter x:Key="BoolToTextWrappingConverter" />
 
 </ResourceDictionary>

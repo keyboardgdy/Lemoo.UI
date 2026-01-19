@@ -11,7 +11,7 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
     /// <summary>
     /// 图标浏览器页面视图模型
     /// </summary>
-    public partial class IconBrowserPageViewModel
+    public partial class IconBrowserPageViewModel : ObservableObject
     {
         /// <summary>
         /// 所有图标列表
@@ -67,7 +67,15 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         /// <summary>
         /// 获取过滤后的图标列表
         /// </summary>
-        public ObservableCollection<IconInfo> FilteredIcons => _filteredIcons;
+        public ObservableCollection<IconInfo> FilteredIcons
+        {
+            get => _filteredIcons;
+            private set
+            {
+                _filteredIcons = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// 获取分类列表
@@ -121,51 +129,50 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
                 query = query.Where(icon => icon.Category == _selectedCategory!.CategoryName);
             }
 
-            // 按搜索文本过滤
+            // 按搜索文本过滤（使用预先小写化的属性）
             if (!string.IsNullOrWhiteSpace(_searchText))
             {
                 var searchLower = _searchText.ToLower();
                 query = query.Where(icon =>
-                    icon.Name.ToLower().Contains(searchLower) ||
-                    icon.Category.ToLower().Contains(searchLower) ||
-                    (icon.Keywords?.Any(k => k.ToLower().Contains(searchLower)) ?? false));
+                    icon.NameLower.Contains(searchLower) ||
+                    icon.CategoryLower.Contains(searchLower) ||
+                    icon.KeywordsLower.Any(k => k.Contains(searchLower)));
             }
 
+            // 批量更新集合，减少 UI 更新次数
             var result = query.ToList();
-            _filteredIcons.Clear();
-            foreach (var icon in result)
-            {
-                _filteredIcons.Add(icon);
-            }
-
+            FilteredIcons = new ObservableCollection<IconInfo>(result);
             OnPropertyChanged(nameof(DisplayedIconCount));
         }
 
         /// <summary>
         /// 搜索命令
         /// </summary>
-        public RelayCommand<string> SearchCommand => new RelayCommand<string>(searchText =>
+        [RelayCommand]
+        private void Search(string searchText)
         {
             _searchText = searchText ?? string.Empty;
             UpdateFilteredIcons();
-        });
+        }
 
         /// <summary>
         /// 设置尺寸命令
         /// </summary>
-        public RelayCommand<string> SetSizeCommand => new RelayCommand<string>(size =>
+        [RelayCommand]
+        private void SetSize(string size)
         {
             if (Enum.TryParse<IconSize>(size, out var iconSize))
             {
                 _currentIconSize = iconSize;
                 UpdateFilteredIcons();
             }
-        });
+        }
 
         /// <summary>
         /// 选择分类命令
         /// </summary>
-        public RelayCommand<IconCategoryItemViewModel> SelectCategoryCommand => new RelayCommand<IconCategoryItemViewModel>(category =>
+        [RelayCommand]
+        private void SelectCategory(IconCategoryItemViewModel category)
         {
             if (category == null) return;
 
@@ -177,23 +184,13 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
 
             _selectedCategory = category;
             UpdateFilteredIcons();
-        });
-
-        /// <summary>
-        /// 属性更改通知
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
     /// <summary>
     /// 图标分类项视图模型
     /// </summary>
-    public class IconCategoryItemViewModel : ObservableObject
+    public partial class IconCategoryItemViewModel : ObservableObject
     {
         private bool _isSelected;
 
@@ -208,6 +205,11 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         public string CategoryName { get; set; } = string.Empty;
 
         /// <summary>
+        /// 图标数量
+        /// </summary>
+        public int IconCount { get; set; }
+
+        /// <summary>
         /// 是否选中
         /// </summary>
         public bool IsSelected
@@ -218,5 +220,10 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
                 SetProperty(ref _isSelected, value);
             }
         }
+
+        /// <summary>
+        /// 显示文本（名称 + 数量）
+        /// </summary>
+        public string DisplayText => $"{DisplayName} ({IconCount})";
     }
 }

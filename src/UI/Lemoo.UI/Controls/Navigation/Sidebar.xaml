@@ -5,11 +5,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:conv="clr-namespace:Lemoo.UI.Converters"
              mc:Ignorable="d"
+             d:DesignWidth="240"
+             d:DesignHeight="800"
              Width="240">
 
     <UserControl.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <conv:ExpandIconConverter x:Key="ExpandIconConverter" />
+        <conv:IconKindToGlyphConverter x:Key="IconKindToGlyphConverter" />
 
         <!-- 导航项样式 -->
         <Style x:Key="NavItemStyle" TargetType="Button">
@@ -186,7 +189,7 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0"
-                                                   Text="{Binding Icon}"
+                                                   Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                    FontFamily="Segoe MDL2 Assets"
                                                    FontSize="16"
                                                    Foreground="{DynamicResource SidebarForegroundBrush}"
@@ -224,7 +227,7 @@
                                                         <ColumnDefinition Width="*" />
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0"
-                                                               Text="{Binding Icon}"
+                                                               Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                                FontFamily="Segoe MDL2 Assets"
                                                                FontSize="14"
                                                                Foreground="{DynamicResource SidebarForegroundBrush}"
@@ -262,7 +265,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0"
-                                           Text="{Binding Icon}"
+                                           Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                            FontFamily="Segoe MDL2 Assets"
                                            FontSize="16"
                                            Foreground="{DynamicResource SidebarForegroundBrush}"

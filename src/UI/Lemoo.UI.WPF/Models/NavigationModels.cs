@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Lemoo.UI.Models.Icons;
 
 namespace Lemoo.UI.WPF.Models;
 
@@ -12,10 +13,10 @@ public class MenuItemModel
     public string Header { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字体图标（Segoe MDL2 Assets 字符），用于上下文菜单和子菜单。
+    /// 字体图标类型，用于上下文菜单和子菜单。
     /// 可为空。
     /// </summary>
-    public string? Icon { get; set; }
+    public IconKind? Icon { get; set; }
 
     /// <summary>
     /// 对应的页面键（可为空，为空则仅作为菜单分组/父级）。
@@ -34,9 +35,9 @@ public partial class NavigationItem : ObservableObject
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    /// 字体图标（Segoe MDL2 Assets 字符）。
+    /// 字体图标类型。
     /// </summary>
-    public string Icon { get; set; } = string.Empty;
+    public IconKind Icon { get; set; } = IconKind.None;
 
     /// <summary>
     /// 对应页面键（可为空，父级分组节点可不设置）。

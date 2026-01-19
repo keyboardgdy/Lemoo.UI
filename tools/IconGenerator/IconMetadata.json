@@ -1,0 +1,6532 @@
+{
+  "$schema": "./IconMetadata.schema.json",
+  "font": {
+    "name": "Segoe Fluent Icons",
+    "version": "1.00",
+    "copyright": "© 2021 Microsoft Corporation. All Rights Reserved."
+  },
+  "categories": [
+    {
+      "key": "navigation",
+      "name": "Navigation",
+      "name_zh": "导航",
+      "priority": 1
+    },
+    {
+      "key": "actions",
+      "name": "Actions",
+      "name_zh": "操作",
+      "priority": 2
+    },
+    {
+      "key": "media",
+      "name": "Media",
+      "name_zh": "媒体",
+      "priority": 3
+    },
+    {
+      "key": "communication",
+      "name": "Communication",
+      "name_zh": "通信",
+      "priority": 4
+    },
+    {
+      "key": "files",
+      "name": "Files",
+      "name_zh": "文件",
+      "priority": 5
+    },
+    {
+      "key": "status",
+      "name": "Status",
+      "name_zh": "状态",
+      "priority": 6
+    },
+    {
+      "key": "ui",
+      "name": "UI Elements",
+      "name_zh": "界面",
+      "priority": 7
+    },
+    {
+      "key": "development",
+      "name": "Development",
+      "name_zh": "开发",
+      "priority": 8
+    },
+    {
+      "key": "security",
+      "name": "Security",
+      "name_zh": "安全",
+      "priority": 9
+    },
+    {
+      "key": "uncategorized",
+      "name": "Uncategorized",
+      "name_zh": "未分类",
+      "priority": 999
+    }
+  ],
+  "icons": [
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "Back",
+      "enum_name": "Back",
+      "category": "navigation",
+      "keywords": [
+        "back",
+        "navigation",
+        "返回",
+        "后退"
+      ],
+      "i18n": {
+        "en": "Back",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE72A",
+      "unicode": "E72A",
+      "unicode_string": "\\uE72A",
+      "name": "Forward",
+      "enum_name": "Forward",
+      "category": "navigation",
+      "keywords": [
+        "下一步",
+        "前进",
+        "navigation",
+        "forward"
+      ],
+      "i18n": {
+        "en": "Forward",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "Up",
+      "enum_name": "Up",
+      "category": "navigation",
+      "keywords": [
+        "向上",
+        "上",
+        "navigation",
+        "up"
+      ],
+      "i18n": {
+        "en": "Up",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE74B",
+      "unicode": "E74B",
+      "unicode_string": "\\uE74B",
+      "name": "Down",
+      "enum_name": "Down",
+      "category": "navigation",
+      "keywords": [
+        "下",
+        "navigation",
+        "down",
+        "向下"
+      ],
+      "i18n": {
+        "en": "Down",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE72C",
+      "unicode": "E72C",
+      "unicode_string": "\\uE72C",
+      "name": "Refresh",
+      "enum_name": "Refresh",
+      "category": "navigation",
+      "keywords": [
+        "重新加载",
+        "刷新",
+        "navigation",
+        "refresh"
+      ],
+      "i18n": {
+        "en": "Refresh",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE80F",
+      "unicode": "E80F",
+      "unicode_string": "\\uE80F",
+      "name": "Home",
+      "enum_name": "Home",
+      "category": "navigation",
+      "keywords": [
+        "首页",
+        "navigation",
+        "主页",
+        "家",
+        "home"
+      ],
+      "i18n": {
+        "en": "Home",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE8BB",
+      "unicode": "E8BB",
+      "unicode_string": "\\uE8BB",
+      "name": "Menu",
+      "enum_name": "Menu",
+      "category": "navigation",
+      "keywords": [
+        "目录",
+        "menu",
+        "navigation",
+        "菜单"
+      ],
+      "i18n": {
+        "en": "Menu",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE10C",
+      "unicode": "E10C",
+      "unicode_string": "\\uE10C",
+      "name": "More",
+      "enum_name": "More",
+      "category": "navigation",
+      "keywords": [
+        "more",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "More",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE8C3",
+      "unicode": "E8C3",
+      "unicode_string": "\\uE8C3",
+      "name": "All",
+      "enum_name": "All",
+      "category": "navigation",
+      "keywords": [
+        "navigation",
+        "all"
+      ],
+      "i18n": {
+        "en": "All",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE762",
+      "unicode": "E762",
+      "unicode_string": "\\uE762",
+      "name": "Left",
+      "enum_name": "Left",
+      "category": "navigation",
+      "keywords": [
+        "左",
+        "left",
+        "navigation",
+        "向左"
+      ],
+      "i18n": {
+        "en": "Left",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE763",
+      "unicode": "E763",
+      "unicode_string": "\\uE763",
+      "name": "Right",
+      "enum_name": "Right",
+      "category": "navigation",
+      "keywords": [
+        "向右",
+        "right",
+        "navigation",
+        "右"
+      ],
+      "i18n": {
+        "en": "Right",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE8AB",
+      "unicode": "E8AB",
+      "unicode_string": "\\uE8AB",
+      "name": "Go",
+      "enum_name": "Go",
+      "category": "navigation",
+      "keywords": [
+        "navigation",
+        "go"
+      ],
+      "i18n": {
+        "en": "Go",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "PageUp",
+      "enum_name": "PageUp",
+      "category": "navigation",
+      "keywords": [
+        "pageup",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "PageUp",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE74B",
+      "unicode": "E74B",
+      "unicode_string": "\\uE74B",
+      "name": "PageDown",
+      "enum_name": "PageDown",
+      "category": "navigation",
+      "keywords": [
+        "pagedown",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "PageDown",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE762",
+      "unicode": "E762",
+      "unicode_string": "\\uE762",
+      "name": "First",
+      "enum_name": "First",
+      "category": "navigation",
+      "keywords": [
+        "first",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "First",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE763",
+      "unicode": "E763",
+      "unicode_string": "\\uE763",
+      "name": "Last",
+      "enum_name": "Last",
+      "category": "navigation",
+      "keywords": [
+        "navigation",
+        "last"
+      ],
+      "i18n": {
+        "en": "Last",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE740",
+      "unicode": "E740",
+      "unicode_string": "\\uE740",
+      "name": "Maximize",
+      "enum_name": "Maximize",
+      "category": "navigation",
+      "keywords": [
+        "maximize",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "Maximize",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE949",
+      "unicode": "E949",
+      "unicode_string": "\\uE949",
+      "name": "Minimize",
+      "enum_name": "Minimize",
+      "category": "navigation",
+      "keywords": [
+        "navigation",
+        "minimize"
+      ],
+      "i18n": {
+        "en": "Minimize",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE923",
+      "unicode": "E923",
+      "unicode_string": "\\uE923",
+      "name": "Restore",
+      "enum_name": "Restore",
+      "category": "navigation",
+      "keywords": [
+        "restore",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "Restore",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "BackToTop",
+      "enum_name": "BackToTop",
+      "category": "navigation",
+      "keywords": [
+        "navigation",
+        "backtotop"
+      ],
+      "i18n": {
+        "en": "BackToTop",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE72A",
+      "unicode": "E72A",
+      "unicode_string": "\\uE72A",
+      "name": "FastForward",
+      "enum_name": "FastForward",
+      "category": "navigation",
+      "keywords": [
+        "fastforward",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "FastForward",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "Rewind",
+      "enum_name": "Rewind",
+      "category": "navigation",
+      "keywords": [
+        "rewind",
+        "navigation"
+      ],
+      "i18n": {
+        "en": "Rewind",
+        "zh": "导航"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "Add",
+      "enum_name": "Add",
+      "category": "actions",
+      "keywords": [
+        "新增",
+        "添加",
+        "add",
+        "+",
+        "actions",
+        "加号"
+      ],
+      "i18n": {
+        "en": "Add",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Delete",
+      "enum_name": "Delete",
+      "category": "actions",
+      "keywords": [
+        "delete",
+        "删除",
+        "移除",
+        "废纸篓",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Delete",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE70F",
+      "unicode": "E70F",
+      "unicode_string": "\\uE70F",
+      "name": "Edit",
+      "enum_name": "Edit",
+      "category": "actions",
+      "keywords": [
+        "修改",
+        "edit",
+        "actions",
+        "编辑"
+      ],
+      "i18n": {
+        "en": "Edit",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74E",
+      "unicode": "E74E",
+      "unicode_string": "\\uE74E",
+      "name": "Save",
+      "enum_name": "Save",
+      "category": "actions",
+      "keywords": [
+        "save",
+        "保存",
+        "actions",
+        "存档"
+      ],
+      "i18n": {
+        "en": "Save",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Cancel",
+      "enum_name": "Cancel",
+      "category": "actions",
+      "keywords": [
+        "撤销",
+        "cancel",
+        "actions",
+        "取消"
+      ],
+      "i18n": {
+        "en": "Cancel",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Accept",
+      "enum_name": "Accept",
+      "category": "actions",
+      "keywords": [
+        "accept",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Accept",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Close",
+      "enum_name": "Close",
+      "category": "actions",
+      "keywords": [
+        "关闭",
+        "close",
+        "actions",
+        "闭合"
+      ],
+      "i18n": {
+        "en": "Close",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8C8",
+      "unicode": "E8C8",
+      "unicode_string": "\\uE8C8",
+      "name": "Copy",
+      "enum_name": "Copy",
+      "category": "actions",
+      "keywords": [
+        "拷贝",
+        "copy",
+        "actions",
+        "复制"
+      ],
+      "i18n": {
+        "en": "Copy",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8C6",
+      "unicode": "E8C6",
+      "unicode_string": "\\uE8C6",
+      "name": "Cut",
+      "enum_name": "Cut",
+      "category": "actions",
+      "keywords": [
+        "剪切",
+        "actions",
+        "裁剪",
+        "cut"
+      ],
+      "i18n": {
+        "en": "Cut",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8C7",
+      "unicode": "E8C7",
+      "unicode_string": "\\uE8C7",
+      "name": "Paste",
+      "enum_name": "Paste",
+      "category": "actions",
+      "keywords": [
+        "粘贴",
+        "paste",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Paste",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A7",
+      "unicode": "E7A7",
+      "unicode_string": "\\uE7A7",
+      "name": "Undo",
+      "enum_name": "Undo",
+      "category": "actions",
+      "keywords": [
+        "撤销",
+        "undo",
+        "actions",
+        "取消操作"
+      ],
+      "i18n": {
+        "en": "Undo",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A6",
+      "unicode": "E7A6",
+      "unicode_string": "\\uE7A6",
+      "name": "Redo",
+      "enum_name": "Redo",
+      "category": "actions",
+      "keywords": [
+        "redo",
+        "恢复操作",
+        "actions",
+        "重做"
+      ],
+      "i18n": {
+        "en": "Redo",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "Search",
+      "enum_name": "Search",
+      "category": "actions",
+      "keywords": [
+        "搜索",
+        "放大镜",
+        "search",
+        "查找",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Search",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE71C",
+      "unicode": "E71C",
+      "unicode_string": "\\uE71C",
+      "name": "Filter",
+      "enum_name": "Filter",
+      "category": "actions",
+      "keywords": [
+        "filter",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Filter",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8CB",
+      "unicode": "E8CB",
+      "unicode_string": "\\uE8CB",
+      "name": "Sort",
+      "enum_name": "Sort",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "sort"
+      ],
+      "i18n": {
+        "en": "Sort",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE749",
+      "unicode": "E749",
+      "unicode_string": "\\uE749",
+      "name": "Print",
+      "enum_name": "Print",
+      "category": "actions",
+      "keywords": [
+        "打印",
+        "actions",
+        "print",
+        "打印机"
+      ],
+      "i18n": {
+        "en": "Print",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE896",
+      "unicode": "E896",
+      "unicode_string": "\\uE896",
+      "name": "Download",
+      "enum_name": "Download",
+      "category": "actions",
+      "keywords": [
+        "下载",
+        "download",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Download",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE898",
+      "unicode": "E898",
+      "unicode_string": "\\uE898",
+      "name": "Upload",
+      "enum_name": "Upload",
+      "category": "actions",
+      "keywords": [
+        "upload",
+        "actions",
+        "上传"
+      ],
+      "i18n": {
+        "en": "Upload",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE895",
+      "unicode": "E895",
+      "unicode_string": "\\uE895",
+      "name": "Sync",
+      "enum_name": "Sync",
+      "category": "actions",
+      "keywords": [
+        "sync",
+        "actions",
+        "同步"
+      ],
+      "i18n": {
+        "en": "Sync",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE72D",
+      "unicode": "E72D",
+      "unicode_string": "\\uE72D",
+      "name": "Share",
+      "enum_name": "Share",
+      "category": "actions",
+      "keywords": [
+        "share",
+        "分享",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Share",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE71B",
+      "unicode": "E71B",
+      "unicode_string": "\\uE71B",
+      "name": "Link",
+      "enum_name": "Link",
+      "category": "actions",
+      "keywords": [
+        "link",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Link",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE718",
+      "unicode": "E718",
+      "unicode_string": "\\uE718",
+      "name": "Pin",
+      "enum_name": "Pin",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "pin"
+      ],
+      "i18n": {
+        "en": "Pin",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE77A",
+      "unicode": "E77A",
+      "unicode_string": "\\uE77A",
+      "name": "Unpin",
+      "enum_name": "Unpin",
+      "category": "actions",
+      "keywords": [
+        "unpin",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Unpin",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE71A",
+      "unicode": "E71A",
+      "unicode_string": "\\uE71A",
+      "name": "Stop",
+      "enum_name": "Stop",
+      "category": "actions",
+      "keywords": [
+        "stop",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Stop",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE769",
+      "unicode": "E769",
+      "unicode_string": "\\uE769",
+      "name": "Pause",
+      "enum_name": "Pause",
+      "category": "actions",
+      "keywords": [
+        "pause",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Pause",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE768",
+      "unicode": "E768",
+      "unicode_string": "\\uE768",
+      "name": "Play",
+      "enum_name": "Play",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "play"
+      ],
+      "i18n": {
+        "en": "Play",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE713",
+      "unicode": "E713",
+      "unicode_string": "\\uE713",
+      "name": "Settings",
+      "enum_name": "Settings",
+      "category": "actions",
+      "keywords": [
+        "settings",
+        "配置",
+        "设置",
+        "actions",
+        "选项"
+      ],
+      "i18n": {
+        "en": "Settings",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74C",
+      "unicode": "E74C",
+      "unicode_string": "\\uE74C",
+      "name": "Move",
+      "enum_name": "Move",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "move"
+      ],
+      "i18n": {
+        "en": "Move",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8AC",
+      "unicode": "E8AC",
+      "unicode_string": "\\uE8AC",
+      "name": "Rename",
+      "enum_name": "Rename",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "rename"
+      ],
+      "i18n": {
+        "en": "Rename",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8E3",
+      "unicode": "E8E3",
+      "unicode_string": "\\uE8E3",
+      "name": "SelectAll",
+      "enum_name": "SelectAll",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "selectall"
+      ],
+      "i18n": {
+        "en": "SelectAll",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8E6",
+      "unicode": "E8E6",
+      "unicode_string": "\\uE8E6",
+      "name": "Clear",
+      "enum_name": "Clear",
+      "category": "actions",
+      "keywords": [
+        "clear",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Clear",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8A7",
+      "unicode": "E8A7",
+      "unicode_string": "\\uE8A7",
+      "name": "ViewAll",
+      "enum_name": "ViewAll",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "viewall"
+      ],
+      "i18n": {
+        "en": "ViewAll",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7C4",
+      "unicode": "E7C4",
+      "unicode_string": "\\uE7C4",
+      "name": "New",
+      "enum_name": "New",
+      "category": "actions",
+      "keywords": [
+        "new",
+        "actions"
+      ],
+      "i18n": {
+        "en": "New",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8A5",
+      "unicode": "E8A5",
+      "unicode_string": "\\uE8A5",
+      "name": "Open",
+      "enum_name": "Open",
+      "category": "actions",
+      "keywords": [
+        "打开",
+        "open",
+        "actions",
+        "开启"
+      ],
+      "i18n": {
+        "en": "Open",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8B5",
+      "unicode": "E8B5",
+      "unicode_string": "\\uE8B5",
+      "name": "Import",
+      "enum_name": "Import",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "import"
+      ],
+      "i18n": {
+        "en": "Import",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8B1",
+      "unicode": "E8B1",
+      "unicode_string": "\\uE8B1",
+      "name": "Export",
+      "enum_name": "Export",
+      "category": "actions",
+      "keywords": [
+        "export",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Export",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Send",
+      "enum_name": "Send",
+      "category": "actions",
+      "keywords": [
+        "send",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Send",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8A1",
+      "unicode": "E8A1",
+      "unicode_string": "\\uE8A1",
+      "name": "Receive",
+      "enum_name": "Receive",
+      "category": "actions",
+      "keywords": [
+        "receive",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Receive",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE766",
+      "unicode": "E766",
+      "unicode_string": "\\uE766",
+      "name": "Enable",
+      "enum_name": "Enable",
+      "category": "actions",
+      "keywords": [
+        "enable",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Enable",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE767",
+      "unicode": "E767",
+      "unicode_string": "\\uE767",
+      "name": "Disable",
+      "enum_name": "Disable",
+      "category": "actions",
+      "keywords": [
+        "disable",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Disable",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE72E",
+      "unicode": "E72E",
+      "unicode_string": "\\uE72E",
+      "name": "LockAction",
+      "enum_name": "LockAction",
+      "category": "actions",
+      "keywords": [
+        "lockaction",
+        "actions"
+      ],
+      "i18n": {
+        "en": "LockAction",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE785",
+      "unicode": "E785",
+      "unicode_string": "\\uE785",
+      "name": "UnlockAction",
+      "enum_name": "UnlockAction",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "unlockaction"
+      ],
+      "i18n": {
+        "en": "UnlockAction",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7E7",
+      "unicode": "E7E7",
+      "unicode_string": "\\uE7E7",
+      "name": "Exit",
+      "enum_name": "Exit",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "exit"
+      ],
+      "i18n": {
+        "en": "Exit",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B2",
+      "unicode": "E7B2",
+      "unicode_string": "\\uE7B2",
+      "name": "SignOut",
+      "enum_name": "SignOut",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "signout"
+      ],
+      "i18n": {
+        "en": "SignOut",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B1",
+      "unicode": "E7B1",
+      "unicode_string": "\\uE7B1",
+      "name": "SignIn",
+      "enum_name": "SignIn",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "signin"
+      ],
+      "i18n": {
+        "en": "SignIn",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8B7",
+      "unicode": "E8B7",
+      "unicode_string": "\\uE8B7",
+      "name": "SignUp",
+      "enum_name": "SignUp",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "signup"
+      ],
+      "i18n": {
+        "en": "SignUp",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Submit",
+      "enum_name": "Submit",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "submit"
+      ],
+      "i18n": {
+        "en": "Submit",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE746",
+      "unicode": "E746",
+      "unicode_string": "\\uE746",
+      "name": "Apply",
+      "enum_name": "Apply",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "apply"
+      ],
+      "i18n": {
+        "en": "Apply",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A7",
+      "unicode": "E7A7",
+      "unicode_string": "\\uE7A7",
+      "name": "Reset",
+      "enum_name": "Reset",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "reset"
+      ],
+      "i18n": {
+        "en": "Reset",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A6",
+      "unicode": "E7A6",
+      "unicode_string": "\\uE7A6",
+      "name": "Recover",
+      "enum_name": "Recover",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "recover"
+      ],
+      "i18n": {
+        "en": "Recover",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE78B",
+      "unicode": "E78B",
+      "unicode_string": "\\uE78B",
+      "name": "Archive",
+      "enum_name": "Archive",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "archive"
+      ],
+      "i18n": {
+        "en": "Archive",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE78C",
+      "unicode": "E78C",
+      "unicode_string": "\\uE78C",
+      "name": "Unarchive",
+      "enum_name": "Unarchive",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "unarchive"
+      ],
+      "i18n": {
+        "en": "Unarchive",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74D",
+      "unicode": "E74D",
+      "unicode_string": "\\uE74D",
+      "name": "Recycle",
+      "enum_name": "Recycle",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "recycle"
+      ],
+      "i18n": {
+        "en": "Recycle",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A6",
+      "unicode": "E7A6",
+      "unicode_string": "\\uE7A6",
+      "name": "RestoreDelete",
+      "enum_name": "RestoreDelete",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "restoredelete"
+      ],
+      "i18n": {
+        "en": "RestoreDelete",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE722",
+      "unicode": "E722",
+      "unicode_string": "\\uE722",
+      "name": "Scan",
+      "enum_name": "Scan",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "scan"
+      ],
+      "i18n": {
+        "en": "Scan",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE722",
+      "unicode": "E722",
+      "unicode_string": "\\uE722",
+      "name": "Capture",
+      "enum_name": "Capture",
+      "category": "actions",
+      "keywords": [
+        "capture",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Capture",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE722",
+      "unicode": "E722",
+      "unicode_string": "\\uE722",
+      "name": "Record",
+      "enum_name": "Record",
+      "category": "actions",
+      "keywords": [
+        "record",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Record",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE720",
+      "unicode": "E720",
+      "unicode_string": "\\uE720",
+      "name": "Snapshot",
+      "enum_name": "Snapshot",
+      "category": "actions",
+      "keywords": [
+        "snapshot",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Snapshot",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A7",
+      "unicode": "E7A7",
+      "unicode_string": "\\uE7A7",
+      "name": "Crop",
+      "enum_name": "Crop",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "crop"
+      ],
+      "i18n": {
+        "en": "Crop",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7AD",
+      "unicode": "E7AD",
+      "unicode_string": "\\uE7AD",
+      "name": "Rotate",
+      "enum_name": "Rotate",
+      "category": "actions",
+      "keywords": [
+        "rotate",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Rotate",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7AE",
+      "unicode": "E7AE",
+      "unicode_string": "\\uE7AE",
+      "name": "Flip",
+      "enum_name": "Flip",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "flip"
+      ],
+      "i18n": {
+        "en": "Flip",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "Scale",
+      "enum_name": "Scale",
+      "category": "actions",
+      "keywords": [
+        "scale",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Scale",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8E1",
+      "unicode": "E8E1",
+      "unicode_string": "\\uE8E1",
+      "name": "Align",
+      "enum_name": "Align",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "align"
+      ],
+      "i18n": {
+        "en": "Align",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE712",
+      "unicode": "E712",
+      "unicode_string": "\\uE712",
+      "name": "Group",
+      "enum_name": "Group",
+      "category": "actions",
+      "keywords": [
+        "组",
+        "group",
+        "actions",
+        "群组"
+      ],
+      "i18n": {
+        "en": "Group",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8E6",
+      "unicode": "E8E6",
+      "unicode_string": "\\uE8E6",
+      "name": "Ungroup",
+      "enum_name": "Ungroup",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "ungroup"
+      ],
+      "i18n": {
+        "en": "Ungroup",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74B",
+      "unicode": "E74B",
+      "unicode_string": "\\uE74B",
+      "name": "BringFront",
+      "enum_name": "BringFront",
+      "category": "actions",
+      "keywords": [
+        "bringfront",
+        "actions"
+      ],
+      "i18n": {
+        "en": "BringFront",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "SendBack",
+      "enum_name": "SendBack",
+      "category": "actions",
+      "keywords": [
+        "sendback",
+        "actions"
+      ],
+      "i18n": {
+        "en": "SendBack",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8B8",
+      "unicode": "E8B8",
+      "unicode_string": "\\uE8B8",
+      "name": "Preview",
+      "enum_name": "Preview",
+      "category": "actions",
+      "keywords": [
+        "preview",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Preview",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Publish",
+      "enum_name": "Publish",
+      "category": "actions",
+      "keywords": [
+        "publish",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Publish",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "Subscribe",
+      "enum_name": "Subscribe",
+      "category": "actions",
+      "keywords": [
+        "subscribe",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Subscribe",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Unsubscribe",
+      "enum_name": "Unsubscribe",
+      "category": "actions",
+      "keywords": [
+        "unsubscribe",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Unsubscribe",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "Follow",
+      "enum_name": "Follow",
+      "category": "actions",
+      "keywords": [
+        "follow",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Follow",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Unfollow",
+      "enum_name": "Unfollow",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "unfollow"
+      ],
+      "i18n": {
+        "en": "Unfollow",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "Invite",
+      "enum_name": "Invite",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "invite"
+      ],
+      "i18n": {
+        "en": "Invite",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Request",
+      "enum_name": "Request",
+      "category": "actions",
+      "keywords": [
+        "request",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Request",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Approve",
+      "enum_name": "Approve",
+      "category": "actions",
+      "keywords": [
+        "approve",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Approve",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Reject",
+      "enum_name": "Reject",
+      "category": "actions",
+      "keywords": [
+        "reject",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Reject",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE72A",
+      "unicode": "E72A",
+      "unicode_string": "\\uE72A",
+      "name": "Forward",
+      "enum_name": "ForwardAction",
+      "category": "actions",
+      "keywords": [
+        "下一步",
+        "forwardaction",
+        "前进",
+        "forward",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Forward",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7A6",
+      "unicode": "E7A6",
+      "unicode_string": "\\uE7A6",
+      "name": "Reply",
+      "enum_name": "Reply",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "reply"
+      ],
+      "i18n": {
+        "en": "Reply",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "MarkRead",
+      "enum_name": "MarkRead",
+      "category": "actions",
+      "keywords": [
+        "markread",
+        "actions"
+      ],
+      "i18n": {
+        "en": "MarkRead",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE947",
+      "unicode": "E947",
+      "unicode_string": "\\uE947",
+      "name": "MarkUnread",
+      "enum_name": "MarkUnread",
+      "category": "actions",
+      "keywords": [
+        "markunread",
+        "actions"
+      ],
+      "i18n": {
+        "en": "MarkUnread",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B5",
+      "unicode": "E7B5",
+      "unicode_string": "\\uE7B5",
+      "name": "Bookmark",
+      "enum_name": "Bookmark",
+      "category": "actions",
+      "keywords": [
+        "bookmark",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Bookmark",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B6",
+      "unicode": "E7B6",
+      "unicode_string": "\\uE7B6",
+      "name": "RemoveBookmark",
+      "enum_name": "RemoveBookmark",
+      "category": "actions",
+      "keywords": [
+        "removebookmark",
+        "actions"
+      ],
+      "i18n": {
+        "en": "RemoveBookmark",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE775",
+      "unicode": "E775",
+      "unicode_string": "\\uE775",
+      "name": "Tag",
+      "enum_name": "Tag",
+      "category": "actions",
+      "keywords": [
+        "tag",
+        "actions",
+        "标签",
+        "标记"
+      ],
+      "i18n": {
+        "en": "Tag",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE734",
+      "unicode": "E734",
+      "unicode_string": "\\uE734",
+      "name": "Rate",
+      "enum_name": "Rate",
+      "category": "actions",
+      "keywords": [
+        "rate",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Rate",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "Comment",
+      "enum_name": "Comment",
+      "category": "actions",
+      "keywords": [
+        "评论",
+        "actions",
+        "comment",
+        "留言"
+      ],
+      "i18n": {
+        "en": "Comment",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B5",
+      "unicode": "E7B5",
+      "unicode_string": "\\uE7B5",
+      "name": "Like",
+      "enum_name": "Like",
+      "category": "actions",
+      "keywords": [
+        "点赞",
+        "actions",
+        "喜欢",
+        "like"
+      ],
+      "i18n": {
+        "en": "Like",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE7B6",
+      "unicode": "E7B6",
+      "unicode_string": "\\uE7B6",
+      "name": "Dislike",
+      "enum_name": "Dislike",
+      "category": "actions",
+      "keywords": [
+        "点踩",
+        "dislike",
+        "actions",
+        "不喜欢"
+      ],
+      "i18n": {
+        "en": "Dislike",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "Plus",
+      "enum_name": "Plus",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "plus"
+      ],
+      "i18n": {
+        "en": "Plus",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Minus",
+      "enum_name": "Minus",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "minus"
+      ],
+      "i18n": {
+        "en": "Minus",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE947",
+      "unicode": "E947",
+      "unicode_string": "\\uE947",
+      "name": "Multiply",
+      "enum_name": "Multiply",
+      "category": "actions",
+      "keywords": [
+        "multiply",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Multiply",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE8AF",
+      "unicode": "E8AF",
+      "unicode_string": "\\uE8AF",
+      "name": "Divide",
+      "enum_name": "Divide",
+      "category": "actions",
+      "keywords": [
+        "divide",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Divide",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE919",
+      "unicode": "E919",
+      "unicode_string": "\\uE919",
+      "name": "Equals",
+      "enum_name": "Equals",
+      "category": "actions",
+      "keywords": [
+        "equals",
+        "actions"
+      ],
+      "i18n": {
+        "en": "Equals",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE91A",
+      "unicode": "E91A",
+      "unicode_string": "\\uE91A",
+      "name": "NotEquals",
+      "enum_name": "NotEquals",
+      "category": "actions",
+      "keywords": [
+        "actions",
+        "notequals"
+      ],
+      "i18n": {
+        "en": "NotEquals",
+        "zh": "操作"
+      }
+    },
+    {
+      "glyph": "uE995",
+      "unicode": "E995",
+      "unicode_string": "\\uE995",
+      "name": "Volume",
+      "enum_name": "Volume",
+      "category": "media",
+      "keywords": [
+        "volume",
+        "音量",
+        "media",
+        "声音"
+      ],
+      "i18n": {
+        "en": "Volume",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE993",
+      "unicode": "E993",
+      "unicode_string": "\\uE993",
+      "name": "Mute",
+      "enum_name": "Mute",
+      "category": "media",
+      "keywords": [
+        "mute",
+        "media",
+        "消音",
+        "静音"
+      ],
+      "i18n": {
+        "en": "Mute",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE995",
+      "unicode": "E995",
+      "unicode_string": "\\uE995",
+      "name": "VolumeUp",
+      "enum_name": "VolumeUp",
+      "category": "media",
+      "keywords": [
+        "media",
+        "volumeup"
+      ],
+      "i18n": {
+        "en": "VolumeUp",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE993",
+      "unicode": "E993",
+      "unicode_string": "\\uE993",
+      "name": "VolumeDown",
+      "enum_name": "VolumeDown",
+      "category": "media",
+      "keywords": [
+        "volumedown",
+        "media"
+      ],
+      "i18n": {
+        "en": "VolumeDown",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE706",
+      "unicode": "E706",
+      "unicode_string": "\\uE706",
+      "name": "Brightness",
+      "enum_name": "Brightness",
+      "category": "media",
+      "keywords": [
+        "brightness",
+        "media"
+      ],
+      "i18n": {
+        "en": "Brightness",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE706",
+      "unicode": "E706",
+      "unicode_string": "\\uE706",
+      "name": "BrightnessUp",
+      "enum_name": "BrightnessUp",
+      "category": "media",
+      "keywords": [
+        "media",
+        "brightnessup"
+      ],
+      "i18n": {
+        "en": "BrightnessUp",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE706",
+      "unicode": "E706",
+      "unicode_string": "\\uE706",
+      "name": "BrightnessDown",
+      "enum_name": "BrightnessDown",
+      "category": "media",
+      "keywords": [
+        "brightnessdown",
+        "media"
+      ],
+      "i18n": {
+        "en": "BrightnessDown",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE722",
+      "unicode": "E722",
+      "unicode_string": "\\uE722",
+      "name": "Camera",
+      "enum_name": "Camera",
+      "category": "media",
+      "keywords": [
+        "拍照",
+        "摄像头",
+        "media",
+        "相机",
+        "camera"
+      ],
+      "i18n": {
+        "en": "Camera",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE714",
+      "unicode": "E714",
+      "unicode_string": "\\uE714",
+      "name": "Video",
+      "enum_name": "Video",
+      "category": "media",
+      "keywords": [
+        "视频",
+        "video",
+        "media",
+        "录像"
+      ],
+      "i18n": {
+        "en": "Video",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE768",
+      "unicode": "E768",
+      "unicode_string": "\\uE768",
+      "name": "VideoPlay",
+      "enum_name": "VideoPlay",
+      "category": "media",
+      "keywords": [
+        "videoplay",
+        "media"
+      ],
+      "i18n": {
+        "en": "VideoPlay",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE786",
+      "unicode": "E786",
+      "unicode_string": "\\uE786",
+      "name": "Audio",
+      "enum_name": "Audio",
+      "category": "media",
+      "keywords": [
+        "media",
+        "audio"
+      ],
+      "i18n": {
+        "en": "Audio",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE720",
+      "unicode": "E720",
+      "unicode_string": "\\uE720",
+      "name": "Image",
+      "enum_name": "Image",
+      "category": "media",
+      "keywords": [
+        "media",
+        "image"
+      ],
+      "i18n": {
+        "en": "Image",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE720",
+      "unicode": "E720",
+      "unicode_string": "\\uE720",
+      "name": "Photo",
+      "enum_name": "Photo",
+      "category": "media",
+      "keywords": [
+        "media",
+        "photo"
+      ],
+      "i18n": {
+        "en": "Photo",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE71B",
+      "unicode": "E71B",
+      "unicode_string": "\\uE71B",
+      "name": "Album",
+      "enum_name": "Album",
+      "category": "media",
+      "keywords": [
+        "media",
+        "album"
+      ],
+      "i18n": {
+        "en": "Album",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE942",
+      "unicode": "E942",
+      "unicode_string": "\\uE942",
+      "name": "Microphone",
+      "enum_name": "Microphone",
+      "category": "media",
+      "keywords": [
+        "microphone",
+        "media"
+      ],
+      "i18n": {
+        "en": "Microphone",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE993",
+      "unicode": "E993",
+      "unicode_string": "\\uE993",
+      "name": "MicrophoneOff",
+      "enum_name": "MicrophoneOff",
+      "category": "media",
+      "keywords": [
+        "media",
+        "microphoneoff"
+      ],
+      "i18n": {
+        "en": "MicrophoneOff",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE747",
+      "unicode": "E747",
+      "unicode_string": "\\uE747",
+      "name": "Caption",
+      "enum_name": "Caption",
+      "category": "media",
+      "keywords": [
+        "media",
+        "caption"
+      ],
+      "i18n": {
+        "en": "Caption",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE734",
+      "unicode": "E734",
+      "unicode_string": "\\uE734",
+      "name": "Playlist",
+      "enum_name": "Playlist",
+      "category": "media",
+      "keywords": [
+        "media",
+        "playlist"
+      ],
+      "i18n": {
+        "en": "Playlist",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "Previous",
+      "enum_name": "Previous",
+      "category": "media",
+      "keywords": [
+        "media",
+        "previous"
+      ],
+      "i18n": {
+        "en": "Previous",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE72A",
+      "unicode": "E72A",
+      "unicode_string": "\\uE72A",
+      "name": "Next",
+      "enum_name": "Next",
+      "category": "media",
+      "keywords": [
+        "next",
+        "media"
+      ],
+      "i18n": {
+        "en": "Next",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE72A",
+      "unicode": "E72A",
+      "unicode_string": "\\uE72A",
+      "name": "FastForwardMedia",
+      "enum_name": "FastForwardMedia",
+      "category": "media",
+      "keywords": [
+        "fastforwardmedia",
+        "media"
+      ],
+      "i18n": {
+        "en": "FastForwardMedia",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "RewindMedia",
+      "enum_name": "RewindMedia",
+      "category": "media",
+      "keywords": [
+        "rewindmedia",
+        "media"
+      ],
+      "i18n": {
+        "en": "RewindMedia",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE740",
+      "unicode": "E740",
+      "unicode_string": "\\uE740",
+      "name": "FullScreenMedia",
+      "enum_name": "FullScreenMedia",
+      "category": "media",
+      "keywords": [
+        "media",
+        "fullscreenmedia"
+      ],
+      "i18n": {
+        "en": "FullScreenMedia",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "PictureInPicture",
+      "enum_name": "PictureInPicture",
+      "category": "media",
+      "keywords": [
+        "media",
+        "pictureinpicture"
+      ],
+      "i18n": {
+        "en": "PictureInPicture",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8A2",
+      "unicode": "E8A2",
+      "unicode_string": "\\uE8A2",
+      "name": "HD",
+      "enum_name": "HD",
+      "category": "media",
+      "keywords": [
+        "hd",
+        "media"
+      ],
+      "i18n": {
+        "en": "HD",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8A3",
+      "unicode": "E8A3",
+      "unicode_string": "\\uE8A3",
+      "name": "FourK",
+      "enum_name": "FourK",
+      "category": "media",
+      "keywords": [
+        "media",
+        "fourk"
+      ],
+      "i18n": {
+        "en": "FourK",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8D4",
+      "unicode": "E8D4",
+      "unicode_string": "\\uE8D4",
+      "name": "Font",
+      "enum_name": "Font",
+      "category": "media",
+      "keywords": [
+        "font",
+        "media"
+      ],
+      "i18n": {
+        "en": "Font",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE790",
+      "unicode": "E790",
+      "unicode_string": "\\uE790",
+      "name": "Color",
+      "enum_name": "Color",
+      "category": "media",
+      "keywords": [
+        "media",
+        "color"
+      ],
+      "i18n": {
+        "en": "Color",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE791",
+      "unicode": "E791",
+      "unicode_string": "\\uE791",
+      "name": "Contrast",
+      "enum_name": "Contrast",
+      "category": "media",
+      "keywords": [
+        "media",
+        "contrast"
+      ],
+      "i18n": {
+        "en": "Contrast",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE792",
+      "unicode": "E792",
+      "unicode_string": "\\uE792",
+      "name": "Saturation",
+      "enum_name": "Saturation",
+      "category": "media",
+      "keywords": [
+        "saturation",
+        "media"
+      ],
+      "i18n": {
+        "en": "Saturation",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE71C",
+      "unicode": "E71C",
+      "unicode_string": "\\uE71C",
+      "name": "FilterMedia",
+      "enum_name": "FilterMedia",
+      "category": "media",
+      "keywords": [
+        "filtermedia",
+        "media"
+      ],
+      "i18n": {
+        "en": "FilterMedia",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8D3",
+      "unicode": "E8D3",
+      "unicode_string": "\\uE8D3",
+      "name": "Effect",
+      "enum_name": "Effect",
+      "category": "media",
+      "keywords": [
+        "effect",
+        "media"
+      ],
+      "i18n": {
+        "en": "Effect",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8D5",
+      "unicode": "E8D5",
+      "unicode_string": "\\uE8D5",
+      "name": "Animation",
+      "enum_name": "Animation",
+      "category": "media",
+      "keywords": [
+        "animation",
+        "media"
+      ],
+      "i18n": {
+        "en": "Animation",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8C9",
+      "unicode": "E8C9",
+      "unicode_string": "\\uE8C9",
+      "name": "Project",
+      "enum_name": "Project",
+      "category": "media",
+      "keywords": [
+        "project",
+        "media"
+      ],
+      "i18n": {
+        "en": "Project",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE7D9",
+      "unicode": "E7D9",
+      "unicode_string": "\\uE7D9",
+      "name": "Screen",
+      "enum_name": "Screen",
+      "category": "media",
+      "keywords": [
+        "screen",
+        "media"
+      ],
+      "i18n": {
+        "en": "Screen",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE7DA",
+      "unicode": "E7DA",
+      "unicode_string": "\\uE7DA",
+      "name": "ScreenShare",
+      "enum_name": "ScreenShare",
+      "category": "media",
+      "keywords": [
+        "screenshare",
+        "media"
+      ],
+      "i18n": {
+        "en": "ScreenShare",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE7DB",
+      "unicode": "E7DB",
+      "unicode_string": "\\uE7DB",
+      "name": "TV",
+      "enum_name": "TV",
+      "category": "media",
+      "keywords": [
+        "media",
+        "tv"
+      ],
+      "i18n": {
+        "en": "TV",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8CA",
+      "unicode": "E8CA",
+      "unicode_string": "\\uE8CA",
+      "name": "Radio",
+      "enum_name": "RadioMedia",
+      "category": "media",
+      "keywords": [
+        "radiomedia",
+        "media",
+        "radio"
+      ],
+      "i18n": {
+        "en": "Radio",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE8CB",
+      "unicode": "E8CB",
+      "unicode_string": "\\uE8CB",
+      "name": "Podcast",
+      "enum_name": "Podcast",
+      "category": "media",
+      "keywords": [
+        "podcast",
+        "media"
+      ],
+      "i18n": {
+        "en": "Podcast",
+        "zh": "媒体"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Mail",
+      "enum_name": "Mail",
+      "category": "communication",
+      "keywords": [
+        "信封",
+        "邮件",
+        "communication",
+        "mail"
+      ],
+      "i18n": {
+        "en": "Mail",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Inbox",
+      "enum_name": "Inbox",
+      "category": "communication",
+      "keywords": [
+        "inbox",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Inbox",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Outbox",
+      "enum_name": "Outbox",
+      "category": "communication",
+      "keywords": [
+        "outbox",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Outbox",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Draft",
+      "enum_name": "Draft",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "draft"
+      ],
+      "i18n": {
+        "en": "Draft",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Sent",
+      "enum_name": "Sent",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "sent"
+      ],
+      "i18n": {
+        "en": "Sent",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Deleted",
+      "enum_name": "Deleted",
+      "category": "communication",
+      "keywords": [
+        "deleted",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Deleted",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE715",
+      "unicode": "E715",
+      "unicode_string": "\\uE715",
+      "name": "Spam",
+      "enum_name": "Spam",
+      "category": "communication",
+      "keywords": [
+        "spam",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Spam",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE924",
+      "unicode": "E924",
+      "unicode_string": "\\uE924",
+      "name": "Attachment",
+      "enum_name": "Attachment",
+      "category": "communication",
+      "keywords": [
+        "attachment",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Attachment",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE787",
+      "unicode": "E787",
+      "unicode_string": "\\uE787",
+      "name": "Calendar",
+      "enum_name": "Calendar",
+      "category": "communication",
+      "keywords": [
+        "日历",
+        "历法",
+        "communication",
+        "时间表",
+        "calendar"
+      ],
+      "i18n": {
+        "en": "Calendar",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8BD",
+      "unicode": "E8BD",
+      "unicode_string": "\\uE8BD",
+      "name": "Event",
+      "enum_name": "Event",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "event"
+      ],
+      "i18n": {
+        "en": "Event",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8BE",
+      "unicode": "E8BE",
+      "unicode_string": "\\uE8BE",
+      "name": "Appointment",
+      "enum_name": "Appointment",
+      "category": "communication",
+      "keywords": [
+        "appointment",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Appointment",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8BF",
+      "unicode": "E8BF",
+      "unicode_string": "\\uE8BF",
+      "name": "Reminder",
+      "enum_name": "Reminder",
+      "category": "communication",
+      "keywords": [
+        "reminder",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Reminder",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE917",
+      "unicode": "E917",
+      "unicode_string": "\\uE917",
+      "name": "Clock",
+      "enum_name": "Clock",
+      "category": "communication",
+      "keywords": [
+        "clock",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Clock",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE917",
+      "unicode": "E917",
+      "unicode_string": "\\uE917",
+      "name": "Timer",
+      "enum_name": "Timer",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "timer"
+      ],
+      "i18n": {
+        "en": "Timer",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE917",
+      "unicode": "E917",
+      "unicode_string": "\\uE917",
+      "name": "Stopwatch",
+      "enum_name": "Stopwatch",
+      "category": "communication",
+      "keywords": [
+        "stopwatch",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Stopwatch",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE917",
+      "unicode": "E917",
+      "unicode_string": "\\uE917",
+      "name": "Alarm",
+      "enum_name": "Alarm",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "alarm"
+      ],
+      "i18n": {
+        "en": "Alarm",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "People",
+      "enum_name": "People",
+      "category": "communication",
+      "keywords": [
+        "people",
+        "communication"
+      ],
+      "i18n": {
+        "en": "People",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE712",
+      "unicode": "E712",
+      "unicode_string": "\\uE712",
+      "name": "Group",
+      "enum_name": "GroupChat",
+      "category": "communication",
+      "keywords": [
+        "groupchat",
+        "group",
+        "communication",
+        "组",
+        "群组"
+      ],
+      "i18n": {
+        "en": "Group",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE712",
+      "unicode": "E712",
+      "unicode_string": "\\uE712",
+      "name": "Team",
+      "enum_name": "Team",
+      "category": "communication",
+      "keywords": [
+        "队伍",
+        "团队",
+        "communication",
+        "team"
+      ],
+      "i18n": {
+        "en": "Team",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8C0",
+      "unicode": "E8C0",
+      "unicode_string": "\\uE8C0",
+      "name": "Organization",
+      "enum_name": "Organization",
+      "category": "communication",
+      "keywords": [
+        "organization",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Organization",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "Contact",
+      "enum_name": "Contact",
+      "category": "communication",
+      "keywords": [
+        "通讯录",
+        "联系人",
+        "communication",
+        "contact"
+      ],
+      "i18n": {
+        "en": "Contact",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "AddContact",
+      "enum_name": "AddContact",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "addcontact"
+      ],
+      "i18n": {
+        "en": "AddContact",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "Phone",
+      "enum_name": "Phone",
+      "category": "communication",
+      "keywords": [
+        "电话",
+        "phone",
+        "手机",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Phone",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "VideoCall",
+      "enum_name": "VideoCall",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "videocall"
+      ],
+      "i18n": {
+        "en": "VideoCall",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "VoiceCall",
+      "enum_name": "VoiceCall",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "voicecall"
+      ],
+      "i18n": {
+        "en": "VoiceCall",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "IncomingCall",
+      "enum_name": "IncomingCall",
+      "category": "communication",
+      "keywords": [
+        "incomingcall",
+        "communication"
+      ],
+      "i18n": {
+        "en": "IncomingCall",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "OutgoingCall",
+      "enum_name": "OutgoingCall",
+      "category": "communication",
+      "keywords": [
+        "outgoingcall",
+        "communication"
+      ],
+      "i18n": {
+        "en": "OutgoingCall",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "MissedCall",
+      "enum_name": "MissedCall",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "missedcall"
+      ],
+      "i18n": {
+        "en": "MissedCall",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "Chat",
+      "enum_name": "Chat",
+      "category": "communication",
+      "keywords": [
+        "chat",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Chat",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "Message",
+      "enum_name": "Message",
+      "category": "communication",
+      "keywords": [
+        "message",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Message",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "SMS",
+      "enum_name": "SMS",
+      "category": "communication",
+      "keywords": [
+        "sms",
+        "communication"
+      ],
+      "i18n": {
+        "en": "SMS",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "IM",
+      "enum_name": "IM",
+      "category": "communication",
+      "keywords": [
+        "im",
+        "communication"
+      ],
+      "i18n": {
+        "en": "IM",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE7BA",
+      "unicode": "E7BA",
+      "unicode_string": "\\uE7BA",
+      "name": "Notification",
+      "enum_name": "Notification",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "notification"
+      ],
+      "i18n": {
+        "en": "Notification",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8CC",
+      "unicode": "E8CC",
+      "unicode_string": "\\uE8CC",
+      "name": "Ringtone",
+      "enum_name": "Ringtone",
+      "category": "communication",
+      "keywords": [
+        "ringtone",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Ringtone",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE8CD",
+      "unicode": "E8CD",
+      "unicode_string": "\\uE8CD",
+      "name": "Vibrate",
+      "enum_name": "Vibrate",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "vibrate"
+      ],
+      "i18n": {
+        "en": "Vibrate",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Location",
+      "enum_name": "Location",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "location"
+      ],
+      "i18n": {
+        "en": "Location",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Map",
+      "enum_name": "Map",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "map"
+      ],
+      "i18n": {
+        "en": "Map",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Navigate",
+      "enum_name": "Navigate",
+      "category": "communication",
+      "keywords": [
+        "navigate",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Navigate",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Route",
+      "enum_name": "Route",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "route"
+      ],
+      "i18n": {
+        "en": "Route",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Traffic",
+      "enum_name": "Traffic",
+      "category": "communication",
+      "keywords": [
+        "traffic",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Traffic",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Bus",
+      "enum_name": "Bus",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "bus"
+      ],
+      "i18n": {
+        "en": "Bus",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Train",
+      "enum_name": "Train",
+      "category": "communication",
+      "keywords": [
+        "train",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Train",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Plane",
+      "enum_name": "Plane",
+      "category": "communication",
+      "keywords": [
+        "plane",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Plane",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Car",
+      "enum_name": "Car",
+      "category": "communication",
+      "keywords": [
+        "car",
+        "communication"
+      ],
+      "i18n": {
+        "en": "Car",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE809",
+      "unicode": "E809",
+      "unicode_string": "\\uE809",
+      "name": "Walk",
+      "enum_name": "Walk",
+      "category": "communication",
+      "keywords": [
+        "communication",
+        "walk"
+      ],
+      "i18n": {
+        "en": "Walk",
+        "zh": "通信"
+      }
+    },
+    {
+      "glyph": "uE7A3",
+      "unicode": "E7A3",
+      "unicode_string": "\\uE7A3",
+      "name": "File",
+      "enum_name": "File",
+      "category": "files",
+      "keywords": [
+        "文件",
+        "files",
+        "file"
+      ],
+      "i18n": {
+        "en": "File",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE7A3",
+      "unicode": "E7A3",
+      "unicode_string": "\\uE7A3",
+      "name": "NewFile",
+      "enum_name": "NewFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "newfile"
+      ],
+      "i18n": {
+        "en": "NewFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8B7",
+      "unicode": "E8B7",
+      "unicode_string": "\\uE8B7",
+      "name": "Folder",
+      "enum_name": "Folder",
+      "category": "files",
+      "keywords": [
+        "目录",
+        "folder",
+        "文件夹",
+        "files"
+      ],
+      "i18n": {
+        "en": "Folder",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8B7",
+      "unicode": "E8B7",
+      "unicode_string": "\\uE8B7",
+      "name": "NewFolder",
+      "enum_name": "NewFolder",
+      "category": "files",
+      "keywords": [
+        "files",
+        "newfolder"
+      ],
+      "i18n": {
+        "en": "NewFolder",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8B8",
+      "unicode": "E8B8",
+      "unicode_string": "\\uE8B8",
+      "name": "OpenFolder",
+      "enum_name": "OpenFolder",
+      "category": "files",
+      "keywords": [
+        "openfolder",
+        "files"
+      ],
+      "i18n": {
+        "en": "OpenFolder",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE7A4",
+      "unicode": "E7A4",
+      "unicode_string": "\\uE7A4",
+      "name": "Document",
+      "enum_name": "Document",
+      "category": "files",
+      "keywords": [
+        "document",
+        "files"
+      ],
+      "i18n": {
+        "en": "Document",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A3",
+      "unicode": "E8A3",
+      "unicode_string": "\\uE8A3",
+      "name": "WordFile",
+      "enum_name": "WordFile",
+      "category": "files",
+      "keywords": [
+        "wordfile",
+        "files"
+      ],
+      "i18n": {
+        "en": "WordFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A4",
+      "unicode": "E8A4",
+      "unicode_string": "\\uE8A4",
+      "name": "ZipFile",
+      "enum_name": "ZipFile",
+      "category": "files",
+      "keywords": [
+        "zipfile",
+        "files"
+      ],
+      "i18n": {
+        "en": "ZipFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A4",
+      "unicode": "E8A4",
+      "unicode_string": "\\uE8A4",
+      "name": "RarFile",
+      "enum_name": "RarFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "rarfile"
+      ],
+      "i18n": {
+        "en": "RarFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8B9",
+      "unicode": "E8B9",
+      "unicode_string": "\\uE8B9",
+      "name": "ImageFile",
+      "enum_name": "ImageFile",
+      "category": "files",
+      "keywords": [
+        "imagefile",
+        "files"
+      ],
+      "i18n": {
+        "en": "ImageFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8B8",
+      "unicode": "E8B8",
+      "unicode_string": "\\uE8B8",
+      "name": "VideoFile",
+      "enum_name": "VideoFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "videofile"
+      ],
+      "i18n": {
+        "en": "VideoFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8BA",
+      "unicode": "E8BA",
+      "unicode_string": "\\uE8BA",
+      "name": "AudioFile",
+      "enum_name": "AudioFile",
+      "category": "files",
+      "keywords": [
+        "audiofile",
+        "files"
+      ],
+      "i18n": {
+        "en": "AudioFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A5",
+      "unicode": "E8A5",
+      "unicode_string": "\\uE8A5",
+      "name": "TextFile",
+      "enum_name": "TextFile",
+      "category": "files",
+      "keywords": [
+        "textfile",
+        "files"
+      ],
+      "i18n": {
+        "en": "TextFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A6",
+      "unicode": "E8A6",
+      "unicode_string": "\\uE8A6",
+      "name": "CodeFile",
+      "enum_name": "CodeFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "codefile"
+      ],
+      "i18n": {
+        "en": "CodeFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A7",
+      "unicode": "E8A7",
+      "unicode_string": "\\uE8A7",
+      "name": "ExcelFile",
+      "enum_name": "ExcelFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "excelfile"
+      ],
+      "i18n": {
+        "en": "ExcelFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A8",
+      "unicode": "E8A8",
+      "unicode_string": "\\uE8A8",
+      "name": "PowerPointFile",
+      "enum_name": "PowerPointFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "powerpointfile"
+      ],
+      "i18n": {
+        "en": "PowerPointFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8A9",
+      "unicode": "E8A9",
+      "unicode_string": "\\uE8A9",
+      "name": "PDFFile",
+      "enum_name": "PDFFile",
+      "category": "files",
+      "keywords": [
+        "pdffile",
+        "files"
+      ],
+      "i18n": {
+        "en": "PDFFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8AA",
+      "unicode": "E8AA",
+      "unicode_string": "\\uE8AA",
+      "name": "HTMLFile",
+      "enum_name": "HTMLFile",
+      "category": "files",
+      "keywords": [
+        "htmlfile",
+        "files"
+      ],
+      "i18n": {
+        "en": "HTMLFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8AB",
+      "unicode": "E8AB",
+      "unicode_string": "\\uE8AB",
+      "name": "CSSFile",
+      "enum_name": "CSSFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "cssfile"
+      ],
+      "i18n": {
+        "en": "CSSFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8AC",
+      "unicode": "E8AC",
+      "unicode_string": "\\uE8AC",
+      "name": "JSFile",
+      "enum_name": "JSFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "jsfile"
+      ],
+      "i18n": {
+        "en": "JSFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8AD",
+      "unicode": "E8AD",
+      "unicode_string": "\\uE8AD",
+      "name": "JSONFile",
+      "enum_name": "JSONFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "jsonfile"
+      ],
+      "i18n": {
+        "en": "JSONFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE8AE",
+      "unicode": "E8AE",
+      "unicode_string": "\\uE8AE",
+      "name": "XMLFile",
+      "enum_name": "XMLFile",
+      "category": "files",
+      "keywords": [
+        "xmlfile",
+        "files"
+      ],
+      "i18n": {
+        "en": "XMLFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE896",
+      "unicode": "E896",
+      "unicode_string": "\\uE896",
+      "name": "DownloadFile",
+      "enum_name": "DownloadFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "downloadfile"
+      ],
+      "i18n": {
+        "en": "DownloadFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE898",
+      "unicode": "E898",
+      "unicode_string": "\\uE898",
+      "name": "UploadFile",
+      "enum_name": "UploadFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "uploadfile"
+      ],
+      "i18n": {
+        "en": "UploadFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE70A",
+      "unicode": "E70A",
+      "unicode_string": "\\uE70A",
+      "name": "CloudFile",
+      "enum_name": "CloudFile",
+      "category": "files",
+      "keywords": [
+        "files",
+        "cloudfile"
+      ],
+      "i18n": {
+        "en": "CloudFile",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE823",
+      "unicode": "E823",
+      "unicode_string": "\\uE823",
+      "name": "Recent",
+      "enum_name": "Recent",
+      "category": "files",
+      "keywords": [
+        "files",
+        "recent"
+      ],
+      "i18n": {
+        "en": "Recent",
+        "zh": "文件"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Success",
+      "enum_name": "Success",
+      "category": "status",
+      "keywords": [
+        "成功",
+        "status",
+        "完成",
+        "success"
+      ],
+      "i18n": {
+        "en": "Success",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Error",
+      "enum_name": "Error",
+      "category": "status",
+      "keywords": [
+        "error",
+        "status",
+        "错误",
+        "警告",
+        "异常"
+      ],
+      "i18n": {
+        "en": "Error",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE7BA",
+      "unicode": "E7BA",
+      "unicode_string": "\\uE7BA",
+      "name": "Warning",
+      "enum_name": "Warning",
+      "category": "status",
+      "keywords": [
+        "警告",
+        "注意",
+        "status",
+        "warning"
+      ],
+      "i18n": {
+        "en": "Warning",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE946",
+      "unicode": "E946",
+      "unicode_string": "\\uE946",
+      "name": "Info",
+      "enum_name": "Info",
+      "category": "status",
+      "keywords": [
+        "信息",
+        "提示",
+        "status",
+        "info"
+      ],
+      "i18n": {
+        "en": "Info",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE897",
+      "unicode": "E897",
+      "unicode_string": "\\uE897",
+      "name": "Help",
+      "enum_name": "Help",
+      "category": "status",
+      "keywords": [
+        "疑问",
+        "status",
+        "帮助",
+        "help"
+      ],
+      "i18n": {
+        "en": "Help",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE897",
+      "unicode": "E897",
+      "unicode_string": "\\uE897",
+      "name": "Question",
+      "enum_name": "Question",
+      "category": "status",
+      "keywords": [
+        "question",
+        "status"
+      ],
+      "i18n": {
+        "en": "Question",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE7B5",
+      "unicode": "E7B5",
+      "unicode_string": "\\uE7B5",
+      "name": "Favorite",
+      "enum_name": "Favorite",
+      "category": "status",
+      "keywords": [
+        "status",
+        "favorite"
+      ],
+      "i18n": {
+        "en": "Favorite",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE7B6",
+      "unicode": "E7B6",
+      "unicode_string": "\\uE7B6",
+      "name": "FavoriteOutline",
+      "enum_name": "FavoriteOutline",
+      "category": "status",
+      "keywords": [
+        "status",
+        "favoriteoutline"
+      ],
+      "i18n": {
+        "en": "FavoriteOutline",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE734",
+      "unicode": "E734",
+      "unicode_string": "\\uE734",
+      "name": "Star",
+      "enum_name": "Star",
+      "category": "status",
+      "keywords": [
+        "star",
+        "收藏",
+        "status",
+        "评分",
+        "星"
+      ],
+      "i18n": {
+        "en": "Star",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE735",
+      "unicode": "E735",
+      "unicode_string": "\\uE735",
+      "name": "StarOutline",
+      "enum_name": "StarOutline",
+      "category": "status",
+      "keywords": [
+        "staroutline",
+        "status"
+      ],
+      "i18n": {
+        "en": "StarOutline",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE735",
+      "unicode": "E735",
+      "unicode_string": "\\uE735",
+      "name": "StarHalf",
+      "enum_name": "StarHalf",
+      "category": "status",
+      "keywords": [
+        "status",
+        "starhalf"
+      ],
+      "i18n": {
+        "en": "StarHalf",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE775",
+      "unicode": "E775",
+      "unicode_string": "\\uE775",
+      "name": "Flag",
+      "enum_name": "Flag",
+      "category": "status",
+      "keywords": [
+        "旗帜",
+        "标记",
+        "status",
+        "flag"
+      ],
+      "i18n": {
+        "en": "Flag",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Check",
+      "enum_name": "Check",
+      "category": "status",
+      "keywords": [
+        "status",
+        "check"
+      ],
+      "i18n": {
+        "en": "Check",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE945",
+      "unicode": "E945",
+      "unicode_string": "\\uE945",
+      "name": "CheckCircle",
+      "enum_name": "CheckCircle",
+      "category": "status",
+      "keywords": [
+        "status",
+        "checkcircle"
+      ],
+      "i18n": {
+        "en": "CheckCircle",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE947",
+      "unicode": "E947",
+      "unicode_string": "\\uE947",
+      "name": "CancelCircle",
+      "enum_name": "CancelCircle",
+      "category": "status",
+      "keywords": [
+        "status",
+        "cancelcircle"
+      ],
+      "i18n": {
+        "en": "CancelCircle",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE948",
+      "unicode": "E948",
+      "unicode_string": "\\uE948",
+      "name": "DeleteCircle",
+      "enum_name": "DeleteCircle",
+      "category": "status",
+      "keywords": [
+        "deletecircle",
+        "status"
+      ],
+      "i18n": {
+        "en": "DeleteCircle",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE946",
+      "unicode": "E946",
+      "unicode_string": "\\uE946",
+      "name": "InfoCircle",
+      "enum_name": "InfoCircle",
+      "category": "status",
+      "keywords": [
+        "infocircle",
+        "status"
+      ],
+      "i18n": {
+        "en": "InfoCircle",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE949",
+      "unicode": "E949",
+      "unicode_string": "\\uE949",
+      "name": "WarningCircle",
+      "enum_name": "WarningCircle",
+      "category": "status",
+      "keywords": [
+        "status",
+        "warningcircle"
+      ],
+      "i18n": {
+        "en": "WarningCircle",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A5",
+      "unicode": "E9A5",
+      "unicode_string": "\\uE9A5",
+      "name": "Loading",
+      "enum_name": "Loading",
+      "category": "status",
+      "keywords": [
+        "等待",
+        "loading",
+        "status",
+        "加载"
+      ],
+      "i18n": {
+        "en": "Loading",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A6",
+      "unicode": "E9A6",
+      "unicode_string": "\\uE9A6",
+      "name": "Progress",
+      "enum_name": "Progress",
+      "category": "status",
+      "keywords": [
+        "progress",
+        "status"
+      ],
+      "i18n": {
+        "en": "Progress",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A7",
+      "unicode": "E9A7",
+      "unicode_string": "\\uE9A7",
+      "name": "Busy",
+      "enum_name": "Busy",
+      "category": "status",
+      "keywords": [
+        "status",
+        "busy"
+      ],
+      "i18n": {
+        "en": "Busy",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A9",
+      "unicode": "E9A9",
+      "unicode_string": "\\uE9A9",
+      "name": "Online",
+      "enum_name": "Online",
+      "category": "status",
+      "keywords": [
+        "status",
+        "online"
+      ],
+      "i18n": {
+        "en": "Online",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9AA",
+      "unicode": "E9AA",
+      "unicode_string": "\\uE9AA",
+      "name": "Offline",
+      "enum_name": "Offline",
+      "category": "status",
+      "keywords": [
+        "status",
+        "offline"
+      ],
+      "i18n": {
+        "en": "Offline",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9AC",
+      "unicode": "E9AC",
+      "unicode_string": "\\uE9AC",
+      "name": "Unknown",
+      "enum_name": "Unknown",
+      "category": "status",
+      "keywords": [
+        "status",
+        "unknown"
+      ],
+      "i18n": {
+        "en": "Unknown",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE767",
+      "unicode": "E767",
+      "unicode_string": "\\uE767",
+      "name": "Disabled",
+      "enum_name": "Disabled",
+      "category": "status",
+      "keywords": [
+        "status",
+        "disabled"
+      ],
+      "i18n": {
+        "en": "Disabled",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE746",
+      "unicode": "E746",
+      "unicode_string": "\\uE746",
+      "name": "Blocked",
+      "enum_name": "Blocked",
+      "category": "status",
+      "keywords": [
+        "status",
+        "blocked"
+      ],
+      "i18n": {
+        "en": "Blocked",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE766",
+      "unicode": "E766",
+      "unicode_string": "\\uE766",
+      "name": "Available",
+      "enum_name": "Available",
+      "category": "status",
+      "keywords": [
+        "status",
+        "available"
+      ],
+      "i18n": {
+        "en": "Available",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE767",
+      "unicode": "E767",
+      "unicode_string": "\\uE767",
+      "name": "Unavailable",
+      "enum_name": "Unavailable",
+      "category": "status",
+      "keywords": [
+        "status",
+        "unavailable"
+      ],
+      "i18n": {
+        "en": "Unavailable",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A5",
+      "unicode": "E9A5",
+      "unicode_string": "\\uE9A5",
+      "name": "Waiting",
+      "enum_name": "Waiting",
+      "category": "status",
+      "keywords": [
+        "status",
+        "waiting"
+      ],
+      "i18n": {
+        "en": "Waiting",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A7",
+      "unicode": "E9A7",
+      "unicode_string": "\\uE9A7",
+      "name": "Processing",
+      "enum_name": "Processing",
+      "category": "status",
+      "keywords": [
+        "status",
+        "processing"
+      ],
+      "i18n": {
+        "en": "Processing",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Completed",
+      "enum_name": "Completed",
+      "category": "status",
+      "keywords": [
+        "completed",
+        "status"
+      ],
+      "i18n": {
+        "en": "Completed",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A6",
+      "unicode": "E9A6",
+      "unicode_string": "\\uE9A6",
+      "name": "Pending",
+      "enum_name": "Pending",
+      "category": "status",
+      "keywords": [
+        "pending",
+        "status"
+      ],
+      "i18n": {
+        "en": "Pending",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE9A7",
+      "unicode": "E9A7",
+      "unicode_string": "\\uE9A7",
+      "name": "InProgress",
+      "enum_name": "InProgress",
+      "category": "status",
+      "keywords": [
+        "status",
+        "inprogress"
+      ],
+      "i18n": {
+        "en": "InProgress",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE711",
+      "unicode": "E711",
+      "unicode_string": "\\uE711",
+      "name": "Cancelled",
+      "enum_name": "Cancelled",
+      "category": "status",
+      "keywords": [
+        "status",
+        "cancelled"
+      ],
+      "i18n": {
+        "en": "Cancelled",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE8CE",
+      "unicode": "E8CE",
+      "unicode_string": "\\uE8CE",
+      "name": "Expired",
+      "enum_name": "Expired",
+      "category": "status",
+      "keywords": [
+        "expired",
+        "status"
+      ],
+      "i18n": {
+        "en": "Expired",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "NewStatus",
+      "enum_name": "NewStatus",
+      "category": "status",
+      "keywords": [
+        "status",
+        "newstatus"
+      ],
+      "i18n": {
+        "en": "NewStatus",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Read",
+      "enum_name": "Read",
+      "category": "status",
+      "keywords": [
+        "status",
+        "read"
+      ],
+      "i18n": {
+        "en": "Read",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE947",
+      "unicode": "E947",
+      "unicode_string": "\\uE947",
+      "name": "Unread",
+      "enum_name": "Unread",
+      "category": "status",
+      "keywords": [
+        "unread",
+        "status"
+      ],
+      "i18n": {
+        "en": "Unread",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE775",
+      "unicode": "E775",
+      "unicode_string": "\\uE775",
+      "name": "Important",
+      "enum_name": "Important",
+      "category": "status",
+      "keywords": [
+        "status",
+        "important"
+      ],
+      "i18n": {
+        "en": "Important",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE7BA",
+      "unicode": "E7BA",
+      "unicode_string": "\\uE7BA",
+      "name": "Urgent",
+      "enum_name": "Urgent",
+      "category": "status",
+      "keywords": [
+        "status",
+        "urgent"
+      ],
+      "i18n": {
+        "en": "Urgent",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "Low",
+      "enum_name": "Low",
+      "category": "status",
+      "keywords": [
+        "low",
+        "status"
+      ],
+      "i18n": {
+        "en": "Low",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE946",
+      "unicode": "E946",
+      "unicode_string": "\\uE946",
+      "name": "Medium",
+      "enum_name": "Medium",
+      "category": "status",
+      "keywords": [
+        "status",
+        "medium"
+      ],
+      "i18n": {
+        "en": "Medium",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE74B",
+      "unicode": "E74B",
+      "unicode_string": "\\uE74B",
+      "name": "High",
+      "enum_name": "High",
+      "category": "status",
+      "keywords": [
+        "high",
+        "status"
+      ],
+      "i18n": {
+        "en": "High",
+        "zh": "状态"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "Window",
+      "enum_name": "Window",
+      "category": "ui",
+      "keywords": [
+        "window",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Window",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "Windows",
+      "enum_name": "Windows",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "windows"
+      ],
+      "i18n": {
+        "en": "Windows",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE7A0",
+      "unicode": "E7A0",
+      "unicode_string": "\\uE7A0",
+      "name": "Tab",
+      "enum_name": "Tab",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "tab"
+      ],
+      "i18n": {
+        "en": "Tab",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE7A0",
+      "unicode": "E7A0",
+      "unicode_string": "\\uE7A0",
+      "name": "NewTab",
+      "enum_name": "NewTab",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "newtab"
+      ],
+      "i18n": {
+        "en": "NewTab",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE7A0",
+      "unicode": "E7A0",
+      "unicode_string": "\\uE7A0",
+      "name": "CloseTab",
+      "enum_name": "CloseTab",
+      "category": "ui",
+      "keywords": [
+        "closetab",
+        "ui"
+      ],
+      "i18n": {
+        "en": "CloseTab",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE729",
+      "unicode": "E729",
+      "unicode_string": "\\uE729",
+      "name": "Panel",
+      "enum_name": "Panel",
+      "category": "ui",
+      "keywords": [
+        "panel",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Panel",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "Sidebar",
+      "enum_name": "Sidebar",
+      "category": "ui",
+      "keywords": [
+        "sidebar",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Sidebar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE762",
+      "unicode": "E762",
+      "unicode_string": "\\uE762",
+      "name": "LeftSidebar",
+      "enum_name": "LeftSidebar",
+      "category": "ui",
+      "keywords": [
+        "leftsidebar",
+        "ui"
+      ],
+      "i18n": {
+        "en": "LeftSidebar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE763",
+      "unicode": "E763",
+      "unicode_string": "\\uE763",
+      "name": "RightSidebar",
+      "enum_name": "RightSidebar",
+      "category": "ui",
+      "keywords": [
+        "rightsidebar",
+        "ui"
+      ],
+      "i18n": {
+        "en": "RightSidebar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE70F",
+      "unicode": "E70F",
+      "unicode_string": "\\uE70F",
+      "name": "Grid",
+      "enum_name": "Grid",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "grid"
+      ],
+      "i18n": {
+        "en": "Grid",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE710",
+      "unicode": "E710",
+      "unicode_string": "\\uE710",
+      "name": "List",
+      "enum_name": "List",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "list"
+      ],
+      "i18n": {
+        "en": "List",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE712",
+      "unicode": "E712",
+      "unicode_string": "\\uE712",
+      "name": "Details",
+      "enum_name": "Details",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "details"
+      ],
+      "i18n": {
+        "en": "Details",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE740",
+      "unicode": "E740",
+      "unicode_string": "\\uE740",
+      "name": "FullScreen",
+      "enum_name": "FullScreen",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "fullscreen"
+      ],
+      "i18n": {
+        "en": "FullScreen",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE741",
+      "unicode": "E741",
+      "unicode_string": "\\uE741",
+      "name": "ExitFullScreen",
+      "enum_name": "ExitFullScreen",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "exitfullscreen"
+      ],
+      "i18n": {
+        "en": "ExitFullScreen",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE74A",
+      "unicode": "E74A",
+      "unicode_string": "\\uE74A",
+      "name": "ZoomOut",
+      "enum_name": "ZoomOut",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "zoomout",
+        "缩小"
+      ],
+      "i18n": {
+        "en": "ZoomOut",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE74B",
+      "unicode": "E74B",
+      "unicode_string": "\\uE74B",
+      "name": "ZoomIn",
+      "enum_name": "ZoomIn",
+      "category": "ui",
+      "keywords": [
+        "zoomin",
+        "ui",
+        "放大"
+      ],
+      "i18n": {
+        "en": "ZoomIn",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE794",
+      "unicode": "E794",
+      "unicode_string": "\\uE794",
+      "name": "ZoomReset",
+      "enum_name": "ZoomReset",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "zoomreset"
+      ],
+      "i18n": {
+        "en": "ZoomReset",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE795",
+      "unicode": "E795",
+      "unicode_string": "\\uE795",
+      "name": "FitToWindow",
+      "enum_name": "FitToWindow",
+      "category": "ui",
+      "keywords": [
+        "fittowindow",
+        "ui"
+      ],
+      "i18n": {
+        "en": "FitToWindow",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE796",
+      "unicode": "E796",
+      "unicode_string": "\\uE796",
+      "name": "FitToPage",
+      "enum_name": "FitToPage",
+      "category": "ui",
+      "keywords": [
+        "fittopage",
+        "ui"
+      ],
+      "i18n": {
+        "en": "FitToPage",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE797",
+      "unicode": "E797",
+      "unicode_string": "\\uE797",
+      "name": "FitToWidth",
+      "enum_name": "FitToWidth",
+      "category": "ui",
+      "keywords": [
+        "fittowidth",
+        "ui"
+      ],
+      "i18n": {
+        "en": "FitToWidth",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE798",
+      "unicode": "E798",
+      "unicode_string": "\\uE798",
+      "name": "FitToHeight",
+      "enum_name": "FitToHeight",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "fittoheight"
+      ],
+      "i18n": {
+        "en": "FitToHeight",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8CF",
+      "unicode": "E8CF",
+      "unicode_string": "\\uE8CF",
+      "name": "Toolbar",
+      "enum_name": "Toolbar",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "toolbar"
+      ],
+      "i18n": {
+        "en": "Toolbar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D0",
+      "unicode": "E8D0",
+      "unicode_string": "\\uE8D0",
+      "name": "StatusBar",
+      "enum_name": "StatusBar",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "statusbar"
+      ],
+      "i18n": {
+        "en": "StatusBar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D1",
+      "unicode": "E8D1",
+      "unicode_string": "\\uE8D1",
+      "name": "MenuBar",
+      "enum_name": "MenuBar",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "menubar"
+      ],
+      "i18n": {
+        "en": "MenuBar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D2",
+      "unicode": "E8D2",
+      "unicode_string": "\\uE8D2",
+      "name": "TitleBar",
+      "enum_name": "TitleBar",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "titlebar"
+      ],
+      "i18n": {
+        "en": "TitleBar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D3",
+      "unicode": "E8D3",
+      "unicode_string": "\\uE8D3",
+      "name": "ScrollBar",
+      "enum_name": "ScrollBar",
+      "category": "ui",
+      "keywords": [
+        "scrollbar",
+        "ui"
+      ],
+      "i18n": {
+        "en": "ScrollBar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D4",
+      "unicode": "E8D4",
+      "unicode_string": "\\uE8D4",
+      "name": "Separator",
+      "enum_name": "Separator",
+      "category": "ui",
+      "keywords": [
+        "separator",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Separator",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D5",
+      "unicode": "E8D5",
+      "unicode_string": "\\uE8D5",
+      "name": "Splitter",
+      "enum_name": "Splitter",
+      "category": "ui",
+      "keywords": [
+        "splitter",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Splitter",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D6",
+      "unicode": "E8D6",
+      "unicode_string": "\\uE8D6",
+      "name": "Dialog",
+      "enum_name": "Dialog",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "dialog"
+      ],
+      "i18n": {
+        "en": "Dialog",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D7",
+      "unicode": "E8D7",
+      "unicode_string": "\\uE8D7",
+      "name": "Modal",
+      "enum_name": "Modal",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "modal"
+      ],
+      "i18n": {
+        "en": "Modal",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D8",
+      "unicode": "E8D8",
+      "unicode_string": "\\uE8D8",
+      "name": "Popup",
+      "enum_name": "Popup",
+      "category": "ui",
+      "keywords": [
+        "popup",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Popup",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8D9",
+      "unicode": "E8D9",
+      "unicode_string": "\\uE8D9",
+      "name": "Dropdown",
+      "enum_name": "Dropdown",
+      "category": "ui",
+      "keywords": [
+        "dropdown",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Dropdown",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8BB",
+      "unicode": "E8BB",
+      "unicode_string": "\\uE8BB",
+      "name": "ContextMenu",
+      "enum_name": "ContextMenu",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "contextmenu"
+      ],
+      "i18n": {
+        "en": "ContextMenu",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE897",
+      "unicode": "E897",
+      "unicode_string": "\\uE897",
+      "name": "Tooltip",
+      "enum_name": "Tooltip",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "tooltip"
+      ],
+      "i18n": {
+        "en": "Tooltip",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8DB",
+      "unicode": "E8DB",
+      "unicode_string": "\\uE8DB",
+      "name": "Badge",
+      "enum_name": "Badge",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "badge"
+      ],
+      "i18n": {
+        "en": "Badge",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE775",
+      "unicode": "E775",
+      "unicode_string": "\\uE775",
+      "name": "Label",
+      "enum_name": "Label",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "label"
+      ],
+      "i18n": {
+        "en": "Label",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8DC",
+      "unicode": "E8DC",
+      "unicode_string": "\\uE8DC",
+      "name": "Input",
+      "enum_name": "Input",
+      "category": "ui",
+      "keywords": [
+        "input",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Input",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8DD",
+      "unicode": "E8DD",
+      "unicode_string": "\\uE8DD",
+      "name": "Button",
+      "enum_name": "Button",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "button"
+      ],
+      "i18n": {
+        "en": "Button",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Checkbox",
+      "enum_name": "Checkbox",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "checkbox"
+      ],
+      "i18n": {
+        "en": "Checkbox",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8DE",
+      "unicode": "E8DE",
+      "unicode_string": "\\uE8DE",
+      "name": "Radio",
+      "enum_name": "Radio",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "radio"
+      ],
+      "i18n": {
+        "en": "Radio",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8DF",
+      "unicode": "E8DF",
+      "unicode_string": "\\uE8DF",
+      "name": "Switch",
+      "enum_name": "Switch",
+      "category": "ui",
+      "keywords": [
+        "switch",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Switch",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE8E0",
+      "unicode": "E8E0",
+      "unicode_string": "\\uE8E0",
+      "name": "Slider",
+      "enum_name": "Slider",
+      "category": "ui",
+      "keywords": [
+        "ui",
+        "slider"
+      ],
+      "i18n": {
+        "en": "Slider",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE9A6",
+      "unicode": "E9A6",
+      "unicode_string": "\\uE9A6",
+      "name": "ProgressBar",
+      "enum_name": "ProgressBar",
+      "category": "ui",
+      "keywords": [
+        "progressbar",
+        "ui"
+      ],
+      "i18n": {
+        "en": "ProgressBar",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE9A5",
+      "unicode": "E9A5",
+      "unicode_string": "\\uE9A5",
+      "name": "Spinner",
+      "enum_name": "Spinner",
+      "category": "ui",
+      "keywords": [
+        "旋转",
+        "spinner",
+        "加载中",
+        "ui"
+      ],
+      "i18n": {
+        "en": "Spinner",
+        "zh": "界面"
+      }
+    },
+    {
+      "glyph": "uE943",
+      "unicode": "E943",
+      "unicode_string": "\\uE943",
+      "name": "Code",
+      "enum_name": "Code",
+      "category": "development",
+      "keywords": [
+        "code",
+        "development"
+      ],
+      "i18n": {
+        "en": "Code",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE913",
+      "unicode": "E913",
+      "unicode_string": "\\uE913",
+      "name": "Debug",
+      "enum_name": "Debug",
+      "category": "development",
+      "keywords": [
+        "debug",
+        "development"
+      ],
+      "i18n": {
+        "en": "Debug",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE768",
+      "unicode": "E768",
+      "unicode_string": "\\uE768",
+      "name": "Run",
+      "enum_name": "Run",
+      "category": "development",
+      "keywords": [
+        "development",
+        "run"
+      ],
+      "i18n": {
+        "en": "Run",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE756",
+      "unicode": "E756",
+      "unicode_string": "\\uE756",
+      "name": "Terminal",
+      "enum_name": "Terminal",
+      "category": "development",
+      "keywords": [
+        "development",
+        "terminal"
+      ],
+      "i18n": {
+        "en": "Terminal",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE756",
+      "unicode": "E756",
+      "unicode_string": "\\uE756",
+      "name": "CommandLine",
+      "enum_name": "CommandLine",
+      "category": "development",
+      "keywords": [
+        "development",
+        "commandline"
+      ],
+      "i18n": {
+        "en": "CommandLine",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE756",
+      "unicode": "E756",
+      "unicode_string": "\\uE756",
+      "name": "Console",
+      "enum_name": "Console",
+      "category": "development",
+      "keywords": [
+        "console",
+        "development"
+      ],
+      "i18n": {
+        "en": "Console",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE756",
+      "unicode": "E756",
+      "unicode_string": "\\uE756",
+      "name": "Shell",
+      "enum_name": "Shell",
+      "category": "development",
+      "keywords": [
+        "shell",
+        "development"
+      ],
+      "i18n": {
+        "en": "Shell",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE7C4",
+      "unicode": "E7C4",
+      "unicode_string": "\\uE7C4",
+      "name": "Database",
+      "enum_name": "Database",
+      "category": "development",
+      "keywords": [
+        "development",
+        "database"
+      ],
+      "i18n": {
+        "en": "Database",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE7C4",
+      "unicode": "E7C4",
+      "unicode_string": "\\uE7C4",
+      "name": "Table",
+      "enum_name": "Table",
+      "category": "development",
+      "keywords": [
+        "table",
+        "development"
+      ],
+      "i18n": {
+        "en": "Table",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "Query",
+      "enum_name": "Query",
+      "category": "development",
+      "keywords": [
+        "query",
+        "development"
+      ],
+      "i18n": {
+        "en": "Query",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "API",
+      "enum_name": "API",
+      "category": "development",
+      "keywords": [
+        "api",
+        "development"
+      ],
+      "i18n": {
+        "en": "API",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "REST",
+      "enum_name": "REST",
+      "category": "development",
+      "keywords": [
+        "development",
+        "rest"
+      ],
+      "i18n": {
+        "en": "REST",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE721",
+      "unicode": "E721",
+      "unicode_string": "\\uE721",
+      "name": "GraphQL",
+      "enum_name": "GraphQL",
+      "category": "development",
+      "keywords": [
+        "graphql",
+        "development"
+      ],
+      "i18n": {
+        "en": "GraphQL",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE717",
+      "unicode": "E717",
+      "unicode_string": "\\uE717",
+      "name": "Server",
+      "enum_name": "Server",
+      "category": "development",
+      "keywords": [
+        "server",
+        "development"
+      ],
+      "i18n": {
+        "en": "Server",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE70A",
+      "unicode": "E70A",
+      "unicode_string": "\\uE70A",
+      "name": "Cloud",
+      "enum_name": "Cloud",
+      "category": "development",
+      "keywords": [
+        "cloud",
+        "云",
+        "development",
+        "云端"
+      ],
+      "i18n": {
+        "en": "Cloud",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE70A",
+      "unicode": "E70A",
+      "unicode_string": "\\uE70A",
+      "name": "CloudHost",
+      "enum_name": "CloudHost",
+      "category": "development",
+      "keywords": [
+        "development",
+        "cloudhost"
+      ],
+      "i18n": {
+        "en": "CloudHost",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E1",
+      "unicode": "E8E1",
+      "unicode_string": "\\uE8E1",
+      "name": "Local",
+      "enum_name": "Local",
+      "category": "development",
+      "keywords": [
+        "local",
+        "development"
+      ],
+      "i18n": {
+        "en": "Local",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE708",
+      "unicode": "E708",
+      "unicode_string": "\\uE708",
+      "name": "Git",
+      "enum_name": "Git",
+      "category": "development",
+      "keywords": [
+        "development",
+        "git"
+      ],
+      "i18n": {
+        "en": "Git",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE927",
+      "unicode": "E927",
+      "unicode_string": "\\uE927",
+      "name": "Branch",
+      "enum_name": "Branch",
+      "category": "development",
+      "keywords": [
+        "development",
+        "branch"
+      ],
+      "i18n": {
+        "en": "Branch",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE928",
+      "unicode": "E928",
+      "unicode_string": "\\uE928",
+      "name": "Merge",
+      "enum_name": "Merge",
+      "category": "development",
+      "keywords": [
+        "development",
+        "merge"
+      ],
+      "i18n": {
+        "en": "Merge",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8A1",
+      "unicode": "E8A1",
+      "unicode_string": "\\uE8A1",
+      "name": "Pull",
+      "enum_name": "Pull",
+      "category": "development",
+      "keywords": [
+        "pull",
+        "development"
+      ],
+      "i18n": {
+        "en": "Pull",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE896",
+      "unicode": "E896",
+      "unicode_string": "\\uE896",
+      "name": "Push",
+      "enum_name": "Push",
+      "category": "development",
+      "keywords": [
+        "push",
+        "development"
+      ],
+      "i18n": {
+        "en": "Push",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Commit",
+      "enum_name": "Commit",
+      "category": "development",
+      "keywords": [
+        "commit",
+        "development"
+      ],
+      "i18n": {
+        "en": "Commit",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8C8",
+      "unicode": "E8C8",
+      "unicode_string": "\\uE8C8",
+      "name": "Clone",
+      "enum_name": "Clone",
+      "category": "development",
+      "keywords": [
+        "clone",
+        "development"
+      ],
+      "i18n": {
+        "en": "Clone",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE927",
+      "unicode": "E927",
+      "unicode_string": "\\uE927",
+      "name": "Fork",
+      "enum_name": "Fork",
+      "category": "development",
+      "keywords": [
+        "fork",
+        "development"
+      ],
+      "i18n": {
+        "en": "Fork",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E2",
+      "unicode": "E8E2",
+      "unicode_string": "\\uE8E2",
+      "name": "Diff",
+      "enum_name": "Diff",
+      "category": "development",
+      "keywords": [
+        "development",
+        "diff"
+      ],
+      "i18n": {
+        "en": "Diff",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E3",
+      "unicode": "E8E3",
+      "unicode_string": "\\uE8E3",
+      "name": "Patch",
+      "enum_name": "Patch",
+      "category": "development",
+      "keywords": [
+        "development",
+        "patch"
+      ],
+      "i18n": {
+        "en": "Patch",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE724",
+      "unicode": "E724",
+      "unicode_string": "\\uE724",
+      "name": "Release",
+      "enum_name": "Release",
+      "category": "development",
+      "keywords": [
+        "development",
+        "release"
+      ],
+      "i18n": {
+        "en": "Release",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E4",
+      "unicode": "E8E4",
+      "unicode_string": "\\uE8E4",
+      "name": "Version",
+      "enum_name": "Version",
+      "category": "development",
+      "keywords": [
+        "development",
+        "version"
+      ],
+      "i18n": {
+        "en": "Version",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE775",
+      "unicode": "E775",
+      "unicode_string": "\\uE775",
+      "name": "Tag",
+      "enum_name": "GitTag",
+      "category": "development",
+      "keywords": [
+        "development",
+        "gittag",
+        "标记",
+        "tag",
+        "标签"
+      ],
+      "i18n": {
+        "en": "Tag",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E5",
+      "unicode": "E8E5",
+      "unicode_string": "\\uE8E5",
+      "name": "Package",
+      "enum_name": "Package",
+      "category": "development",
+      "keywords": [
+        "development",
+        "package"
+      ],
+      "i18n": {
+        "en": "Package",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E6",
+      "unicode": "E8E6",
+      "unicode_string": "\\uE8E6",
+      "name": "Module",
+      "enum_name": "Module",
+      "category": "development",
+      "keywords": [
+        "module",
+        "development"
+      ],
+      "i18n": {
+        "en": "Module",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E7",
+      "unicode": "E8E7",
+      "unicode_string": "\\uE8E7",
+      "name": "Library",
+      "enum_name": "Library",
+      "category": "development",
+      "keywords": [
+        "library",
+        "development"
+      ],
+      "i18n": {
+        "en": "Library",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E8",
+      "unicode": "E8E8",
+      "unicode_string": "\\uE8E8",
+      "name": "Framework",
+      "enum_name": "Framework",
+      "category": "development",
+      "keywords": [
+        "development",
+        "framework"
+      ],
+      "i18n": {
+        "en": "Framework",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8E9",
+      "unicode": "E8E9",
+      "unicode_string": "\\uE8E9",
+      "name": "SDK",
+      "enum_name": "SDK",
+      "category": "development",
+      "keywords": [
+        "sdk",
+        "development"
+      ],
+      "i18n": {
+        "en": "SDK",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE713",
+      "unicode": "E713",
+      "unicode_string": "\\uE713",
+      "name": "Config",
+      "enum_name": "Config",
+      "category": "development",
+      "keywords": [
+        "config",
+        "development"
+      ],
+      "i18n": {
+        "en": "Config",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE713",
+      "unicode": "E713",
+      "unicode_string": "\\uE713",
+      "name": "Preferences",
+      "enum_name": "Preferences",
+      "category": "development",
+      "keywords": [
+        "preferences",
+        "development"
+      ],
+      "i18n": {
+        "en": "Preferences",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8EA",
+      "unicode": "E8EA",
+      "unicode_string": "\\uE8EA",
+      "name": "Environment",
+      "enum_name": "Environment",
+      "category": "development",
+      "keywords": [
+        "development",
+        "environment"
+      ],
+      "i18n": {
+        "en": "Environment",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8EB",
+      "unicode": "E8EB",
+      "unicode_string": "\\uE8EB",
+      "name": "Log",
+      "enum_name": "Log",
+      "category": "development",
+      "keywords": [
+        "log",
+        "development"
+      ],
+      "i18n": {
+        "en": "Log",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8EC",
+      "unicode": "E8EC",
+      "unicode_string": "\\uE8EC",
+      "name": "Monitor",
+      "enum_name": "Monitor",
+      "category": "development",
+      "keywords": [
+        "development",
+        "monitor"
+      ],
+      "i18n": {
+        "en": "Monitor",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8ED",
+      "unicode": "E8ED",
+      "unicode_string": "\\uE8ED",
+      "name": "Performance",
+      "enum_name": "Performance",
+      "category": "development",
+      "keywords": [
+        "development",
+        "performance"
+      ],
+      "i18n": {
+        "en": "Performance",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8EE",
+      "unicode": "E8EE",
+      "unicode_string": "\\uE8EE",
+      "name": "Analytics",
+      "enum_name": "Analytics",
+      "category": "development",
+      "keywords": [
+        "development",
+        "analytics"
+      ],
+      "i18n": {
+        "en": "Analytics",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8EF",
+      "unicode": "E8EF",
+      "unicode_string": "\\uE8EF",
+      "name": "Test",
+      "enum_name": "Test",
+      "category": "development",
+      "keywords": [
+        "development",
+        "test"
+      ],
+      "i18n": {
+        "en": "Test",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F0",
+      "unicode": "E8F0",
+      "unicode_string": "\\uE8F0",
+      "name": "UnitTest",
+      "enum_name": "UnitTest",
+      "category": "development",
+      "keywords": [
+        "development",
+        "unittest"
+      ],
+      "i18n": {
+        "en": "UnitTest",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F1",
+      "unicode": "E8F1",
+      "unicode_string": "\\uE8F1",
+      "name": "IntegrationTest",
+      "enum_name": "IntegrationTest",
+      "category": "development",
+      "keywords": [
+        "integrationtest",
+        "development"
+      ],
+      "i18n": {
+        "en": "IntegrationTest",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F2",
+      "unicode": "E8F2",
+      "unicode_string": "\\uE8F2",
+      "name": "Build",
+      "enum_name": "Build",
+      "category": "development",
+      "keywords": [
+        "build",
+        "development"
+      ],
+      "i18n": {
+        "en": "Build",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F3",
+      "unicode": "E8F3",
+      "unicode_string": "\\uE8F3",
+      "name": "Compile",
+      "enum_name": "Compile",
+      "category": "development",
+      "keywords": [
+        "compile",
+        "development"
+      ],
+      "i18n": {
+        "en": "Compile",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F4",
+      "unicode": "E8F4",
+      "unicode_string": "\\uE8F4",
+      "name": "Deploy",
+      "enum_name": "Deploy",
+      "category": "development",
+      "keywords": [
+        "deploy",
+        "development"
+      ],
+      "i18n": {
+        "en": "Deploy",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F5",
+      "unicode": "E8F5",
+      "unicode_string": "\\uE8F5",
+      "name": "CICD",
+      "enum_name": "CICD",
+      "category": "development",
+      "keywords": [
+        "development",
+        "cicd"
+      ],
+      "i18n": {
+        "en": "CICD",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F6",
+      "unicode": "E8F6",
+      "unicode_string": "\\uE8F6",
+      "name": "Docker",
+      "enum_name": "Docker",
+      "category": "development",
+      "keywords": [
+        "development",
+        "docker"
+      ],
+      "i18n": {
+        "en": "Docker",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE8F7",
+      "unicode": "E8F7",
+      "unicode_string": "\\uE8F7",
+      "name": "Kubernetes",
+      "enum_name": "Kubernetes",
+      "category": "development",
+      "keywords": [
+        "kubernetes",
+        "development"
+      ],
+      "i18n": {
+        "en": "Kubernetes",
+        "zh": "开发"
+      }
+    },
+    {
+      "glyph": "uE72E",
+      "unicode": "E72E",
+      "unicode_string": "\\uE72E",
+      "name": "Lock",
+      "enum_name": "Lock",
+      "category": "security",
+      "keywords": [
+        "security",
+        "lock",
+        "锁",
+        "锁定"
+      ],
+      "i18n": {
+        "en": "Lock",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE785",
+      "unicode": "E785",
+      "unicode_string": "\\uE785",
+      "name": "Unlock",
+      "enum_name": "Unlock",
+      "category": "security",
+      "keywords": [
+        "security",
+        "unlock",
+        "开锁",
+        "解锁"
+      ],
+      "i18n": {
+        "en": "Unlock",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE788",
+      "unicode": "E788",
+      "unicode_string": "\\uE788",
+      "name": "Key",
+      "enum_name": "Key",
+      "category": "security",
+      "keywords": [
+        "key",
+        "密钥",
+        "security",
+        "钥匙",
+        "关键"
+      ],
+      "i18n": {
+        "en": "Key",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE788",
+      "unicode": "E788",
+      "unicode_string": "\\uE788",
+      "name": "Password",
+      "enum_name": "Password",
+      "category": "security",
+      "keywords": [
+        "security",
+        "password"
+      ],
+      "i18n": {
+        "en": "Password",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE788",
+      "unicode": "E788",
+      "unicode_string": "\\uE788",
+      "name": "HidePassword",
+      "enum_name": "HidePassword",
+      "category": "security",
+      "keywords": [
+        "security",
+        "hidepassword"
+      ],
+      "i18n": {
+        "en": "HidePassword",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE788",
+      "unicode": "E788",
+      "unicode_string": "\\uE788",
+      "name": "ShowPassword",
+      "enum_name": "ShowPassword",
+      "category": "security",
+      "keywords": [
+        "security",
+        "showpassword"
+      ],
+      "i18n": {
+        "en": "ShowPassword",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "Shield",
+      "enum_name": "Shield",
+      "category": "security",
+      "keywords": [
+        "安全",
+        "security",
+        "shield",
+        "盾牌",
+        "防护"
+      ],
+      "i18n": {
+        "en": "Shield",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE72B",
+      "unicode": "E72B",
+      "unicode_string": "\\uE72B",
+      "name": "Secure",
+      "enum_name": "Secure",
+      "category": "security",
+      "keywords": [
+        "security",
+        "secure"
+      ],
+      "i18n": {
+        "en": "Secure",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE7BA",
+      "unicode": "E7BA",
+      "unicode_string": "\\uE7BA",
+      "name": "Insecure",
+      "enum_name": "Insecure",
+      "category": "security",
+      "keywords": [
+        "security",
+        "insecure"
+      ],
+      "i18n": {
+        "en": "Insecure",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE7BA",
+      "unicode": "E7BA",
+      "unicode_string": "\\uE7BA",
+      "name": "Alert",
+      "enum_name": "Alert",
+      "category": "security",
+      "keywords": [
+        "security",
+        "alert"
+      ],
+      "i18n": {
+        "en": "Alert",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE73E",
+      "unicode": "E73E",
+      "unicode_string": "\\uE73E",
+      "name": "Verify",
+      "enum_name": "Verify",
+      "category": "security",
+      "keywords": [
+        "security",
+        "verify"
+      ],
+      "i18n": {
+        "en": "Verify",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8F8",
+      "unicode": "E8F8",
+      "unicode_string": "\\uE8F8",
+      "name": "Authentication",
+      "enum_name": "Authentication",
+      "category": "security",
+      "keywords": [
+        "security",
+        "authentication"
+      ],
+      "i18n": {
+        "en": "Authentication",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8F9",
+      "unicode": "E8F9",
+      "unicode_string": "\\uE8F9",
+      "name": "Authorization",
+      "enum_name": "Authorization",
+      "category": "security",
+      "keywords": [
+        "security",
+        "authorization"
+      ],
+      "i18n": {
+        "en": "Authorization",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FA",
+      "unicode": "E8FA",
+      "unicode_string": "\\uE8FA",
+      "name": "Permission",
+      "enum_name": "Permission",
+      "category": "security",
+      "keywords": [
+        "security",
+        "permission"
+      ],
+      "i18n": {
+        "en": "Permission",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "Role",
+      "enum_name": "Role",
+      "category": "security",
+      "keywords": [
+        "security",
+        "role"
+      ],
+      "i18n": {
+        "en": "Role",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "User",
+      "enum_name": "User",
+      "category": "security",
+      "keywords": [
+        "security",
+        "账号",
+        "用户",
+        "user"
+      ],
+      "i18n": {
+        "en": "User",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "Admin",
+      "enum_name": "Admin",
+      "category": "security",
+      "keywords": [
+        "security",
+        "admin",
+        "管理",
+        "管理员"
+      ],
+      "i18n": {
+        "en": "Admin",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE77B",
+      "unicode": "E77B",
+      "unicode_string": "\\uE77B",
+      "name": "Guest",
+      "enum_name": "Guest",
+      "category": "security",
+      "keywords": [
+        "security",
+        "guest"
+      ],
+      "i18n": {
+        "en": "Guest",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FB",
+      "unicode": "E8FB",
+      "unicode_string": "\\uE8FB",
+      "name": "Firewall",
+      "enum_name": "Firewall",
+      "category": "security",
+      "keywords": [
+        "security",
+        "firewall"
+      ],
+      "i18n": {
+        "en": "Firewall",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FC",
+      "unicode": "E8FC",
+      "unicode_string": "\\uE8FC",
+      "name": "VPN",
+      "enum_name": "VPN",
+      "category": "security",
+      "keywords": [
+        "security",
+        "vpn"
+      ],
+      "i18n": {
+        "en": "VPN",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FD",
+      "unicode": "E8FD",
+      "unicode_string": "\\uE8FD",
+      "name": "Proxy",
+      "enum_name": "Proxy",
+      "category": "security",
+      "keywords": [
+        "security",
+        "proxy"
+      ],
+      "i18n": {
+        "en": "Proxy",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FE",
+      "unicode": "E8FE",
+      "unicode_string": "\\uE8FE",
+      "name": "Encryption",
+      "enum_name": "Encryption",
+      "category": "security",
+      "keywords": [
+        "security",
+        "encryption"
+      ],
+      "i18n": {
+        "en": "Encryption",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE8FF",
+      "unicode": "E8FF",
+      "unicode_string": "\\uE8FF",
+      "name": "Decryption",
+      "enum_name": "Decryption",
+      "category": "security",
+      "keywords": [
+        "decryption",
+        "security"
+      ],
+      "i18n": {
+        "en": "Decryption",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE900",
+      "unicode": "E900",
+      "unicode_string": "\\uE900",
+      "name": "Signature",
+      "enum_name": "Signature",
+      "category": "security",
+      "keywords": [
+        "security",
+        "signature"
+      ],
+      "i18n": {
+        "en": "Signature",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE901",
+      "unicode": "E901",
+      "unicode_string": "\\uE901",
+      "name": "Certificate",
+      "enum_name": "Certificate",
+      "category": "security",
+      "keywords": [
+        "security",
+        "凭证",
+        "certificate",
+        "证书"
+      ],
+      "i18n": {
+        "en": "Certificate",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE902",
+      "unicode": "E902",
+      "unicode_string": "\\uE902",
+      "name": "Fingerprint",
+      "enum_name": "Fingerprint",
+      "category": "security",
+      "keywords": [
+        "security",
+        "fingerprint"
+      ],
+      "i18n": {
+        "en": "Fingerprint",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE722",
+      "unicode": "E722",
+      "unicode_string": "\\uE722",
+      "name": "FaceID",
+      "enum_name": "FaceID",
+      "category": "security",
+      "keywords": [
+        "security",
+        "faceid"
+      ],
+      "i18n": {
+        "en": "FaceID",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE903",
+      "unicode": "E903",
+      "unicode_string": "\\uE903",
+      "name": "Privacy",
+      "enum_name": "Privacy",
+      "category": "security",
+      "keywords": [
+        "security",
+        "privacy"
+      ],
+      "i18n": {
+        "en": "Privacy",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE904",
+      "unicode": "E904",
+      "unicode_string": "\\uE904",
+      "name": "PrivacyPolicy",
+      "enum_name": "PrivacyPolicy",
+      "category": "security",
+      "keywords": [
+        "security",
+        "privacypolicy"
+      ],
+      "i18n": {
+        "en": "PrivacyPolicy",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE905",
+      "unicode": "E905",
+      "unicode_string": "\\uE905",
+      "name": "Terms",
+      "enum_name": "Terms",
+      "category": "security",
+      "keywords": [
+        "security",
+        "terms"
+      ],
+      "i18n": {
+        "en": "Terms",
+        "zh": "安全"
+      }
+    },
+    {
+      "glyph": "uE906",
+      "unicode": "E906",
+      "unicode_string": "\\uE906",
+      "name": "Incognito",
+      "enum_name": "Incognito",
+      "category": "security",
+      "keywords": [
+        "security",
+        "incognito"
+      ],
+      "i18n": {
+        "en": "Incognito",
+        "zh": "安全"
+      }
+    }
+  ]
+}

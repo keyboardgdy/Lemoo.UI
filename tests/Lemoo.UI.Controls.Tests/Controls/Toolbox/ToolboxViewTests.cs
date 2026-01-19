@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.Input;
 using FluentAssertions;
 using Lemoo.UI.Models;
-using Lemoo.UI.ViewModels;
+using Lemoo.UI.WPF.ViewModels;
 using Xunit;
 
 namespace Lemoo.UI.Controls.Tests.Toolbox;

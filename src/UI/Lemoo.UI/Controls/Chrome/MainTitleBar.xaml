@@ -6,10 +6,18 @@
              xmlns:local="clr-namespace:Lemoo.UI.Controls.Chrome"
              xmlns:converters="clr-namespace:Lemoo.UI.Converters"
              mc:Ignorable="d"
-             Height="32">
+             d:DesignWidth="800"
+             d:DesignHeight="32">
+
+    <d:DesignerProperties.DesignStyle>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White"/>
+        </Style>
+    </d:DesignerProperties.DesignStyle>
 
     <UserControl.Resources>
-        <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        <converters:IconKindToGlyphConverter x:Key="IconKindToGlyphConverter" />
+        <converters:IconKindToVisibilityConverter x:Key="IconKindToVisibilityConverter" />
         
         <!-- 菜单样式 - 现代风格 -->
         <Style TargetType="Menu">
@@ -168,7 +176,7 @@
                             <Setter.Value>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Icon}"
+                                        <TextBlock Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                    FontFamily="Segoe MDL2 Assets"
                                                    FontSize="14"
                                                    Foreground="{DynamicResource MenuItemForegroundBrush}"
@@ -177,7 +185,7 @@
                                                    Width="16"
                                                    TextAlignment="Center"
                                                    Margin="0,0,8,0"
-                                                   Visibility="{Binding Icon, Converter={StaticResource StringToVisibilityConverter}}" />
+                                                   Visibility="{Binding Icon, Converter={StaticResource IconKindToVisibilityConverter}}" />
                                         <TextBlock Text="{Binding Header}"
                                                    Foreground="{DynamicResource MenuItemForegroundBrush}"
                                                    Background="Transparent"
@@ -195,7 +203,7 @@
                                         <Setter.Value>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Icon}"
+                                                    <TextBlock Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                                FontFamily="Segoe MDL2 Assets"
                                                                FontSize="14"
                                                                Foreground="{DynamicResource MenuItemForegroundBrush}"
@@ -204,7 +212,7 @@
                                                                Width="16"
                                                                TextAlignment="Center"
                                                                Margin="0,0,8,0"
-                                                               Visibility="{Binding Icon, Converter={StaticResource StringToVisibilityConverter}}" />
+                                                               Visibility="{Binding Icon, Converter={StaticResource IconKindToVisibilityConverter}}" />
                                                     <TextBlock Text="{Binding Header}"
                                                                Foreground="{DynamicResource MenuItemForegroundBrush}"
                                                                Background="Transparent"
@@ -274,7 +282,7 @@
                                             <Setter.Value>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{Binding Icon}"
+                                                        <TextBlock Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                                    FontFamily="Segoe MDL2 Assets"
                                                                    FontSize="14"
                                                                    Foreground="{DynamicResource MenuItemForegroundBrush}"
@@ -283,7 +291,7 @@
                                                                    Width="16"
                                                                    TextAlignment="Center"
                                                                    Margin="0,0,8,0"
-                                                                   Visibility="{Binding Icon, Converter={StaticResource StringToVisibilityConverter}}" />
+                                                                   Visibility="{Binding Icon, Converter={StaticResource IconKindToVisibilityConverter}}" />
                                                         <TextBlock Text="{Binding Header}"
                                                                    Foreground="{DynamicResource MenuItemForegroundBrush}"
                                                                    Background="Transparent"
@@ -302,7 +310,7 @@
                                                         <Setter.Value>
                                                             <DataTemplate>
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock Text="{Binding Icon}"
+                                                                    <TextBlock Text="{Binding Icon, Converter={StaticResource IconKindToGlyphConverter}}"
                                                                                FontFamily="Segoe MDL2 Assets"
                                                                                FontSize="14"
                                                                                Foreground="{DynamicResource MenuItemForegroundBrush}"
@@ -311,7 +319,7 @@
                                                                                Width="16"
                                                                                TextAlignment="Center"
                                                                                Margin="0,0,8,0"
-                                                                               Visibility="{Binding Icon, Converter={StaticResource StringToVisibilityConverter}}" />
+                                                                               Visibility="{Binding Icon, Converter={StaticResource IconKindToVisibilityConverter}}" />
                                                                     <TextBlock Text="{Binding Header}"
                                                                                Foreground="{DynamicResource MenuItemForegroundBrush}"
                                                                                Background="Transparent"

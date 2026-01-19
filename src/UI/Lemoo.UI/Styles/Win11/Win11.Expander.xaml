@@ -123,12 +123,11 @@
                                                     <VisualState x:Name="Normal" />
                                                     <VisualState x:Name="MouseOver">
                                                         <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames
+                                                            <ColorAnimation
                                                                 Storyboard.TargetName="HeaderBorder"
-                                                                Storyboard.TargetProperty="Background"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.ListItem.HoverBackground}" />
-                                                            </ObjectAnimationUsingKeyFrames>
+                                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                                To="#F5F5F5"
+                                                                Duration="0" />
                                                         </Storyboard>
                                                     </VisualState>
                                                     <VisualState x:Name="Pressed" />

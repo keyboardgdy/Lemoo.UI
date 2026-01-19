@@ -1,0 +1,334 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Lemoo.UI.Controls.Feedback"
+                    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Typography.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Converters/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- EmptyState 样式 -->
+    <Style x:Key="Win11.EmptyStateStyle" TargetType="controls:EmptyState">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="24"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="IconBrush" Value="{DynamicResource Brush.Text.Secondary}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:EmptyState">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- 图标 -->
+                            <ContentControl x:Name="IconContainer"
+                                            Grid.Row="0"
+                                            Content="{TemplateBinding Icon}"
+                                            Width="{TemplateBinding IconSize}"
+                                            Height="{TemplateBinding IconSize}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Margin="0,0,0,24"
+                                            Opacity="0">
+                                <ContentControl.RenderTransform>
+                                    <TranslateTransform Y="-10"/>
+                                </ContentControl.RenderTransform>
+                            </ContentControl>
+
+                            <!-- 标题 -->
+                            <TextBlock x:Name="TitleText"
+                                       Grid.Row="1"
+                                       Text="{TemplateBinding Title}"
+                                       FontSize="{StaticResource FontSize.Large}"
+                                       FontWeight="SemiBold"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,8"
+                                       Foreground="{DynamicResource Brush.Text.Primary}"
+                                       Opacity="0">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform Y="-10"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+
+                            <!-- 描述 -->
+                            <TextBlock x:Name="DescriptionText"
+                                       Grid.Row="2"
+                                       Text="{TemplateBinding Description}"
+                                       FontSize="{StaticResource FontSize.Normal}"
+                                       TextAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       Margin="0,0,0,24"
+                                       Foreground="{DynamicResource Brush.Text.Secondary}"
+                                       MaxWidth="{TemplateBinding MaxContentWidth}"
+                                       Opacity="0">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform Y="-10"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+
+                            <!-- 操作按钮区域 -->
+                            <StackPanel x:Name="ActionPanel"
+                                        Grid.Row="3"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center"
+                                        Margin="0,8,0,0"
+                                        Opacity="0">
+                                <StackPanel.RenderTransform>
+                                    <TranslateTransform Y="-10"/>
+                                </StackPanel.RenderTransform>
+
+                                <!-- 主操作按钮 -->
+                                <Button x:Name="ActionButton"
+                                        Content="{TemplateBinding ActionText}"
+                                        Command="{TemplateBinding ActionCommand}"
+                                        Padding="16,8"
+                                        MinWidth="100"
+                                        Style="{StaticResource Win11.AccentButtonStyle}"
+                                        Visibility="{TemplateBinding ActionText, Converter={StaticResource StringToVisibilityConverter}}"/>
+
+                                <!-- 次要操作按钮 -->
+                                <Button x:Name="SecondaryActionButton"
+                                        Content="{TemplateBinding SecondaryActionText}"
+                                        Command="{TemplateBinding SecondaryActionCommand}"
+                                        Padding="16,8"
+                                        MinWidth="100"
+                                        Margin="8,0,0,0"
+                                        Style="{StaticResource Win11.ButtonStyle}"
+                                        Visibility="{TemplateBinding SecondaryActionText, Converter={StaticResource StringToVisibilityConverter}}"/>
+                            </StackPanel>
+
+                            <!-- 自定义内容 -->
+                            <ContentPresenter x:Name="CustomContentPresenter"
+                                              Grid.Row="1"
+                                              Grid.RowSpan="3"
+                                              Content="{TemplateBinding CustomContent}"
+                                              Visibility="Collapsed"/>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!-- 自定义内容模式 -->
+                        <Trigger Property="CustomContent" Value="{x:Null}">
+                            <Setter TargetName="CustomContentPresenter" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding CustomContent, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="CustomContentPresenter" Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+
+                        <!-- 启用动画 -->
+                        <Trigger Property="EnableAnimation" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard BeginTime="0:0:0">
+                                        <!-- 图标淡入动画 -->
+                                        <DoubleAnimation Storyboard.TargetName="IconContainer"
+                                                       Storyboard.TargetProperty="Opacity"
+                                                       To="0.6"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="IconContainer"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                       To="0"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <!-- 标题淡入动画 -->
+                                        <DoubleAnimation Storyboard.TargetName="TitleText"
+                                                       Storyboard.TargetProperty="Opacity"
+                                                       To="1"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="TitleText"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                       To="0"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.1">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <!-- 描述淡入动画 -->
+                                        <DoubleAnimation Storyboard.TargetName="DescriptionText"
+                                                       Storyboard.TargetProperty="Opacity"
+                                                       To="1"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="DescriptionText"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                       To="0"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <!-- 操作按钮淡入动画 -->
+                                        <DoubleAnimation Storyboard.TargetName="ActionPanel"
+                                                       Storyboard.TargetProperty="Opacity"
+                                                       To="1"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimation Storyboard.TargetName="ActionPanel"
+                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                       To="0"
+                                                       Duration="0:0:0.3"
+                                                       BeginTime="0:0:0.3">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+
+                        <!-- 禁用动画 -->
+                        <Trigger Property="EnableAnimation" Value="False">
+                            <Setter TargetName="IconContainer" Property="Opacity" Value="0.6"/>
+                            <Setter TargetName="TitleText" Property="Opacity" Value="1"/>
+                            <Setter TargetName="DescriptionText" Property="Opacity" Value="1"/>
+                            <Setter TargetName="ActionPanel" Property="Opacity" Value="1"/>
+                            <Setter TargetName="IconContainer" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="TitleText" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="DescriptionText" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ActionPanel" Property="RenderTransform">
+                                <Setter.Value>
+                                    <TranslateTransform Y="0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 预设图标模板 -->
+
+    <!-- 无数据图标 -->
+    <DataTemplate x:Key="NoDataIconTemplate">
+        <Grid>
+            <Path Data="M 19 5 L 14 0 L 3 0 C 1.9 0 1 0.9 1 2 L 1 22 C 1 23.1 1.9 24 3 24 L 21 24 C 22.1 24 23 23.1 23 22 L 23 7 L 19 5 Z M 14 2 L 21 9 L 14 9 L 14 2 Z"
+                  Fill="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  Stretch="Uniform"
+                  Opacity="0.3"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 搜索无结果图标 -->
+    <DataTemplate x:Key="NoSearchResultsIconTemplate">
+        <Grid>
+            <Path Data="M 15.5 14 L 20.5 19 L 19 20.5 L 14 15.5 C 12.7 16.4 11.2 17 9.5 17 C 5.4 17 2 13.6 2 9.5 C 2 5.4 5.4 2 9.5 2 C 13.6 2 17 5.4 17 9.5 C 17 11.2 16.4 12.7 15.5 14 Z M 9.5 15 C 12.5 15 15 12.5 15 9.5 C 15 6.5 12.5 4 9.5 4 C 6.5 4 4 6.5 4 9.5 C 4 12.5 6.5 15 9.5 15 Z"
+                  Fill="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  Stretch="Uniform"
+                  Opacity="0.3"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 无网络图标 -->
+    <DataTemplate x:Key="NoNetworkIconTemplate">
+        <Grid>
+            <Path Data="M 12 2 C 6.5 2 2 6.5 2 12 C 2 17.5 6.5 22 12 22 C 17.5 22 22 17.5 22 12 C 22 6.5 17.5 2 12 2 Z M 12 20 C 7.6 20 4 16.4 4 12 C 4 7.6 7.6 4 12 4 C 16.4 4 20 7.6 20 12 C 20 16.4 16.4 20 12 20 Z M 12 6 L 12 18"
+                  Stroke="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  StrokeThickness="2"
+                  Stretch="Uniform"
+                  Opacity="0.3"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 错误图标 -->
+    <DataTemplate x:Key="ErrorIconTemplate">
+        <Grid>
+            <Path Data="M 12 2 C 6.5 2 2 6.5 2 12 C 2 17.5 6.5 22 12 22 C 17.5 22 22 17.5 22 12 C 22 6.5 17.5 2 12 2 Z M 13 17 L 11 17 L 11 15 L 13 15 L 13 17 Z M 13 13 L 11 13 L 11 7 L 13 7 L 13 13 Z"
+                  Fill="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  Stretch="Uniform"
+                  Opacity="0.3"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 加载中图标 -->
+    <DataTemplate x:Key="LoadingIconTemplate">
+        <Grid>
+            <ui:ProgressRing IsIndeterminate="True"
+                          Width="{Binding IconSize, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                          Height="{Binding IconSize, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 维护中图标 -->
+    <DataTemplate x:Key="MaintenanceIconTemplate">
+        <Grid>
+            <Path Data="M 11.99 2 C 6.47 2 2 6.48 2 12 C 2 17.52 6.47 22 11.99 22 C 17.52 22 22 17.52 22 12 C 22 6.48 17.52 2 11.99 2 Z M 12 20 C 7.58 20 4 16.42 4 12 C 4 7.58 7.58 4 12 4 C 16.42 4 20 7.58 20 12 C 20 16.42 16.42 20 12 20 Z M 12.5 7 L 11.5 7 L 11.5 12.25 L 16 15.15 L 16.5 14.35 L 12.5 11.75 L 12.5 7 Z"
+                  Fill="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  Stretch="Uniform"
+                  Opacity="0.3">
+                <Path.RenderTransform>
+                    <RotateTransform Angle="0" CenterX="12" CenterY="12"/>
+                </Path.RenderTransform>
+            </Path>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 未授权图标 -->
+    <DataTemplate x:Key="UnauthorizedIconTemplate">
+        <Grid>
+            <Path Data="M 18 8 L 17 7 L 12 12 L 7 7 L 6 8 L 11 13 L 6 18 L 7 19 L 12 14 L 17 19 L 18 18 L 13 13 L 18 8 Z M 12 2 C 6.5 2 2 6.5 2 12 C 2 17.5 6.5 22 12 22 C 17.5 22 22 17.5 22 12 C 22 6.5 17.5 2 12 2 Z M 12 20 C 7.6 20 4 16.4 4 12 C 4 7.6 7.6 4 12 4 C 16.4 4 20 7.6 20 12 C 20 16.4 16.4 20 12 20 Z"
+                  Fill="{Binding IconBrush, RelativeSource={RelativeSource AncestorType=controls:EmptyState}}"
+                  Stretch="Uniform"
+                  Opacity="0.3"/>
+        </Grid>
+    </DataTemplate>
+
+    <!-- 默认样式 -->
+    <Style TargetType="controls:EmptyState" BasedOn="{StaticResource Win11.EmptyStateStyle}"/>
+
+</ResourceDictionary>

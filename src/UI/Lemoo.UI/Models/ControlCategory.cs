@@ -61,6 +61,21 @@ public enum ControlCategory
     Chrome,
 
     /// <summary>
+    /// 数据展示
+    /// </summary>
+    DataDisplay,
+
+    /// <summary>
+    /// 媒体
+    /// </summary>
+    Media,
+
+    /// <summary>
+    /// 数据可视化
+    /// </summary>
+    DataVisualization,
+
+    /// <summary>
     /// 其他
     /// </summary>
     Others

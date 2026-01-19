@@ -1,0 +1,94 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- CodeEditor 默认样式 -->
+    <Style TargetType="{x:Type ui:CodeEditor}">
+        <Setter Property="Background" Value="#1E1E1E" />
+        <Setter Property="BorderBrush" Value="#3C3C3C" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="100" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:CodeEditor}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" x:Name="LineNumbersColumn" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- 行号 -->
+                            <Border x:Name="PART_LineNumbers"
+                                    Grid.Column="0"
+                                    Background="#1E1E1E"
+                                    Padding="8,0,8,0"
+                                    BorderBrush="#3C3C3C"
+                                    BorderThickness="0,0,1,0">
+                                <TextBlock x:Name="LineNumbersText"
+                                           Foreground="#858585"
+                                           FontFamily="{TemplateBinding FontFamily}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           TextAlignment="Right"
+                                           TextWrapping="NoWrap">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform x:Name="LineNumbersTransform" X="0" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Border>
+
+                            <!-- 编辑器 -->
+                            <ScrollViewer Grid.Column="1"
+                                          VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Auto"
+                                          x:Name="PART_ScrollViewer">
+                                <RichTextBox x:Name="PART_Editor"
+                                             Background="Transparent"
+                                             Foreground="#DCDCDC"
+                                             BorderThickness="0"
+                                             FontFamily="{TemplateBinding FontFamily}"
+                                             FontSize="{TemplateBinding FontSize}"
+                                             IsReadOnly="{TemplateBinding IsReadOnly}"
+                                             VerticalAlignment="Top"
+                                             VerticalScrollBarVisibility="Disabled"
+                                             HorizontalScrollBarVisibility="Disabled">
+                                    <RichTextBox.Resources>
+                                        <Style TargetType="{x:Type Paragraph}">
+                                            <Setter Property="Margin" Value="0" />
+                                        </Style>
+                                    </RichTextBox.Resources>
+                                    <RichTextBox.Style>
+                                        <Style TargetType="{x:Type RichTextBox}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsFocused" Value="True">
+                                                    <Setter Property="BorderBrush" Value="Transparent" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </RichTextBox.Style>
+                                </RichTextBox>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ShowLineNumbers" Value="False">
+                            <Setter TargetName="LineNumbersColumn" Property="Width" Value="0" />
+                            <Setter TargetName="PART_LineNumbers" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

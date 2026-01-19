@@ -50,9 +50,11 @@ namespace Lemoo.UI.Controls
     /// }
     /// </code>
     /// </example>
-    public class DialogHost : ContentControl
+    public class DialogHost : ContentControl, IDisposable
     {
         #region Constructor
+
+        private bool _disposed;
 
         static DialogHost()
         {
@@ -363,6 +365,72 @@ namespace Lemoo.UI.Controls
         /// 关闭对话框。
         /// </summary>
         public void CloseDialog() => IsOpen = false;
+
+        #endregion
+
+        #region IDisposable 实现
+
+        /// <summary>
+        /// 释放对话框占用的资源。
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 释放对话框占用的资源。
+        /// </summary>
+        /// <param name="disposing">是否正在释放托管资源</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                // 清理托管资源 - 取消事件订阅
+                if (DialogOpened != null)
+                {
+                    // 获取事件订阅字段并清空
+                    var eventField = typeof(DialogHost).GetEvent(nameof(DialogOpened));
+                    if (eventField != null)
+                    {
+                        // 移除所有事件订阅者
+                        foreach (var @delegate in DialogOpened.GetInvocationList())
+                        {
+                            DialogOpened -= (EventHandler<DialogOpenedEventArgs>)@delegate;
+                        }
+                    }
+                }
+
+                if (DialogClosed != null)
+                {
+                    var eventField = typeof(DialogHost).GetEvent(nameof(DialogClosed));
+                    if (eventField != null)
+                    {
+                        foreach (var @delegate in DialogClosed.GetInvocationList())
+                        {
+                            DialogClosed -= (EventHandler<DialogClosedEventArgs>)@delegate;
+                        }
+                    }
+                }
+
+                // 释放模板部件引用
+                _dialogContainer = null;
+            }
+
+            _disposed = true;
+        }
+
+        /// <summary>
+        /// 析构函数。
+        /// </summary>
+        ~DialogHost()
+        {
+            Dispose(false);
+        }
 
         #endregion
     }

@@ -11,32 +11,14 @@
          共用动画 Storyboard 资源
          ============================================ -->
 
-    <!-- 按钮悬停进入动画 -->
+    <!-- 按钮悬停进入动画（移除颜色动画，使用属性触发器替代以支持主题切换）-->
     <Storyboard x:Key="ButtonHoverEnterStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                       To="{StaticResource button.hoverBackground}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                       To="{StaticResource input.focusBorder}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter，确保主题切换时颜色正确更新 -->
     </Storyboard>
 
-    <!-- 按钮悬停退出动画 -->
+    <!-- 按钮悬停退出动画（移除颜色动画，使用属性触发器替代以支持主题切换）-->
     <Storyboard x:Key="ButtonHoverExitStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                       To="{StaticResource button.background}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-                       To="{StaticResource button.border}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter，确保主题切换时颜色正确更新 -->
     </Storyboard>
 
     <!-- 按钮按下动画 -->
@@ -67,31 +49,19 @@
                         EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
     </Storyboard>
 
-    <!-- 主按钮悬停进入动画 -->
+    <!-- 主按钮悬停进入动画（移除ColorAnimation，改用Setter）-->
     <Storyboard x:Key="PrimaryButtonHoverEnterStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                       To="{StaticResource Palette.Accent.Hover}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter，确保主题切换时颜色正确更新 -->
     </Storyboard>
 
-    <!-- 主按钮悬停退出动画 -->
+    <!-- 主按钮悬停退出动画（移除ColorAnimation，改用Setter）-->
     <Storyboard x:Key="PrimaryButtonHoverExitStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                       To="{StaticResource Palette.Accent.Primary}"
-                       Duration="{StaticResource AnimationDuration.Normal}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter，确保主题切换时颜色正确更新 -->
     </Storyboard>
 
-    <!-- 主按钮按下动画 -->
+    <!-- 主按钮按下动画（移除ColorAnimation，改用Setter）-->
     <Storyboard x:Key="PrimaryButtonPressedStoryboard">
-        <ColorAnimation Storyboard.TargetName="border"
-                       Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                       To="{StaticResource Palette.Accent.Pressed}"
-                       Duration="{StaticResource AnimationDuration.Fast}"
-                       EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- 颜色过渡已移除，改用 Trigger 中的 Setter，确保主题切换时颜色正确更新 -->
         <DoubleAnimation Storyboard.TargetName="scaleTransform"
                         Storyboard.TargetProperty="ScaleX"
                         To="0.97"
@@ -118,31 +88,19 @@
                         EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
     </Storyboard>
 
-    <!-- 危险按钮悬停进入动画 -->
+    <!-- 危险按钮悬停进入动画（移除Opacity动画，改用Setter）-->
     <Storyboard x:Key="DangerButtonHoverEnterStoryboard">
-        <DoubleAnimation Storyboard.TargetName="border"
-                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)"
-                        To="0.8"
-                        Duration="{StaticResource AnimationDuration.Normal}"
-                        EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- Opacity 动画已移除，改用 Trigger 中的 Setter，确保主题切换时正确更新 -->
     </Storyboard>
 
-    <!-- 危险按钮悬停退出动画 -->
+    <!-- 危险按钮悬停退出动画（移除Opacity动画，改用Setter）-->
     <Storyboard x:Key="DangerButtonHoverExitStoryboard">
-        <DoubleAnimation Storyboard.TargetName="border"
-                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)"
-                        To="1"
-                        Duration="{StaticResource AnimationDuration.Normal}"
-                        EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- Opacity 动画已移除，改用 Trigger 中的 Setter，确保主题切换时正确更新 -->
     </Storyboard>
 
-    <!-- 危险按钮按下动画 -->
+    <!-- 危险按钮按下动画（移除Opacity动画，改用Setter）-->
     <Storyboard x:Key="DangerButtonPressedStoryboard">
-        <DoubleAnimation Storyboard.TargetName="border"
-                        Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Opacity)"
-                        To="0.6"
-                        Duration="{StaticResource AnimationDuration.Fast}"
-                        EasingFunction="{StaticResource EasingFunction.EaseOut}"/>
+        <!-- Opacity 动画已移除，改用 Trigger 中的 Setter，确保主题切换时正确更新 -->
         <DoubleAnimation Storyboard.TargetName="scaleTransform"
                         Storyboard.TargetProperty="ScaleX"
                         To="0.97"
@@ -198,12 +156,9 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ButtonHoverEnterStoryboard}"/>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ButtonHoverExitStoryboard}"/>
-                            </Trigger.ExitActions>
+                            <!-- 使用 Setter 直接设置画刷，确保主题切换时颜色正确更新 -->
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Trigger.EnterActions>
@@ -265,14 +220,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource PrimaryButtonHoverEnterStoryboard}"/>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource PrimaryButtonHoverExitStoryboard}"/>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentHoverBrush}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPressedBrush}"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource PrimaryButtonPressedStoryboard}"/>
                             </Trigger.EnterActions>
@@ -465,14 +416,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource DangerButtonHoverEnterStoryboard}"/>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource DangerButtonHoverExitStoryboard}"/>
-                            </Trigger.ExitActions>
+                            <Setter TargetName="border" Property="Opacity" Value="0.8"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Opacity" Value="0.6"/>
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource DangerButtonPressedStoryboard}"/>
                             </Trigger.EnterActions>

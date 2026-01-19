@@ -66,43 +66,43 @@ namespace Lemoo.UI.Services
         /// </summary>
         public IconService()
         {
-            IconRegistry.Initialize();
+            IconMetadataRegistry.Initialize();
         }
 
         /// <inheritdoc/>
         public IconInfo? GetIcon(IconKind kind)
         {
-            return IconRegistry.GetIcon(kind);
+            return IconMetadataRegistry.GetIcon(kind);
         }
 
         /// <inheritdoc/>
         public IEnumerable<IconInfo> GetAllIcons()
         {
-            return IconRegistry.GetAllIcons();
+            return IconMetadataRegistry.GetAllIcons();
         }
 
         /// <inheritdoc/>
         public IEnumerable<IconInfo> GetIconsByCategory(string category)
         {
-            return IconRegistry.GetIconsByCategory(category);
+            return IconMetadataRegistry.GetIconsByCategory(category);
         }
 
         /// <inheritdoc/>
         public IEnumerable<IconCategoryInfo> GetCategories()
         {
-            return IconRegistry.GetCategories();
+            return IconMetadataRegistry.GetCategories();
         }
 
         /// <inheritdoc/>
         public IEnumerable<IconInfo> SearchIcons(string searchTerm)
         {
-            return IconRegistry.SearchIcons(searchTerm);
+            return IconMetadataRegistry.SearchIcons(searchTerm);
         }
 
         /// <inheritdoc/>
         public string GetGlyph(IconKind kind)
         {
-            return IconRegistry.GetGlyph(kind);
+            return IconMetadataRegistry.GetGlyph(kind);
         }
 
         /// <inheritdoc/>

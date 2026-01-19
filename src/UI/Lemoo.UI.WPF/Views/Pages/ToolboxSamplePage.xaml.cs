@@ -1,5 +1,5 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Lemoo.UI.ViewModels;
+using Lemoo.UI.WPF.ViewModels;
 using Lemoo.UI.WPF.ViewModels.Pages;
 using System.Windows;
 

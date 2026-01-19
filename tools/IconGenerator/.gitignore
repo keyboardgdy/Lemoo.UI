@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# T4
+*.g.cs
+*.g.i.cs
+
+# Source Generator
+bin/
+obj/
+*.Generated.cs
+
+# Build outputs
+IconMetadata.json.bak
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates

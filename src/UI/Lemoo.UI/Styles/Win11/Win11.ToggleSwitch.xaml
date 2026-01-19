@@ -5,10 +5,10 @@
 
     <!-- ToggleSwitch 默认样式 -->
     <Style TargetType="{x:Type ui:ToggleSwitch}" x:Key="{x:Type ui:ToggleSwitch}">
-        <Setter Property="Background" Value="{DynamicResource Brush.ToggleSwitch.OffBackground}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.ToggleSwitch.OffBorder}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="12,8" />
@@ -31,12 +31,12 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Header 内容 -->
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <ContentPresenter
-                                    Content="{TemplateBinding Header}"
-                                    TextElement.Foreground="{TemplateBinding Foreground}"
-                                    Margin="0,0,12,0" />
-                            </StackPanel>
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Content="{TemplateBinding Header}"
+                                TextElement.Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center"
+                                Margin="0,0,12,0" />
 
                             <!-- 开关按钮 -->
                             <ToggleButton
@@ -45,21 +45,18 @@
                                 IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                                 Width="52"
                                 Height="28"
-                                Background="{DynamicResource Brush.ToggleSwitch.OffBackground}"
-                                BorderBrush="{DynamicResource Brush.ToggleSwitch.OffBorder}"
-                                BorderThickness="1"
                                 SnapsToDevicePixels="True">
 
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Border
                                             x:Name="ToggleBorder"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
                                             Width="52"
                                             Height="28"
                                             CornerRadius="14"
+                                            Background="{DynamicResource Brush.ToggleSwitch.OffBackground}"
+                                            BorderBrush="{DynamicResource Brush.ToggleSwitch.OffBorder}"
+                                            BorderThickness="1"
                                             SnapsToDevicePixels="True">
 
                                             <Grid>
@@ -70,9 +67,9 @@
                                                     Height="20"
                                                     Fill="{DynamicResource Brush.ToggleSwitch.Knob}"
                                                     HorizontalAlignment="Left"
-                                                    StrokeThickness="0">
-                                                    <Ellipse.Margin>3</Ellipse.Margin>
-                                                </Ellipse>
+                                                    VerticalAlignment="Center"
+                                                    Margin="3,0,0,0"
+                                                    StrokeThickness="0" />
                                             </Grid>
 
                                             <VisualStateManager.VisualStateGroups>
@@ -82,32 +79,13 @@
                                                             <!-- 滑块移动到右侧 -->
                                                             <ThicknessAnimation
                                                                 Storyboard.TargetName="ToggleKnob"
-                                                                Storyboard.TargetProperty="(Ellipse.Margin)"
+                                                                Storyboard.TargetProperty="(FrameworkElement.Margin)"
                                                                 To="25,0,0,0"
                                                                 Duration="0:0:0.2">
                                                                 <ThicknessAnimation.EasingFunction>
                                                                     <CubicEase EasingMode="EaseOut" />
                                                                 </ThicknessAnimation.EasingFunction>
                                                             </ThicknessAnimation>
-                                                            <!-- 更改背景色 -->
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="ToggleBorder"
-                                                                Storyboard.TargetProperty="Background"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.ToggleSwitch.OnBackground}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="ToggleBorder"
-                                                                Storyboard.TargetProperty="BorderBrush"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.ToggleSwitch.OnBorder}" />
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                            <ObjectAnimationUsingKeyFrames
-                                                                Storyboard.TargetName="ToggleKnob"
-                                                                Storyboard.TargetProperty="Fill"
-                                                                Duration="0">
-                                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.ToggleSwitch.Knob.On}" />
-                                                            </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
 
@@ -116,7 +94,7 @@
                                                             <!-- 滑块移动到左侧 -->
                                                             <ThicknessAnimation
                                                                 Storyboard.TargetName="ToggleKnob"
-                                                                Storyboard.TargetProperty="(Ellipse.Margin)"
+                                                                Storyboard.TargetProperty="(FrameworkElement.Margin)"
                                                                 To="3,0,0,0"
                                                                 Duration="0:0:0.2">
                                                                 <ThicknessAnimation.EasingFunction>
@@ -131,6 +109,7 @@
 
                                                 <VisualStateGroup x:Name="CommonStates">
                                                     <VisualState x:Name="Normal" />
+
                                                     <VisualState x:Name="MouseOver">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames
@@ -141,6 +120,7 @@
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
+
                                                     <VisualState x:Name="Pressed">
                                                         <Storyboard>
                                                             <ObjectAnimationUsingKeyFrames
@@ -151,6 +131,7 @@
                                                             </ObjectAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </VisualState>
+
                                                     <VisualState x:Name="Disabled">
                                                         <Storyboard>
                                                             <DoubleAnimation
@@ -170,6 +151,19 @@
                     </Border>
 
                     <ControlTemplate.Triggers>
+                        <!-- Checked 状态：使用开启颜色 -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="TogglePart" Property="Background" Value="{DynamicResource Brush.ToggleSwitch.OnBackground}" />
+                            <Setter TargetName="TogglePart" Property="BorderBrush" Value="{DynamicResource Brush.ToggleSwitch.OnBorder}" />
+                        </Trigger>
+
+                        <!-- Unchecked 状态：使用关闭颜色 -->
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="TogglePart" Property="Background" Value="{DynamicResource Brush.ToggleSwitch.OffBackground}" />
+                            <Setter TargetName="TogglePart" Property="BorderBrush" Value="{DynamicResource Brush.ToggleSwitch.OffBorder}" />
+                        </Trigger>
+
+                        <!-- 禁用状态 -->
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5" />
                         </Trigger>

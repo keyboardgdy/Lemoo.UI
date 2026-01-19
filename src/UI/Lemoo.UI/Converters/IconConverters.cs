@@ -8,21 +8,24 @@ namespace Lemoo.UI.Converters
 {
     /// <summary>
     /// IconKind 到字形字符的转换器
+    /// 优化：使用单例模式，减少内存占用
     /// </summary>
     public class IconKindToGlyphConverter : IValueConverter
     {
-        private readonly IIconService _iconService;
+        private static readonly Lazy<IconService> _iconService = new(() => new IconService());
 
-        public IconKindToGlyphConverter()
-        {
-            _iconService = new IconService();
-        }
+        /// <summary>
+        /// 获取共享实例
+        /// </summary>
+        public static IconKindToGlyphConverter Instance { get; } = new IconKindToGlyphConverter();
+
+        public IconKindToGlyphConverter() { }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is IconKind kind)
             {
-                return _iconService.GetGlyph(kind);
+                return _iconService.Value.GetGlyph(kind);
             }
             return "\u0000";
         }
@@ -35,21 +38,34 @@ namespace Lemoo.UI.Converters
 
     /// <summary>
     /// IconSize 到字体大小的转换器
+    /// 优化：使用单例模式，减少内存占用
     /// </summary>
     public class IconSizeToFontSizeConverter : IValueConverter
     {
-        private readonly IIconService _iconService;
-
-        public IconSizeToFontSizeConverter()
+        private static readonly Lazy<IconService> _iconService = new(() => new IconService());
+        private static readonly Dictionary<IconSize, double> _sizeMap = new()
         {
-            _iconService = new IconService();
-        }
+            { IconSize.ExtraSmall, 12 },
+            { IconSize.Small, 16 },
+            { IconSize.Normal, 20 },
+            { IconSize.Medium, 24 },
+            { IconSize.Large, 32 },
+            { IconSize.ExtraLarge, 48 }
+        };
+
+        /// <summary>
+        /// 获取共享实例
+        /// </summary>
+        public static IconSizeToFontSizeConverter Instance { get; } = new IconSizeToFontSizeConverter();
+
+        public IconSizeToFontSizeConverter() { }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // 直接使用字典查找，避免调用 IconService
             if (value is IconSize size)
             {
-                return _iconService.GetIconSize(size);
+                return _sizeMap.GetValueOrDefault(size, 20.0);
             }
             return 20.0;
         }

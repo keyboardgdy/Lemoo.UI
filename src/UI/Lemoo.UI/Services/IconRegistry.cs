@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Lemoo.UI.Models.Icons;
 
 namespace Lemoo.UI.Services
@@ -13,6 +14,8 @@ namespace Lemoo.UI.Services
         private static Dictionary<IconKind, IconInfo> _iconCache = new();
         private static Dictionary<string, List<IconInfo>> _categoryCache = new();
         private static bool _isInitialized = false;
+        private static readonly object _lock = new();
+        private static FieldInfo[]? _iconKindProperties;
 
         /// <summary>
         /// 初始化图标注册表
@@ -21,23 +24,40 @@ namespace Lemoo.UI.Services
         {
             if (_isInitialized) return;
 
-            _iconCache.Clear();
-            _categoryCache.Clear();
-
-            // 从 IconKind 枚举中读取图标信息
-            foreach (IconKind kind in Enum.GetValues<IconKind>())
+            lock (_lock)
             {
-                var info = GetIconInfoFromEnum(kind);
-                _iconCache[kind] = info;
+                if (_isInitialized) return;
 
-                if (!_categoryCache.ContainsKey(info.Category))
+                _iconCache.Clear();
+                _categoryCache.Clear();
+
+                // 预加载反射信息以减少开销
+                CacheReflectionInfo();
+
+                // 从 IconKind 枚举中读取图标信息
+                foreach (IconKind kind in Enum.GetValues<IconKind>())
                 {
-                    _categoryCache[info.Category] = new List<IconInfo>();
-                }
-                _categoryCache[info.Category].Add(info);
-            }
+                    var info = GetIconInfoFromEnum(kind);
+                    _iconCache[kind] = info;
 
-            _isInitialized = true;
+                    if (!_categoryCache.ContainsKey(info.Category))
+                    {
+                        _categoryCache[info.Category] = new List<IconInfo>();
+                    }
+                    _categoryCache[info.Category].Add(info);
+                }
+
+                _isInitialized = true;
+            }
+        }
+
+        /// <summary>
+        /// 缓存反射信息以减少运行时开销
+        /// </summary>
+        private static void CacheReflectionInfo()
+        {
+            var type = typeof(IconKind);
+            _iconKindProperties = type.GetFields(BindingFlags.Public | BindingFlags.Static);
         }
 
         /// <summary>
@@ -200,10 +220,15 @@ namespace Lemoo.UI.Services
         {
             return category switch
             {
-                "Navigation" => "导航",
-                "Action" => "操作",
-                "File" => "文件",
-                "Status" => "状态",
+                "导航" => "导航",
+                "操作" => "操作",
+                "媒体" => "媒体",
+                "通信" => "通信",
+                "文件" => "文件",
+                "状态" => "状态",
+                "界面" => "界面",
+                "开发" => "开发",
+                "安全" => "安全",
                 _ => category
             };
         }
@@ -215,10 +240,15 @@ namespace Lemoo.UI.Services
         {
             return category switch
             {
-                "Navigation" => 1,
-                "Action" => 2,
-                "File" => 3,
-                "Status" => 4,
+                "导航" => 1,
+                "操作" => 2,
+                "媒体" => 3,
+                "通信" => 4,
+                "文件" => 5,
+                "状态" => 6,
+                "界面" => 7,
+                "开发" => 8,
+                "安全" => 9,
                 _ => 100
             };
         }

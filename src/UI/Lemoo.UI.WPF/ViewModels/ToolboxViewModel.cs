@@ -5,7 +5,7 @@ using Lemoo.UI.Services;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 
-namespace Lemoo.UI.ViewModels;
+namespace Lemoo.UI.WPF.ViewModels;
 
 /// <summary>
 /// 工具箱视图模型
@@ -45,6 +45,16 @@ public partial class ToolboxViewModel : ObservableObject
     /// 搜索结果
     /// </summary>
     public ObservableCollection<ControlInfo> SearchResults { get; } = new();
+
+    /// <summary>
+    /// 搜索结果数量
+    /// </summary>
+    public int SearchResultCount => SearchResults.Count;
+
+    /// <summary>
+    /// 是否有搜索结果
+    /// </summary>
+    public bool HasSearchResults => SearchResults.Count > 0;
 
     /// <summary>
     /// 按分类分组的控件集合
@@ -133,6 +143,10 @@ public partial class ToolboxViewModel : ObservableObject
         {
             SearchResults.Add(result);
         }
+
+        // 通知搜索结果数量变化
+        OnPropertyChanged(nameof(SearchResultCount));
+        OnPropertyChanged(nameof(HasSearchResults));
     }
 
     /// <summary>

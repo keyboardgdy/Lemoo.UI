@@ -1,0 +1,353 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <!-- ToastItem 默认样式 -->
+    <Style TargetType="{x:Type ui:ToastItem}" x:Key="{x:Type ui:ToastItem}">
+        <Setter Property="Background" Value="{DynamicResource NotificationBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource NotificationForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource NotificationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="MinWidth" Value="320" />
+        <Setter Property="MaxWidth" Value="400" />
+        <Setter Property="MaxHeight" Value="120" />
+        <Setter Property="Effect" Value="{StaticResource Shadow.Medium}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:ToastItem}">
+                    <Border
+                        x:Name="RootBorder"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="{TemplateBinding Padding}"
+                        MinWidth="{TemplateBinding MinWidth}"
+                        MaxWidth="{TemplateBinding MaxWidth}"
+                        MaxHeight="{TemplateBinding MaxHeight}"
+                        Effect="{Binding Effect, RelativeSource={RelativeSource TemplatedParent}}"
+                        RenderTransformOrigin="0.5,0.5">
+
+                        <Border.RenderTransform>
+                            <TranslateTransform x:Name="SlideTransform" />
+                        </Border.RenderTransform>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!-- 主内容 -->
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- 图标 -->
+                                <TextBlock
+                                    Grid.Column="0"
+                                    x:Name="IconTextBlock"
+                                    Text="&#xE897;"
+                                    FontFamily="Segoe MDL2 Assets"
+                                    FontSize="20"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,12,0"
+                                    Visibility="Collapsed" />
+
+                                <!-- 消息文本 -->
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{TemplateBinding Message}"
+                                    VerticalAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    Foreground="{TemplateBinding Foreground}" />
+
+                                <!-- 操作和关闭按钮 -->
+                                <StackPanel
+                                    Grid.Column="2"
+                                    Orientation="Horizontal"
+                                    Margin="12,0,0,0">
+                                    <!-- 操作按钮 -->
+                                    <Button
+                                        x:Name="ActionButton"
+                                        Content="{TemplateBinding ActionButtonContent}"
+                                        Command="{TemplateBinding ActionButtonCommand}"
+                                        Style="{StaticResource Toast.ButtonStyle}"
+                                        Visibility="Collapsed" />
+
+                                    <!-- 关闭按钮 -->
+                                    <Button
+                                        x:Name="CloseButton"
+                                        Width="32"
+                                        Height="32"
+                                        Margin="8,0,0,0"
+                                        Command="{TemplateBinding CloseCommand}"
+                                        Style="{StaticResource Toast.CloseButtonStyle}"
+                                        Visibility="Collapsed" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- 进度条 -->
+                            <ProgressBar
+                                Grid.Row="1"
+                                x:Name="ProgressBar"
+                                Height="4"
+                                Margin="0,12,0,0"
+                                Foreground="{DynamicResource AccentPrimaryBrush}"
+                                Background="Transparent"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <!-- 图标显示 -->
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Info">
+                            <Setter TargetName="IconTextBlock" Property="Text" Value="&#xE897;" />
+                            <Setter TargetName="IconTextBlock" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="IconTextBlock" Property="Foreground" Value="{DynamicResource Brush.Semantic.Info.Foreground}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Success">
+                            <Setter TargetName="IconTextBlock" Property="Text" Value="&#xE10B;" />
+                            <Setter TargetName="IconTextBlock" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="IconTextBlock" Property="Foreground" Value="{DynamicResource Brush.Semantic.Success.Foreground}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Warning">
+                            <Setter TargetName="IconTextBlock" Property="Text" Value="&#xE7BA;" />
+                            <Setter TargetName="IconTextBlock" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="IconTextBlock" Property="Foreground" Value="{DynamicResource Brush.Semantic.Warning.Foreground}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Error">
+                            <Setter TargetName="IconTextBlock" Property="Text" Value="&#xE814;" />
+                            <Setter TargetName="IconTextBlock" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="IconTextBlock" Property="Foreground" Value="{DynamicResource Brush.Semantic.Error.Foreground}" />
+                        </DataTrigger>
+
+                        <!-- 背景颜色 -->
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Info">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource Brush.Semantic.Info.Background}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Success">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource Brush.Semantic.Success.Background}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Warning">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource Brush.Semantic.Warning.Background}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource Self}}" Value="Error">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource Brush.Semantic.Error.Background}" />
+                        </DataTrigger>
+
+                        <!-- 操作按钮显示 -->
+                        <DataTrigger Binding="{Binding ActionButtonContent, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter TargetName="ActionButton" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+
+                        <!-- 关闭按钮显示 -->
+                        <Trigger Property="ShowCloseButton" Value="True">
+                            <Setter TargetName="CloseButton" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
+                        <!-- 进度条显示 -->
+                        <Trigger Property="ShowProgress" Value="True">
+                            <Setter TargetName="ProgressBar" Property="Visibility" Value="Visible" />
+                        </Trigger>
+
+                        <!-- 加载动画 -->
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <!-- 淡入效果 -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="RootBorder"
+                                        Storyboard.TargetProperty="Opacity"
+                                        From="0"
+                                        To="1"
+                                        Duration="0:0:0.3">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+
+                                    <!-- 滑入效果 -->
+                                    <DoubleAnimation
+                                        Storyboard.TargetName="SlideTransform"
+                                        Storyboard.TargetProperty="X"
+                                        From="20"
+                                        To="0"
+                                        Duration="0:0:0.3">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseOut" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Toast 操作按钮样式 -->
+    <Style x:Key="Toast.ButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        Padding="{TemplateBinding Padding}"
+                        CornerRadius="4">
+                        <ContentPresenter
+                            Content="{TemplateBinding Content}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="White" />
+                            <Setter TargetName="Border" Property="Opacity" Value="0.1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Toast 关闭按钮样式 -->
+    <Style x:Key="Toast.CloseButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="4">
+                        <TextBlock
+                            Text="&#xE106;"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="14"
+                            Foreground="{TemplateBinding Foreground}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="White" />
+                            <Setter TargetName="Border" Property="Opacity" Value="0.1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ToastNotification 默认样式 -->
+    <Style TargetType="{x:Type ui:ToastNotification}" x:Key="{x:Type ui:ToastNotification}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:ToastNotification}">
+                    <Grid>
+                        <!-- 根据位置显示不同的容器 -->
+                        <Grid x:Name="TopLeftContainer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid x:Name="TopCenterContainer" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid x:Name="TopRightContainer" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid x:Name="BottomLeftContainer" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid x:Name="BottomCenterContainer" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+
+                        <Grid x:Name="BottomRightContainer" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16" Visibility="Collapsed">
+                            <ItemsControl ItemsSource="{Binding Toasts, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </Grid>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- 根据位置显示对应的容器 -->
+                        <Trigger Property="Position" Value="TopLeft">
+                            <Setter TargetName="TopLeftContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Position" Value="TopCenter">
+                            <Setter TargetName="TopCenterContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Position" Value="TopRight">
+                            <Setter TargetName="TopRightContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Position" Value="BottomLeft">
+                            <Setter TargetName="BottomLeftContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Position" Value="BottomCenter">
+                            <Setter TargetName="BottomCenterContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="Position" Value="BottomRight">
+                            <Setter TargetName="BottomRightContainer" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,14 +1,27 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+    xmlns:ui="clr-namespace:Lemoo.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Themes/Base/ComponentBrushes.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Shadows.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- 旋转变换资源 -->
+    <RotateTransform x:Key="RotateTransform0" Angle="0" />
+    <RotateTransform x:Key="RotateTransform180" Angle="180" />
 
     <!-- DropDownButton 默认样式 -->
     <Style TargetType="{x:Type ui:DropDownButton}" x:Key="{x:Type ui:DropDownButton}">
-        <Setter Property="Background" Value="{DynamicResource Brush.Button.Background}" />
-        <Setter Property="Foreground" Value="{DynamicResource Brush.Button.Foreground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Button.Border}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Thin}" />
         <Setter Property="Padding" Value="16,6" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -25,7 +38,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource CornerRadius.Small}"
+                            CornerRadius="{StaticResource Win11.CornerRadius.Small}"
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
 
@@ -56,7 +69,9 @@
                                     Height="4"
                                     Stretch="Uniform"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center" />
+                                    VerticalAlignment="Center"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    RenderTransform="{StaticResource RotateTransform0}" />
                             </Grid>
                         </Border>
 
@@ -71,12 +86,12 @@
                             Focusable="False">
 
                             <Border
-                                Background="{DynamicResource Brush.Popup.Background}"
-                                BorderBrush="{DynamicResource Brush.Popup.Border}"
+                                Background="{DynamicResource PopupBackgroundBrush}"
+                                BorderBrush="{DynamicResource PopupBorderBrush}"
                                 BorderThickness="1"
-                                CornerRadius="{DynamicResource CornerRadius.Small}"
+                                CornerRadius="{StaticResource Win11.CornerRadius.Small}"
                                 Padding="4"
-                                Effect="{DynamicResource Shadow.Small}"
+                                Effect="{StaticResource Shadow.Small}"
                                 SnapsToDevicePixels="True">
 
                                 <ContentPresenter
@@ -85,77 +100,36 @@
                                     ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" />
                             </Border>
                         </Popup>
-
-                        <!-- 视觉状态 -->
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="Background"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.HoverBackground}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.HoverBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="Background"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.PressedBackground}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.PressedBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="0.5"
-                                            Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Unfocused" />
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames
-                                            Storyboard.TargetName="ButtonBorder"
-                                            Storyboard.TargetProperty="BorderBrush"
-                                            Duration="0">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource Brush.Button.FocusBorder}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <!-- 鼠标悬停状态 -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonHoverBackgroundBrush}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}" />
+                        </Trigger>
+
+                        <!-- 按下状态 -->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonPressedBackgroundBrush}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonPressedBorderBrush}" />
+                        </Trigger>
+
+                        <!-- 禁用状态 -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.6" />
+                            <Setter Property="Cursor" Value="Arrow" />
+                        </Trigger>
+
+                        <!-- 焦点状态 -->
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource InputFocusBorderBrush}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="{StaticResource Win11.BorderThickness.Medium}" />
+                        </Trigger>
+
+                        <!-- 下拉打开状态 - 旋转箭头 -->
                         <Trigger Property="IsDropDownOpen" Value="True">
-                            <Setter TargetName="DropDownArrow" Property="RenderTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="180" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="DropDownArrow" Property="RenderTransform" Value="{StaticResource RotateTransform180}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

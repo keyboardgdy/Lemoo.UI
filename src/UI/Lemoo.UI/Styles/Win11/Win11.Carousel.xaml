@@ -1,0 +1,116 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="clr-namespace:Lemoo.UI.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Design/Animations.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Styles/Win11/Win11.Tokens.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Lemoo.UI;component/Converters/Converters.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Carousel 默认样式 -->
+    <Style TargetType="{x:Type ui:Carousel}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:Carousel}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="4">
+                        <Grid>
+                            <!-- ItemsControl -->
+                            <ItemsControl x:Name="PART_ItemsControl"
+                                          ItemsSource="{TemplateBinding ItemsSource}"
+                                          ItemTemplate="{TemplateBinding ItemTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ContentPresenter}">
+                                        <Setter Property="Width" Value="{TemplateBinding ActualWidth, RelativeSource={RelativeSource AncestorType=ui:Carousel}}" />
+                                        <Setter Property="Height" Value="{TemplateBinding ActualHeight, RelativeSource={RelativeSource AncestorType=ui:Carousel}}" />
+                                        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                                        <Setter Property="RenderTransform">
+                                            <Setter.Value>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                    <TranslateTransform X="0" Y="0" />
+                                                </TransformGroup>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+
+                            <!-- 导航按钮 -->
+                            <StackPanel HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        Visibility="{TemplateBinding ShowNavigationButtons, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Button x:Name="PART_PreviousButton"
+                                        Width="40"
+                                        Height="40"
+                                        Margin="8"
+                                        Content=""
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Width="{TemplateBinding Width}"
+                                                    Height="{TemplateBinding Height}"
+                                                    CornerRadius="20"
+                                                    Background="#CC000000"
+                                                    Cursor="Hand">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal"
+                                        Visibility="{TemplateBinding ShowNavigationButtons, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Button x:Name="PART_NextButton"
+                                        Width="40"
+                                        Height="40"
+                                        Margin="8"
+                                        Content=""
+                                        Cursor="Hand">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Width="{TemplateBinding Width}"
+                                                    Height="{TemplateBinding Height}"
+                                                    CornerRadius="20"
+                                                    Background="#CC000000"
+                                                    Cursor="Hand">
+                                                <ContentPresenter HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
+
+                            <!-- 指示器 -->
+                            <StackPanel x:Name="PART_IndicatorsPanel"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Horizontal"
+                                        Margin="0,0,0,16"
+                                        Visibility="{TemplateBinding ShowIndicators, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

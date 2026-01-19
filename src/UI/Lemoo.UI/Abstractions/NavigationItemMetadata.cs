@@ -1,3 +1,5 @@
+using Lemoo.UI.Models.Icons;
+
 namespace Lemoo.UI.Abstractions;
 
 /// <summary>
@@ -16,9 +18,9 @@ public class NavigationItemMetadata
     public string Title { get; set; } = string.Empty;
 
     /// <summary>
-    /// 图标（Segoe MDL2 Assets字符）
+    /// 图标类型
     /// </summary>
-    public string Icon { get; set; } = string.Empty;
+    public IconKind Icon { get; set; } = IconKind.None;
 
     /// <summary>
     /// 所属模块名称

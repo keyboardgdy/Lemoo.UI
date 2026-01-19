@@ -8,8 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\UI\Lemoo.UI\Lemoo.UI.csproj" />
-    <ProjectReference Include="..\..\UI\Lemoo.UI.WPF\Lemoo.UI.WPF.csproj" />
     <ProjectReference Include="..\Lemoo.Modules.TaskManager\Lemoo.Modules.TaskManager.csproj" />
   </ItemGroup>
 

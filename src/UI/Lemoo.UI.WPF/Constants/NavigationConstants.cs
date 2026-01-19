@@ -1,3 +1,5 @@
+using Lemoo.UI.Models.Icons;
+
 namespace Lemoo.UI.WPF.Constants;
 
 /// <summary>
@@ -6,24 +8,24 @@ namespace Lemoo.UI.WPF.Constants;
 public static class NavigationConstants
 {
     /// <summary>
-    /// Segoe MDL2 Assets 图标字体
+    /// 导航菜单图标
     /// </summary>
     public static class Icons
     {
         /// <summary>
         /// 设置图标
         /// </summary>
-        public const string Settings = "\uE713";
+        public const IconKind Settings = IconKind.Settings;
 
         /// <summary>
         /// 工具箱图标
         /// </summary>
-        public const string Toolbox = "\uE8C9";
+        public const IconKind Toolbox = IconKind.Grid;
 
         /// <summary>
         /// 图标浏览器图标
         /// </summary>
-        public const string IconBrowser = "\uE8F9";
+        public const IconKind IconBrowser = IconKind.Grid;
     }
 
     /// <summary>

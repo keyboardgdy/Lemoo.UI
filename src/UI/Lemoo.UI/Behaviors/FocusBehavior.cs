@@ -9,6 +9,10 @@ namespace Lemoo.UI.Behaviors
     /// <summary>
     /// 管理焦点控制的行为。
     /// </summary>
+    /// <remarks>
+    /// 线程安全性: 静态方法中使用了try-catch来确保异常不会导致应用程序崩溃。
+    /// 资源管理: 在元素Unloaded时会自动清理所有事件订阅，防止内存泄漏。
+    /// </remarks>
     public class FocusBehavior : Behavior<FrameworkElement>
     {
         #region IsFocused 附加属性
@@ -41,13 +45,33 @@ namespace Lemoo.UI.Behaviors
             if (d is not FrameworkElement element)
                 return;
 
-            if ((bool)e.NewValue)
+            try
             {
-                element.Loaded += OnElementLoaded;
+                // 先取消订阅，防止重复订阅
+                DetachIsFocused(element);
+
+                if ((bool)e.NewValue)
+                {
+                    element.Loaded += OnElementLoaded;
+                    element.Unloaded += OnElementUnloaded;
+                }
             }
-            else
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnIsFocusedChanged failed: {ex.Message}");
+            }
+        }
+
+        private static void DetachIsFocused(FrameworkElement element)
+        {
+            try
             {
                 element.Loaded -= OnElementLoaded;
+                element.Unloaded -= OnElementUnloaded;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: DetachIsFocused failed: {ex.Message}");
             }
         }
 
@@ -55,12 +79,27 @@ namespace Lemoo.UI.Behaviors
         {
             if (sender is FrameworkElement element)
             {
-                element.Loaded -= OnElementLoaded;
-                element.Focus();
-                if (element is TextBox textBox)
+                try
                 {
-                    textBox.SelectAll();
+                    element.Focus();
+                    if (element is TextBox textBox)
+                    {
+                        textBox.SelectAll();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnElementLoaded failed: {ex.Message}");
+                }
+            }
+        }
+
+        private static void OnElementUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                // 清理事件订阅，防止内存泄漏
+                DetachIsFocused(element);
             }
         }
 
@@ -96,13 +135,33 @@ namespace Lemoo.UI.Behaviors
             if (d is not FrameworkElement element)
                 return;
 
-            if ((bool)e.NewValue)
+            try
             {
-                element.Loaded += OnElementFocusOnLoad;
+                // 先取消订阅，防止重复订阅
+                DetachFocusOnLoad(element);
+
+                if ((bool)e.NewValue)
+                {
+                    element.Loaded += OnElementFocusOnLoad;
+                    element.Unloaded += OnElementFocusOnLoadUnloaded;
+                }
             }
-            else
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnFocusOnLoadChanged failed: {ex.Message}");
+            }
+        }
+
+        private static void DetachFocusOnLoad(FrameworkElement element)
+        {
+            try
             {
                 element.Loaded -= OnElementFocusOnLoad;
+                element.Unloaded -= OnElementFocusOnLoadUnloaded;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: DetachFocusOnLoad failed: {ex.Message}");
             }
         }
 
@@ -110,11 +169,27 @@ namespace Lemoo.UI.Behaviors
         {
             if (sender is FrameworkElement element)
             {
-                element.Focus();
-                if (element is TextBox textBox)
+                try
                 {
-                    textBox.SelectAll();
+                    element.Focus();
+                    if (element is TextBox textBox)
+                    {
+                        textBox.SelectAll();
+                    }
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnElementFocusOnLoad failed: {ex.Message}");
+                }
+            }
+        }
+
+        private static void OnElementFocusOnLoadUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element)
+            {
+                // 清理事件订阅，防止内存泄漏
+                DetachFocusOnLoad(element);
             }
         }
 
@@ -150,13 +225,33 @@ namespace Lemoo.UI.Behaviors
             if (d is not TextBox textBox)
                 return;
 
-            if ((bool)e.NewValue)
+            try
             {
-                textBox.GotFocus += OnTextBoxGotFocus;
+                // 先取消订阅，防止重复订阅
+                DetachSelectAllOnFocus(textBox);
+
+                if ((bool)e.NewValue)
+                {
+                    textBox.GotFocus += OnTextBoxGotFocus;
+                    textBox.Unloaded += OnTextBoxUnloaded;
+                }
             }
-            else
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnSelectAllOnFocusChanged failed: {ex.Message}");
+            }
+        }
+
+        private static void DetachSelectAllOnFocus(TextBox textBox)
+        {
+            try
             {
                 textBox.GotFocus -= OnTextBoxGotFocus;
+                textBox.Unloaded -= OnTextBoxUnloaded;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"FocusBehavior: DetachSelectAllOnFocus failed: {ex.Message}");
             }
         }
 
@@ -164,7 +259,23 @@ namespace Lemoo.UI.Behaviors
         {
             if (sender is TextBox textBox)
             {
-                textBox.SelectAll();
+                try
+                {
+                    textBox.SelectAll();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"FocusBehavior: OnTextBoxGotFocus failed: {ex.Message}");
+                }
+            }
+        }
+
+        private static void OnTextBoxUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                // 清理事件订阅，防止内存泄漏
+                DetachSelectAllOnFocus(textBox);
             }
         }
 

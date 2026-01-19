@@ -19,6 +19,17 @@
   <ItemGroup>
     <Resource Include="Resources\**\*" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="nul" />
+  </ItemGroup>
+
+  <!-- 图标元数据文件（作为嵌入资源和内容文件） -->
+  <ItemGroup>
+    <EmbeddedResource Include="Models\Icons\IconMetadata.json" />
+    <Content Include="Models\Icons\IconMetadata.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <!-- 显式包含需要编译的控件 XAML -->
   <ItemGroup>
@@ -26,7 +37,6 @@
     <Page Include="Controls\Navigation\Sidebar.xaml" />
     <Page Include="Controls\Tabs\DocumentTabHost.xaml" />
     <Page Include="Controls\Dialogs\MessageBoxWindow.xaml" />
-    <Page Include="Controls\Toolbox\ToolboxView.xaml" />
   </ItemGroup>
   
   <!-- 显式包含资源字典文件 -->
@@ -77,6 +87,23 @@
     <Page Include="Styles\Win11\Win11.ToggleButton.xaml" />
     <Page Include="Styles\Win11\Win11.ToolTip.xaml" />
     <Page Include="Styles\Win11\Win11.Icon.xaml" />
+    <Page Include="Styles\Win11\Win11.CardView.xaml" />
+    <Page Include="Styles\Win11\Win11.TagInput.xaml" />
+    <Page Include="Styles\Win11\Win11.ToastNotification.xaml" />
+    <Page Include="Styles\Win11\Win11.ProgressDialog.xaml" />
+
+    <!-- 增强控件样式 -->
+    <Page Include="Styles\Win11\Win11.DataGridEx.xaml" />
+    <Page Include="Styles\Win11\Win11.DataGridPager.xaml" />
+    <Page Include="Styles\Win11\Win11.TimelineView.xaml" />
+    <Page Include="Styles\Win11\Win11.CodeEditor.xaml" />
+    <Page Include="Styles\Win11\Win11.TreeViewEx.xaml" />
+    <Page Include="Styles\Win11\Win11.ImageGallery.xaml" />
+    <Page Include="Styles\Win11\Win11.Carousel.xaml" />
+    <Page Include="Styles\Win11\Win11.RatingControl.xaml" />
+    <Page Include="Styles\Win11\Win11.ChartControl.xaml" />
+    <Page Include="Styles\Win11\Win11.EmptyState.xaml" />
+    <Page Include="Styles\Win11\Win11.SplitViewEx.xaml" />
 
     <!-- Themes/Base -->
     <Page Include="Themes\Base\ColorPalette.xaml" />
@@ -153,6 +180,21 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
+
+  <!-- 图标代码生成器 -->
+  <!-- 选项 1: 使用 Source Generator (.NET 5+) -->
+  <!-- 取消注释以下行以启用 Source Generator -->
+  <!--
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\tools\IconGenerator\Lemoo.UI.IconGenerator\Lemoo.UI.IconGenerator.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+    <AdditionalFiles Include="..\..\..\tools\IconGenerator\IconMetadata.json" />
+  </ItemGroup>
+  -->
+
+  <!-- 选项 2: 使用 T4 模板 (兼容性好) -->
+  <!-- 手动转换: 右键 IconKind.tt → 运行自定义工具 -->
 
 </Project>
 

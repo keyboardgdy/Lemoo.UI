@@ -7,10 +7,12 @@
       xmlns:converters="clr-namespace:Lemoo.UI.WPF.Converters"
       xmlns:viewmodels="clr-namespace:Lemoo.UI.WPF.ViewModels.Pages"
       xmlns:models="clr-namespace:Lemoo.UI.Models.Icons;assembly=Lemoo.UI"
+      xmlns:layout="clr-namespace:Lemoo.UI.Controls.Layout;assembly=Lemoo.UI"
       mc:Ignorable="d"
       d:DesignWidth="1280"
       d:DesignHeight="720"
-      Background="Transparent">
+      Background="Transparent"
+      d:DataContext="{d:DesignInstance Type=viewmodels:IconBrowserPageViewModel, IsDesignTimeCreatable=True}">
 
     <Page.Resources>
         <!-- 自定义 TextBox 样式，带主题色光标和占位符 -->
@@ -369,53 +371,36 @@
                              SelectionChanged="OnIconSelectionChanged">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" />
+                                <layout:VirtualizingWrapPanel ChildWidth="100" ChildHeight="100" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type models:IconInfo}">
-                                <Border x:Name="IconBorder"
-                                        Style="{StaticResource IconItemContainerStyle}"
-                                        Width="100"
-                                        Height="100">
+                                <Border Width="100" Height="100"
+                                        Background="{DynamicResource InputBackgroundBrush}"
+                                        BorderBrush="{DynamicResource InputBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="8"
+                                        Padding="12"
+                                        Margin="6"
+                                        Cursor="Hand">
                                     <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-
-                                        <!-- 图标 -->
-                                        <icons:Icon x:Name="IconControl"
-                                                    Grid.Row="0"
-                                                    IconKind="{Binding Kind}"
+                                        <icons:Icon IconKind="{Binding Kind}"
                                                     IconSize="Normal"
                                                     Foreground="{DynamicResource InputForegroundBrush}"
+                                                    VerticalAlignment="Top"
                                                     HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center" />
-
-                                        <!-- 名称 -->
-                                        <TextBlock x:Name="IconName"
-                                                   Grid.Row="1"
-                                                   Text="{Binding Name}"
+                                                    Margin="0,8,0,0" />
+                                        <TextBlock Text="{Binding Name}"
                                                    FontSize="10"
                                                    Foreground="{DynamicResource InputForegroundBrush}"
                                                    Opacity="0.7"
                                                    TextAlignment="Center"
                                                    TextTrimming="CharacterEllipsis"
-                                                   Margin="0,4,0,0" />
+                                                   VerticalAlignment="Bottom"
+                                                   Margin="6,0,6,6" />
                                     </Grid>
                                 </Border>
-                                <DataTemplate.Triggers>
-                                    <!-- 选中时改变图标和文字颜色 -->
-                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
-                                        <Setter TargetName="IconBorder" Property="Background" Value="{DynamicResource AccentPrimaryBrush}" />
-                                        <Setter TargetName="IconBorder" Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}" />
-                                        <Setter TargetName="IconBorder" Property="BorderThickness" Value="2" />
-                                        <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
-                                        <Setter TargetName="IconName" Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
-                                        <Setter TargetName="IconName" Property="Opacity" Value="1.0" />
-                                    </DataTrigger>
-                                </DataTemplate.Triggers>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

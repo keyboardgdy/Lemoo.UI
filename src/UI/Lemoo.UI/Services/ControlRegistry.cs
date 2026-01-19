@@ -391,6 +391,74 @@ public static class ControlRegistry
             Icon = "M2 11h20v2H2v-2z",
             XamlNamespace = "",
             SampleCode = "<Separator />"
+        },
+
+        // ===== 数据展示 =====
+        new ControlInfo
+        {
+            Name = "TimelineView",
+            DisplayName = "时间线",
+            Description = "优雅展示时间序列数据，支持垂直/水平布局",
+            Category = ControlCategory.DataDisplay,
+            Type = ControlType.Custom,
+            Icon = "M12 2v20 M6 4v4 M6 10v4 M6 16v4 M18 4v4 M18 10v4 M18 16v4",
+            XamlNamespace = "ui",
+            XamlNamespaceUri = "clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI",
+            SampleCode = "<ui:TimelineView ItemsSource=\"{Binding TimelineItems}\" />"
+        },
+
+        // ===== 输入（扩展） =====
+        new ControlInfo
+        {
+            Name = "CodeEditor",
+            DisplayName = "代码编辑器",
+            Description = "轻量级代码输入控件，支持语法高亮、行号显示",
+            Category = ControlCategory.Inputs,
+            Type = ControlType.Custom,
+            Icon = "M4 4h16v16H4V4z M6 6v12h12V6H6z M8 8l4 4-4 4 M16 8l-4 4 4 4",
+            XamlNamespace = "ui",
+            XamlNamespaceUri = "clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI",
+            SampleCode = "<ui:CodeEditor Text=\"{Binding Code}\" Language=\"CSharp\" />"
+        },
+
+        // ===== 媒体 =====
+        new ControlInfo
+        {
+            Name = "ImageGallery",
+            DisplayName = "图片画廊",
+            Description = "精美的图片展示控件，支持缩放、旋转、预览",
+            Category = ControlCategory.Media,
+            Type = ControlType.Custom,
+            Icon = "M4 4h16v16H4V4z M6 6v12h12V6H6z M8 14l3-3 2 2 5-5",
+            XamlNamespace = "ui",
+            XamlNamespaceUri = "clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI",
+            SampleCode = "<ui:ImageGallery ItemsSource=\"{Binding Images}\" />"
+        },
+        new ControlInfo
+        {
+            Name = "Carousel",
+            DisplayName = "轮播控件",
+            Description = "流畅的轮播展示，支持多种过渡效果和自动播放",
+            Category = ControlCategory.Media,
+            Type = ControlType.Custom,
+            Icon = "M2 6h20v12H2V6z M4 8v8h16V8H4z M8 12l-2-2 2-2 M16 12l2-2-2-2",
+            XamlNamespace = "ui",
+            XamlNamespaceUri = "clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI",
+            SampleCode = "<ui:Carousel ItemsSource=\"{Binding Images}\" AutoPlay=\"True\" />"
+        },
+
+        // ===== 数据可视化 =====
+        new ControlInfo
+        {
+            Name = "ChartControl",
+            DisplayName = "图表控件",
+            Description = "简洁美观的图表控件，支持折线图、柱状图、饼图等",
+            Category = ControlCategory.DataVisualization,
+            Type = ControlType.Custom,
+            Icon = "M2 18h20 M6 18v-8 M12 18v-12 M18 18v-6",
+            XamlNamespace = "ui",
+            XamlNamespaceUri = "clr-namespace:Lemoo.UI.Controls;assembly=Lemoo.UI",
+            SampleCode = "<ui:ChartControl ChartType=\"Bar\" ItemsSource=\"{Binding Data}\" />"
         }
     };
 
@@ -410,6 +478,9 @@ public static class ControlRegistry
         ControlCategory.Notifications => "通知",
         ControlCategory.Navigation => "导航",
         ControlCategory.Chrome => "窗口装饰",
+        ControlCategory.DataDisplay => "数据展示",
+        ControlCategory.Media => "媒体",
+        ControlCategory.DataVisualization => "数据可视化",
         ControlCategory.Others => "其他",
         _ => "未知"
     };

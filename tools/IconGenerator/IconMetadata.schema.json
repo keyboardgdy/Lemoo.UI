@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lemoo.UI Icon Metadata Schema",
+  "description": "Schema for icon metadata extracted from Segoe Fluent Icons font",
+  "type": "object",
+  "required": ["font", "categories", "icons"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference"
+    },
+    "font": {
+      "type": "object",
+      "description": "Font information",
+      "required": ["name", "version"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Font family name"
+        },
+        "version": {
+          "type": "string",
+          "description": "Font version"
+        },
+        "copyright": {
+          "type": "string",
+          "description": "Copyright information"
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "description": "Icon categories definition",
+      "items": {
+        "type": "object",
+        "required": ["key", "name", "name_zh", "priority"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Category key (used in code generation)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Category display name in English"
+          },
+          "name_zh": {
+            "type": "string",
+            "description": "Category display name in Chinese"
+          },
+          "priority": {
+            "type": "integer",
+            "description": "Display priority (lower = higher priority)",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "icons": {
+      "type": "array",
+      "description": "Icon metadata list",
+      "items": {
+        "type": "object",
+        "required": ["glyph", "unicode", "unicode_string", "name", "category", "keywords", "i18n"],
+        "properties": {
+          "glyph": {
+            "type": "string",
+            "description": "Glyph name in the font file"
+          },
+          "unicode": {
+            "type": "string",
+            "description": "Unicode code point in hex (e.g., 'E72B')",
+            "pattern": "^[0-9A-Fa-f]{4,5}$"
+          },
+          "unicode_string": {
+            "type": "string",
+            "description": "Unicode escape string (e.g., '\\\\uE72B')",
+            "pattern": "^\\\\u[0-9A-Fa-f]{4}$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Icon name in PascalCase (used for enum value)"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category key"
+          },
+          "keywords": {
+            "type": "array",
+            "description": "Search keywords",
+            "items": {
+              "type": "string"
+            }
+          },
+          "i18n": {
+            "type": "object",
+            "description": "Internationalized names",
+            "properties": {
+              "en": {
+                "type": "string",
+                "description": "English name"
+              },
+              "zh": {
+                "type": "string",
+                "description": "Chinese name"
+              }
+            }
+          },
+          "aliases": {
+            "type": "array",
+            "description": "Alternative enum names (optional)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deprecated": {
+            "type": "boolean",
+            "description": "Whether this icon is deprecated",
+            "default": false
+          }
+        }
+      }
+    }
+  }
+}

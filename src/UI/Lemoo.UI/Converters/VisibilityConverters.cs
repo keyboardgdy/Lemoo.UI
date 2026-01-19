@@ -78,31 +78,4 @@ namespace Lemoo.UI.Converters
             throw new NotImplementedException();
         }
     }
-
-    /// <summary>
-    /// 将 null 值转换为可见性的转换器。
-    /// </summary>
-    public class NullToVisibilityConverter : IValueConverter
-    {
-        /// <summary>
-        /// 获取或设置为 null 时是否可见。
-        /// </summary>
-        public bool NullVisible { get; set; }
-
-        /// <summary>
-        /// 获取或设置不可见时的返回值。
-        /// </summary>
-        public Visibility HiddenValue { get; set; } = Visibility.Collapsed;
-
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            bool visible = value == null ? NullVisible : !NullVisible;
-            return visible ? Visibility.Visible : HiddenValue;
-        }
-
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
 }
