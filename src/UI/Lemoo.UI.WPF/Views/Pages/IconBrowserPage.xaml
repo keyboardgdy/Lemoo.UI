@@ -76,7 +76,7 @@
             </Style.Triggers>
         </Style>
 
-        <!-- ListBoxItem 样式 - 隐藏默认选中样式 -->
+        <!-- ListBoxItem 样式 - 带选中状态 -->
         <Style x:Key="IconListBoxItemStyle" TargetType="ListBoxItem">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -89,6 +89,33 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!-- 选中状态的 Border 样式 -->
+        <Style x:Key="IconItemBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource InputBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="6" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentPrimaryBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- 选中状态的图标样式 -->
+        <Style x:Key="IconItemIconStyle" TargetType="icons:Icon">
+            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <!-- 分类按钮样式 -->
@@ -344,12 +371,12 @@
             <!-- 内容区域：图标列表 + 详情面板 -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="16" />
-                    <ColumnDefinition Width="380" />
+                    <ColumnDefinition Width="340" />
                 </Grid.ColumnDefinitions>
 
-                <!-- 图标网格（带虚拟化支持） -->
+                <!-- 图标网格 -->
                 <Border Grid.Column="0"
                         Background="{DynamicResource WorkbenchSurfaceBrush}"
                         BorderBrush="{DynamicResource InputBorderBrush}"
@@ -358,48 +385,68 @@
                         Padding="16">
                     <ListBox x:Name="IconListBox"
                              ItemsSource="{Binding FilteredIcons}"
-                             HorizontalAlignment="Center"
-                             HorizontalContentAlignment="Center"
-                             BorderThickness="0"
+                             SelectedItem="{Binding SelectedIcon, Mode=TwoWay}"
+                             SelectionMode="Single"
                              Background="Transparent"
-                             ItemContainerStyle="{StaticResource IconListBoxItemStyle}"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             BorderThickness="0"
+                             ScrollViewer.CanContentScroll="True"
                              VirtualizingPanel.IsVirtualizing="True"
                              VirtualizingPanel.VirtualizationMode="Recycling"
-                             VirtualizingPanel.ScrollUnit="Pixel"
-                             SelectionChanged="OnIconSelectionChanged">
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             ItemContainerStyle="{StaticResource IconListBoxItemStyle}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <layout:VirtualizingWrapPanel ChildWidth="100" ChildHeight="100" />
+                                <layout:VirtualizingWrapPanel ChildWidth="112"
+                                                              ChildHeight="112"
+                                                              ItemHorizontalSpacing="0"
+                                                              ItemVerticalSpacing="0" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate DataType="{x:Type models:IconInfo}">
                                 <Border Width="100" Height="100"
-                                        Background="{DynamicResource InputBackgroundBrush}"
-                                        BorderBrush="{DynamicResource InputBorderBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="8"
-                                        Padding="12"
-                                        Margin="6"
-                                        Cursor="Hand">
-                                    <Grid>
-                                        <icons:Icon IconKind="{Binding Kind}"
-                                                    IconSize="Normal"
-                                                    Foreground="{DynamicResource InputForegroundBrush}"
-                                                    VerticalAlignment="Top"
-                                                    HorizontalAlignment="Center"
-                                                    Margin="0,8,0,0" />
+                                        Style="{StaticResource IconItemBorderStyle}">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Kind, Converter={StaticResource IconKindToGlyphConverter}}"
+                                                   FontFamily="{StaticResource FontFamily.Icon}"
+                                                   FontSize="20"
+                                                   HorizontalAlignment="Center"
+                                                   Margin="0,4,0,0"
+                                                   TextOptions.TextFormattingMode="Display"
+                                                   TextOptions.TextRenderingMode="Auto">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                                            <Setter Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                         <TextBlock Text="{Binding Name}"
                                                    FontSize="10"
-                                                   Foreground="{DynamicResource InputForegroundBrush}"
                                                    Opacity="0.7"
                                                    TextAlignment="Center"
                                                    TextTrimming="CharacterEllipsis"
-                                                   VerticalAlignment="Bottom"
-                                                   Margin="6,0,6,6" />
-                                    </Grid>
+                                                   Margin="6,0,6,6">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                                            <Setter Property="Foreground" Value="{DynamicResource OnAccentForegroundBrush}" />
+                                                            <Setter Property="Opacity" Value="1.0" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="False">
+                                                            <Setter Property="Foreground" Value="{DynamicResource InputForegroundBrush}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

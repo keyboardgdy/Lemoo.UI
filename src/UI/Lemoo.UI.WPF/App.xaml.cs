@@ -42,6 +42,12 @@ public partial class App : Application
         // 注册导航服务
         services.AddSingleton<INavigationService, NavigationService>();
 
+        // 注册剪贴板服务
+        services.AddSingleton<IClipboardService, ClipboardService>();
+
+        // 注册通知服务
+        services.AddSingleton<INotificationService, NotificationService>();
+
         // 注册示例页面（用于UI框架测试）
         RegisterSamplePages(pageRegistry);
 

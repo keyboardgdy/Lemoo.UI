@@ -36,6 +36,12 @@ namespace Lemoo.UI.WPF.Views.Pages
                 Interval = TimeSpan.FromMilliseconds(300)
             };
             _searchDebounceTimer.Tick += OnSearchDebounceTick;
+
+            // 订阅 ListBox 选择变化事件
+            if (IconListBox != null)
+            {
+                IconListBox.SelectionChanged += OnIconSelectionChanged;
+            }
         }
 
         /// <summary>

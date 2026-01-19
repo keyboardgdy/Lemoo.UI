@@ -263,7 +263,7 @@
 
                                 <Button Content="复制"
                                         Command="{Binding CopySampleCodeCommand}"
-                                        Style="{StaticResource Win11.Button.Ghost}"
+                                        Style="{DynamicResource Win11.Button.Ghost}"
                                         Padding="8,4"
                                         HorizontalAlignment="Right"
                                         FontSize="11" />

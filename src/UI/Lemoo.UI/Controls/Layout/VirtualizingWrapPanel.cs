@@ -7,37 +7,11 @@ using System.Windows.Media;
 namespace Lemoo.UI.Controls.Layout
 {
     /// <summary>
-    /// 支持虚拟化的 WrapPanel 面板
-    /// 通过只渲染可见项来优化大量项目的性能
+    /// 虚拟化 WrapPanel
+    /// 基于 WPF 官方样本实现，支持大量项目的虚拟化显示
     /// </summary>
     public class VirtualizingWrapPanel : VirtualizingPanel, IScrollInfo
     {
-        // UI元素集合
-        private readonly Size _pixelSize = new(1.0, 1.0);
-
-        // 滚动状态
-        private ScrollViewer? _scrollOwner;
-        private double _offset = 0.0;
-        private double _extent = 0.0;
-        private double _viewport = 0.0;
-        private bool _canHorizontallyScroll;
-        private bool _canVerticallyScroll;
-
-        // 布局状态
-        private int _firstVisibleIndex = -1;
-        private int _lastVisibleIndex = -1;
-        private double _childWidth = 100.0;
-        private double _childHeight = 100.0;
-        private int _itemsPerRow = 1;
-
-        public VirtualizingWrapPanel()
-        {
-            UseLayoutRounding = true;
-            RenderOptions.SetClearTypeHint(this, ClearTypeHint.Enabled);
-        }
-
-        private IItemContainerGenerator Generator => ItemContainerGenerator;
-
         #region 依赖属性
 
         /// <summary>
@@ -54,7 +28,7 @@ namespace Lemoo.UI.Controls.Layout
                 nameof(ChildWidth),
                 typeof(double),
                 typeof(VirtualizingWrapPanel),
-                new PropertyMetadata(100.0, OnLayoutParameterChanged));
+                new PropertyMetadata(100.0, OnLayoutChanged));
 
         /// <summary>
         /// 子项高度
@@ -70,9 +44,41 @@ namespace Lemoo.UI.Controls.Layout
                 nameof(ChildHeight),
                 typeof(double),
                 typeof(VirtualizingWrapPanel),
-                new PropertyMetadata(100.0, OnLayoutParameterChanged));
+                new PropertyMetadata(100.0, OnLayoutChanged));
 
-        private static void OnLayoutParameterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// 项目间距（水平）
+        /// </summary>
+        public double ItemHorizontalSpacing
+        {
+            get => (double)GetValue(ItemHorizontalSpacingProperty);
+            set => SetValue(ItemHorizontalSpacingProperty, value);
+        }
+
+        public static readonly DependencyProperty ItemHorizontalSpacingProperty =
+            DependencyProperty.Register(
+                nameof(ItemHorizontalSpacing),
+                typeof(double),
+                typeof(VirtualizingWrapPanel),
+                new PropertyMetadata(6.0, OnLayoutChanged));
+
+        /// <summary>
+        /// 项目间距（垂直）
+        /// </summary>
+        public double ItemVerticalSpacing
+        {
+            get => (double)GetValue(ItemVerticalSpacingProperty);
+            set => SetValue(ItemVerticalSpacingProperty, value);
+        }
+
+        public static readonly DependencyProperty ItemVerticalSpacingProperty =
+            DependencyProperty.Register(
+                nameof(ItemVerticalSpacing),
+                typeof(double),
+                typeof(VirtualizingWrapPanel),
+                new PropertyMetadata(6.0, OnLayoutChanged));
+
+        private static void OnLayoutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is VirtualizingWrapPanel panel)
             {
@@ -82,176 +88,311 @@ namespace Lemoo.UI.Controls.Layout
 
         #endregion
 
-        #region 布局测量和排列
+        #region 字段
+
+        private ScrollViewer? _scrollOwner;
+        private double _offsetY = 0.0;
+        private double _extentHeight = 0.0;
+        private double _viewportHeight = 0.0;
+        private bool _canVerticallyScroll = true;
+        private bool _canHorizontallyScroll;
+
+        // 缓存计算结果
+        private int _itemsPerRow;
+        private int _totalRows;
+
+        #endregion
+
+        #region 构造函数
+
+        public VirtualizingWrapPanel()
+        {
+            UseLayoutRounding = true;
+            RenderOptions.SetClearTypeHint(this, ClearTypeHint.Enabled);
+        }
+
+        #endregion
+
+        #region 辅助方法
+
+        private ItemsControl? ItemsOwner => ItemsControl.GetItemsOwner(this);
+
+        private int GetItemCount()
+        {
+            var owner = ItemsOwner;
+            if (owner == null || owner.Items == null)
+            {
+                System.Diagnostics.Debug.WriteLine($"[VirtualizingWrapPanel] GetItemCount: owner is null or Items is null");
+                return 0;
+            }
+            int count = owner.Items.Count;
+            System.Diagnostics.Debug.WriteLine($"[VirtualizingWrapPanel] GetItemCount: {count}");
+            return count;
+        }
+
+        /// <summary>
+        /// 计算布局参数
+        /// </summary>
+        private void CalculateLayout(double availableWidth)
+        {
+            double childWidth = ChildWidth;
+            double hSpacing = ItemHorizontalSpacing;
+
+            double actualChildWidth = childWidth + hSpacing;
+
+            // 计算每行可以放多少个项目
+            _itemsPerRow = Math.Max(1, (int)((availableWidth - hSpacing) / actualChildWidth));
+
+            int itemCount = GetItemCount();
+            _totalRows = itemCount > 0 ? (itemCount + _itemsPerRow - 1) / _itemsPerRow : 0;
+        }
+
+        /// <summary>
+        /// 获取指定索引的项目位置
+        /// </summary>
+        private (int row, int col, double x, double y) GetItemPosition(int index)
+        {
+            int row = index / _itemsPerRow;
+            int col = index % _itemsPerRow;
+
+            double actualChildWidth = ChildWidth + ItemHorizontalSpacing;
+            double actualChildHeight = ChildHeight + ItemVerticalSpacing;
+
+            double x = ItemHorizontalSpacing + col * actualChildWidth;
+            double y = ItemVerticalSpacing + row * actualChildHeight;
+
+            return (row, col, x, y);
+        }
+
+        #endregion
+
+        #region 测量和排列
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (availableSize.Width == double.PositiveInfinity ||
-                availableSize.Height == double.PositiveInfinity)
+            // 处理无限大小
+            if (double.IsInfinity(availableSize.Width) || double.IsInfinity(availableSize.Height))
             {
-                // 在无限空间中，限制面板大小
-                availableSize = new(Math.Min(availableSize.Width, 4096), Math.Min(availableSize.Height, 4096));
+                availableSize = new Size(
+                    double.IsInfinity(availableSize.Width) ? 4096 : availableSize.Width,
+                    double.IsInfinity(availableSize.Height) ? 4096 : availableSize.Height);
             }
 
-            _childWidth = ChildWidth;
-            _childHeight = ChildHeight;
+            int itemCount = GetItemCount();
 
-            // 计算每行可以容纳的项数
-            double availableWidth = availableSize.Width - 4; // 减去边距
-            _itemsPerRow = Math.Max(1, (int)(availableWidth / (_childWidth + 12))); // +12 是 margin
+            // 调试输出
+            System.Diagnostics.Debug.WriteLine($"[VirtualizingWrapPanel] MeasureOverride: ItemCount={itemCount}, AvailableSize={availableSize}");
 
-            // 更新视口大小
-            _viewport = availableSize.Height;
+            // 计算布局
+            CalculateLayout(availableSize.Width);
 
-            // 计算总范围
-            int itemCount = InternalChildren.Count;
-            int totalRows = (itemCount + _itemsPerRow - 1) / _itemsPerRow;
-            _extent = Math.Max(0, (totalRows * (_childHeight + 12)) - 4); // -4 减去边距
-
-            // 计算可见范围
-            UpdateVisibleRange();
-
-            // 测量可见项
-            Size measuredSize = MeasureVisibleItems(availableSize);
+            // 更新视口和范围大小
+            _viewportHeight = availableSize.Height;
+            double actualChildHeight = ChildHeight + ItemVerticalSpacing;
+            _extentHeight = Math.Max(0, _totalRows * actualChildHeight + ItemVerticalSpacing);
 
             // 通知滚动信息变更
-            if (_scrollOwner != null)
+            _scrollOwner?.InvalidateScrollInfo();
+
+            if (itemCount == 0)
             {
-                _scrollOwner.InvalidateScrollInfo();
+                return new Size(availableSize.Width, 0);
             }
 
-            return new Size(availableSize.Width, Math.Min(_viewport, _extent));
+            // 计算可见范围
+            int firstVisibleIndex, lastVisibleIndex;
+            GetVisibleRange(out firstVisibleIndex, out lastVisibleIndex);
+
+            System.Diagnostics.Debug.WriteLine($"[VirtualizingWrapPanel] VisibleRange: {firstVisibleIndex} to {lastVisibleIndex}, ItemsPerRow={_itemsPerRow}, TotalRows={_totalRows}");
+
+            // 生成和测量可见项目
+            RealizeVisibleItems(firstVisibleIndex, lastVisibleIndex, true);
+
+            System.Diagnostics.Debug.WriteLine($"[VirtualizingWrapPanel] After Realize: ChildrenCount={InternalChildren.Count}");
+
+            return new Size(availableSize.Width, Math.Min(_viewportHeight, _extentHeight));
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            // 更新可见范围
-            UpdateVisibleRange();
+            int itemCount = GetItemCount();
+            if (itemCount == 0)
+                return finalSize;
 
-            // 排列可见项
-            ArrangeVisibleItems(finalSize);
+            // 计算可见范围
+            int firstVisibleIndex, lastVisibleIndex;
+            GetVisibleRange(out firstVisibleIndex, out lastVisibleIndex);
 
-            // 通知滚动信息变更
-            if (_scrollOwner != null)
-            {
-                _scrollOwner.InvalidateScrollInfo();
-            }
+            // 排列可见项目
+            RealizeVisibleItems(firstVisibleIndex, lastVisibleIndex, false);
 
             return finalSize;
         }
 
-        private Size MeasureVisibleItems(Size availableSize)
+        /// <summary>
+        /// 获取可见范围的项目索引
+        /// </summary>
+        private void GetVisibleRange(out int firstVisibleIndex, out int lastVisibleIndex)
         {
-            Size result = new(0, 0);
+            double actualChildHeight = ChildHeight + ItemVerticalSpacing;
 
-            for (int i = _firstVisibleIndex; i <= _lastVisibleIndex; i++)
-            {
-                if (i < 0 || i >= InternalChildren.Count)
-                    continue;
+            int firstVisibleRow = Math.Max(0, (int)(_offsetY / actualChildHeight));
+            int lastVisibleRow = Math.Min(_totalRows - 1, (int)Math.Ceiling((_offsetY + _viewportHeight) / actualChildHeight));
 
-                UIElement child = InternalChildren[i];
-                if (child == null)
-                    continue;
+            firstVisibleIndex = firstVisibleRow * _itemsPerRow;
+            lastVisibleIndex = Math.Min(GetItemCount() - 1, (lastVisibleRow + 1) * _itemsPerRow - 1);
 
-                child.Measure(new Size(_childWidth, _childHeight));
-            }
-
-            return result;
+            // 添加缓冲区以提高滚动体验
+            int bufferRows = 1;
+            firstVisibleIndex = Math.Max(0, firstVisibleIndex - bufferRows * _itemsPerRow);
+            lastVisibleIndex = Math.Min(GetItemCount() - 1, lastVisibleIndex + bufferRows * _itemsPerRow);
         }
 
-        private void ArrangeVisibleItems(Size finalSize)
+        /// <summary>
+        /// 生成可见项目
+        /// </summary>
+        private void RealizeVisibleItems(int firstVisibleIndex, int lastVisibleIndex, bool measure)
         {
-            for (int i = _firstVisibleIndex; i <= _lastVisibleIndex; i++)
-            {
-                if (i < 0 || i >= InternalChildren.Count)
-                    continue;
-
-                UIElement child = InternalChildren[i];
-                if (child == null)
-                    continue;
-
-                // 计算位置
-                int row = i / _itemsPerRow;
-                int col = i % _itemsPerRow;
-
-                double x = 6 + col * (_childWidth + 12); // +6 是初始边距, +12 是每项的 margin
-                double y = 6 + row * (_childHeight + 12) - _offset;
-
-                Rect rect = new(x, y, _childWidth, _childHeight);
-                child.Arrange(rect);
-            }
-        }
-
-        private void UpdateVisibleRange()
-        {
-            int itemCount = InternalChildren.Count;
-            if (itemCount == 0)
-            {
-                _firstVisibleIndex = -1;
-                _lastVisibleIndex = -1;
+            var generator = ItemContainerGenerator;
+            if (generator == null)
                 return;
-            }
 
-            // 计算可见的行范围
-            int firstVisibleRow = (int)(_offset / (_childHeight + 12));
-            int lastVisibleRow = (int)((_offset + _viewport) / (_childHeight + 12));
+            int itemCount = GetItemCount();
 
-            // 添加缓冲区（预加载额外的一行）
-            firstVisibleRow = Math.Max(0, firstVisibleRow - 1);
-            lastVisibleRow = Math.Min((itemCount + _itemsPerRow - 1) / _itemsPerRow - 1, lastVisibleRow + 1);
+            if (itemCount == 0 || firstVisibleIndex > lastVisibleIndex)
+                return;
 
-            // 计算索引范围
-            _firstVisibleIndex = firstVisibleRow * _itemsPerRow;
-            _lastVisibleIndex = Math.Min(itemCount - 1, (lastVisibleRow + 1) * _itemsPerRow - 1);
+            // 清理不可见的项目
+            CleanupItems(firstVisibleIndex, lastVisibleIndex);
 
-            // 确保所有可见项都已生成
-            RealizeVisibleItems();
-        }
+            // 生成可见项目
+            GeneratorPosition startPos = generator.GeneratorPositionFromIndex(firstVisibleIndex);
+            // 如果 startPos.Offset != 0，实际插入位置应该是 startPos.Index + 1
+            int childIndex = startPos.Offset == 0 ? startPos.Index : startPos.Index + 1;
+            int visibleCount = lastVisibleIndex - firstVisibleIndex + 1;
 
-        private void RealizeVisibleItems()
-        {
-            var startPosition = Generator.GeneratorPositionFromIndex(_firstVisibleIndex);
-
-            using (Generator.StartAt(startPosition, GeneratorDirection.Forward, true))
+            using (generator.StartAt(startPos, GeneratorDirection.Forward, true))
             {
-                for (int i = _firstVisibleIndex; i <= _lastVisibleIndex; i++)
+                for (int i = 0; i < visibleCount; i++)
                 {
-                    bool isNewlyRealized;
-                    UIElement? child = Generator.GenerateNext(out isNewlyRealized) as UIElement;
+                    int itemIndex = firstVisibleIndex + i;
 
-                    if (child != null)
+                    bool newlyRealized;
+                    DependencyObject? containerObj = generator.GenerateNext(out newlyRealized);
+
+                    if (!(containerObj is UIElement child))
+                        continue;
+
+                    if (newlyRealized)
                     {
-                        if (isNewlyRealized)
+                        // 将新生成的容器插入到 InternalChildren
+                        if (childIndex >= InternalChildren.Count)
                         {
                             AddInternalChild(child);
                         }
-                        else if (!InternalChildren.Contains(child))
+                        else
                         {
-                            AddInternalChild(child);
+                            InsertInternalChild(childIndex, child);
                         }
 
-                        Generator.PrepareItemContainer(child);
+                        // 将容器加入逻辑树，确保资源查找与绑定能正确工作
+                        try
+                        {
+                            AddLogicalChild(child);
+                        }
+                        catch
+                        {
+                            // ignore
+                        }
                     }
+                    else
+                    {
+                        // 已存在的容器：确保它位于正确的子索引，否则插入到正确位置
+                        if (childIndex >= InternalChildren.Count || InternalChildren[childIndex] != child)
+                        {
+                            // 如果容器尚未作为子项或位置不正确，则插入到期望位置
+                            if (VisualTreeHelper.GetParent(child) == null)
+                            {
+                                if (childIndex >= InternalChildren.Count)
+                                    AddInternalChild(child);
+                                else
+                                    InsertInternalChild(childIndex, child);
+                            }
+                            else
+                            {
+                                // 如果已经在其他位置，移除并插入到正确位置
+                                int existingIndex = InternalChildren.IndexOf(child);
+                                if (existingIndex >= 0)
+                                {
+                                    RemoveInternalChildRange(existingIndex, 1);
+                                    if (childIndex >= InternalChildren.Count)
+                                        AddInternalChild(child);
+                                    else
+                                        InsertInternalChild(childIndex, child);
+                                }
+                            }
+                        }
+                    }
+
+                    // 确保控件模板已应用，以便 DataTemplate 内的元素可见
+                    (child as FrameworkElement)?.ApplyTemplate();
+
+                    // 准备容器（应用数据绑定）——对新旧容器都调用以确保绑定/样式生效
+                    try
+                    {
+                        generator.PrepareItemContainer(child);
+                    }
+                    catch
+                    {
+                        // 某些容器类型可能不需要或无法准备，忽略潜在异常以避免破坏布局
+                    }
+
+                    // 计算位置
+                    var (row, col, x, y) = GetItemPosition(itemIndex);
+                    y -= _offsetY;
+
+                    if (measure)
+                    {
+                        child.Measure(new Size(ChildWidth, ChildHeight));
+                    }
+                    else
+                    {
+                        child.Arrange(new Rect(x, y, ChildWidth, ChildHeight));
+                    }
+
+                    childIndex++;
                 }
             }
-
-            // 清理不可见项
-            CleanupItems();
         }
 
-        private void CleanupItems()
+        /// <summary>
+        /// 清理不可见的项目
+        /// </summary>
+        private void CleanupItems(int firstVisibleIndex, int lastVisibleIndex)
         {
+            var generator = ItemContainerGenerator;
+            if (generator == null)
+                return;
+
+            // 遍历 InternalChildren，移除不在可见范围内的容器
             for (int i = InternalChildren.Count - 1; i >= 0; i--)
             {
-                UIElement child = InternalChildren[i];
-                if (child == null)
-                    continue;
-
-                int childIndex = Generator.IndexFromGeneratorPosition(new GeneratorPosition(i, 0));
-
-                if (childIndex < _firstVisibleIndex || childIndex > _lastVisibleIndex)
+                GeneratorPosition genPos = new GeneratorPosition(i, 0);
+                int itemIndex = generator.IndexFromGeneratorPosition(genPos);
+                if (itemIndex < firstVisibleIndex || itemIndex > lastVisibleIndex)
                 {
-                    InternalChildren.RemoveAt(i);
+                    // 从生成器中移除并从 InternalChildren 中移除
+                    var child = InternalChildren[i];
+                    try
+                    {
+                        RemoveLogicalChild(child);
+                    }
+                    catch
+                    {
+                        // ignore
+                    }
+                    generator.Remove(genPos, 1);
+                    RemoveInternalChildRange(i, 1);
                 }
             }
         }
@@ -274,15 +415,15 @@ namespace Lemoo.UI.Controls.Layout
 
         public double ExtentWidth => 0;
 
-        public double ExtentHeight => _extent;
+        public double ExtentHeight => _extentHeight;
 
         public double ViewportWidth => RenderSize.Width;
 
-        public double ViewportHeight => _viewport;
+        public double ViewportHeight => _viewportHeight;
 
         public double HorizontalOffset => 0;
 
-        public double VerticalOffset => _offset;
+        public double VerticalOffset => _offsetY;
 
         public ScrollViewer? ScrollOwner
         {
@@ -290,84 +431,71 @@ namespace Lemoo.UI.Controls.Layout
             set => _scrollOwner = value;
         }
 
-        public void LineUp()
-        {
-            SetVerticalOffset(_offset - 16);
-        }
+        public void LineUp() => SetVerticalOffset(_offsetY - 16);
 
-        public void LineDown()
-        {
-            SetVerticalOffset(_offset + 16);
-        }
+        public void LineDown() => SetVerticalOffset(_offsetY + 16);
 
-        public void LineLeft()
-        {
-            // 不支持水平滚动
-        }
+        public void LineLeft() { }
 
-        public void LineRight()
-        {
-            // 不支持水平滚动
-        }
+        public void LineRight() { }
 
-        public void PageUp()
-        {
-            SetVerticalOffset(_offset - _viewport);
-        }
+        public void PageUp() => SetVerticalOffset(_offsetY - _viewportHeight);
 
-        public void PageDown()
-        {
-            SetVerticalOffset(_offset + _viewport);
-        }
+        public void PageDown() => SetVerticalOffset(_offsetY + _viewportHeight);
 
-        public void PageLeft()
-        {
-            // 不支持水平滚动
-        }
+        public void PageLeft() { }
 
-        public void PageRight()
-        {
-            // 不支持水平滚动
-        }
+        public void PageRight() { }
 
-        public void MouseWheelUp()
-        {
-            SetVerticalOffset(_offset - 48);
-        }
+        public void MouseWheelUp() => SetVerticalOffset(_offsetY - 48);
 
-        public void MouseWheelDown()
-        {
-            SetVerticalOffset(_offset + 48);
-        }
+        public void MouseWheelDown() => SetVerticalOffset(_offsetY + 48);
 
-        public void MouseWheelLeft()
-        {
-            // 不支持水平滚动
-        }
+        public void MouseWheelLeft() { }
 
-        public void MouseWheelRight()
-        {
-            // 不支持水平滚动
-        }
+        public void MouseWheelRight() { }
 
-        public void SetHorizontalOffset(double offset)
-        {
-            // 不支持水平滚动
-        }
+        public void SetHorizontalOffset(double offset) { }
 
         public void SetVerticalOffset(double offset)
         {
-            offset = Math.Max(0, Math.Min(_extent - _viewport, offset));
-            if (Math.Abs(offset - _offset) > 1e-6)
+            offset = Math.Max(0, Math.Min(_extentHeight - _viewportHeight, offset));
+            if (Math.Abs(offset - _offsetY) > 1e-6)
             {
-                _offset = offset;
-                InvalidateMeasure();
+                _offsetY = offset;
+                InvalidateArrange();
+                _scrollOwner?.InvalidateScrollInfo();
             }
         }
 
         public Rect MakeVisible(Visual visual, Rect rectangle)
         {
-            // TODO: 实现将指定元素滚动到可见区域
+            if (visual is UIElement element && InternalChildren.Contains(element))
+            {
+                var generator = ItemContainerGenerator;
+                if (generator != null)
+                {
+                    int index = generator.IndexFromGeneratorPosition(new GeneratorPosition(InternalChildren.IndexOf(element), 0));
+                    if (index >= 0)
+                    {
+                        var (row, col, x, y) = GetItemPosition(index);
+                        double itemTop = y;
+                        double itemBottom = y + ChildHeight;
+
+                        // If item is above viewport, scroll up to its top.
+                        if (itemTop < _offsetY)
+                        {
+                            SetVerticalOffset(itemTop);
+                        }
+                        // If item is below viewport, scroll down so its bottom is visible.
+                        else if (itemBottom > _offsetY + _viewportHeight)
+                        {
+                            SetVerticalOffset(itemBottom - _viewportHeight);
+                        }
+                    }
+                }
+            }
+
             return rectangle;
         }
 

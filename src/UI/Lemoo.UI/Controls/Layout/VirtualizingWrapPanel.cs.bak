@@ -1,0 +1,295 @@
+using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+
+namespace Lemoo.UI.Controls.Layout
+{
+    /// <summary>
+    /// 支持虚拟化的 WrapPanel 面板（简化版）
+    /// 使用 WPF 的标准虚拟化机制，避免复杂的状态管理
+    /// </summary>
+    public class VirtualizingWrapPanel : VirtualizingPanel, IScrollInfo
+    {
+        #region 依赖属性
+
+        /// <summary>
+        /// 子项宽度
+        /// </summary>
+        public double ChildWidth
+        {
+            get => (double)GetValue(ChildWidthProperty);
+            set => SetValue(ChildWidthProperty, value);
+        }
+
+        public static readonly DependencyProperty ChildWidthProperty =
+            DependencyProperty.Register(
+                nameof(ChildWidth),
+                typeof(double),
+                typeof(VirtualizingWrapPanel),
+                new PropertyMetadata(100.0, OnLayoutChanged));
+
+        /// <summary>
+        /// 子项高度
+        /// </summary>
+        public double ChildHeight
+        {
+            get => (double)GetValue(ChildHeightProperty);
+            set => SetValue(ChildHeightProperty, value);
+        }
+
+        public static readonly DependencyProperty ChildHeightProperty =
+            DependencyProperty.Register(
+                nameof(ChildHeight),
+                typeof(double),
+                typeof(VirtualizingWrapPanel),
+                new PropertyMetadata(100.0, OnLayoutChanged));
+
+        private static void OnLayoutChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is VirtualizingWrapPanel panel)
+            {
+                panel.InvalidateMeasure();
+            }
+        }
+
+        #endregion
+
+        #region 字段
+
+        private readonly Size _pixelSize = new(1.0, 1.0);
+        private ScrollViewer? _scrollOwner;
+        private double _offset = 0.0;
+        private double _extent = 0.0;
+        private double _viewport = 0.0;
+        private bool _canHorizontallyScroll;
+        private bool _canVerticallyScroll;
+
+        #endregion
+
+        #region 构造函数
+
+        public VirtualizingWrapPanel()
+        {
+            UseLayoutRounding = true;
+            RenderOptions.SetClearTypeHint(this, ClearTypeHint.Enabled);
+        }
+
+        #endregion
+
+        #region 辅助方法
+
+        private IItemContainerGenerator Generator => ItemContainerGenerator;
+
+        private int GetItemCount()
+        {
+            var itemsControl = ItemsControl.GetItemsOwner(this);
+            if (itemsControl == null)
+            {
+                System.Diagnostics.Debug.WriteLine("VirtualizingWrapPanel: ItemsControl.GetItemsOwner returned null");
+                return 0;
+            }
+
+            var items = itemsControl.Items;
+            if (items == null)
+            {
+                System.Diagnostics.Debug.WriteLine("VirtualizingWrapPanel: ItemsControl.Items is null");
+                return 0;
+            }
+
+            System.Diagnostics.Debug.WriteLine($"VirtualizingWrapPanel: Item count = {items.Count}");
+            return items.Count;
+        }
+
+        private (int itemsPerRow, int totalRows) CalculateLayout(double availableWidth)
+        {
+            double childWidth = ChildWidth;
+            double childHeight = ChildHeight;
+
+            // 计算每行可以容纳的项数
+            double availableWidthForContent = availableWidth - 4; // 减去边距
+            int itemsPerRow = Math.Max(1, (int)(availableWidthForContent / (childWidth + 12))); // +12 是 margin
+
+            // 计算总行数
+            int itemCount = GetItemCount();
+            int totalRows = (itemCount + itemsPerRow - 1) / itemsPerRow;
+
+            return (itemsPerRow, totalRows);
+        }
+
+        #endregion
+
+        #region 测量和排列
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            if (availableSize.Width == double.PositiveInfinity ||
+                availableSize.Height == double.PositiveInfinity)
+            {
+                availableSize = new(Math.Min(availableSize.Width, 4096), Math.Min(availableSize.Height, 4096));
+            }
+
+            var (itemsPerRow, totalRows) = CalculateLayout(availableSize.Width);
+
+            // 更新视口大小
+            _viewport = availableSize.Height;
+
+            // 计算总范围
+            double totalHeight = Math.Max(0, (totalRows * (ChildHeight + 12)) - 4); // -4 减去边距
+            _extent = totalHeight;
+
+            // 通知滚动信息变更
+            _scrollOwner?.InvalidateScrollInfo();
+
+            return new Size(availableSize.Width, Math.Min(_viewport, _extent));
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            var (itemsPerRow, totalRows) = CalculateLayout(finalSize.Width);
+
+            System.Diagnostics.Debug.WriteLine($"VirtualizingWrapPanel.ArrangeOverride: itemsPerRow={itemsPerRow}, totalRows={totalRows}, finalSize={finalSize}");
+
+            int itemCount = GetItemCount();
+            if (itemCount == 0)
+            {
+                return finalSize;
+            }
+
+            // 计算可见范围
+            int firstVisibleRow = Math.Max(0, (int)(_offset / (ChildHeight + 12)));
+            int lastVisibleRow = Math.Min(totalRows - 1, (int)((_offset + _viewport) / (ChildHeight + 12)) + 1);
+
+            int firstVisibleIndex = firstVisibleRow * itemsPerRow;
+            int lastVisibleIndex = Math.Min(itemCount - 1, (lastVisibleRow + 1) * itemsPerRow - 1);
+
+            System.Diagnostics.Debug.WriteLine($"VirtualizingWrapPanel.ArrangeOverride: firstVisibleIndex={firstVisibleIndex}, lastVisibleIndex={lastVisibleIndex}, Generator={Generator}");
+
+            // 生成并排列可见项
+            if (firstVisibleIndex <= lastVisibleIndex && Generator != null)
+            {
+                try
+                {
+                    GeneratorPosition startPos = Generator.GeneratorPositionFromIndex(firstVisibleIndex);
+
+                    using (Generator.StartAt(startPos, GeneratorDirection.Forward, true))
+                    {
+                        for (int i = firstVisibleIndex; i <= lastVisibleIndex; i++)
+                        {
+                            bool isNewlyRealized;
+                            UIElement? child = Generator.GenerateNext(out isNewlyRealized) as UIElement;
+
+                            if (child != null)
+                            {
+                                if (isNewlyRealized)
+                                {
+                                    AddInternalChild(child);
+                                }
+
+                                Generator.PrepareItemContainer(child);
+
+                                // 计算位置
+                                int row = i / itemsPerRow;
+                                int col = i % itemsPerRow;
+
+                                double x = 6 + col * (ChildWidth + 12);
+                                double y = 6 + row * (ChildHeight + 12) - _offset;
+
+                                child.Measure(new Size(ChildWidth, ChildHeight));
+                                child.Arrange(new Rect(x, y, ChildWidth, ChildHeight));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 如果生成器操作失败，输出调试信息
+                    System.Diagnostics.Debug.WriteLine($"VirtualizingWrapPanel.ArrangeOverride Exception: {ex.Message}\n{ex.StackTrace}");
+                }
+            }
+
+            // 通知滚动信息变更
+            _scrollOwner?.InvalidateScrollInfo();
+
+            return finalSize;
+        }
+
+        #endregion
+
+        #region IScrollInfo 实现
+
+        public bool CanVerticallyScroll
+        {
+            get => _canVerticallyScroll;
+            set => _canVerticallyScroll = value;
+        }
+
+        public bool CanHorizontallyScroll
+        {
+            get => _canHorizontallyScroll;
+            set => _canHorizontallyScroll = value;
+        }
+
+        public double ExtentWidth => 0;
+
+        public double ExtentHeight => _extent;
+
+        public double ViewportWidth => RenderSize.Width;
+
+        public double ViewportHeight => _viewport;
+
+        public double HorizontalOffset => 0;
+
+        public double VerticalOffset => _offset;
+
+        public ScrollViewer? ScrollOwner
+        {
+            get => _scrollOwner;
+            set => _scrollOwner = value;
+        }
+
+        public void LineUp() => SetVerticalOffset(_offset - 16);
+
+        public void LineDown() => SetVerticalOffset(_offset + 16);
+
+        public void LineLeft() { }
+
+        public void LineRight() { }
+
+        public void PageUp() => SetVerticalOffset(_offset - _viewport);
+
+        public void PageDown() => SetVerticalOffset(_offset + _viewport);
+
+        public void PageLeft() { }
+
+        public void PageRight() { }
+
+        public void MouseWheelUp() => SetVerticalOffset(_offset - 48);
+
+        public void MouseWheelDown() => SetVerticalOffset(_offset + 48);
+
+        public void MouseWheelLeft() { }
+
+        public void MouseWheelRight() { }
+
+        public void SetHorizontalOffset(double offset) { }
+
+        public void SetVerticalOffset(double offset)
+        {
+            offset = Math.Max(0, Math.Min(_extent - _viewport, offset));
+            if (Math.Abs(offset - _offset) > 1e-6)
+            {
+                _offset = offset;
+                InvalidateArrange();
+            }
+        }
+
+        public Rect MakeVisible(Visual visual, Rect rectangle)
+        {
+            return rectangle;
+        }
+
+        #endregion
+    }
+}

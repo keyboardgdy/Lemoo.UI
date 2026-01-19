@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:converters="clr-namespace:Lemoo.UI.WPF.Converters"
       xmlns:convertersFramework="clr-namespace:Lemoo.UI.Converters;assembly=Lemoo.UI"
-      xmlns:helpers="clr-namespace:Lemoo.UI.Helpers"
+      xmlns:helpers="clr-namespace:Lemoo.UI.Helpers;assembly=Lemoo.UI"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"

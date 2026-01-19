@@ -9,7 +9,8 @@
     
     <!-- 字体族 -->
     <FontFamily x:Key="FontFamily.Default">Segoe UI</FontFamily>
-    <FontFamily x:Key="FontFamily.Icon">Segoe Fluent Icons</FontFamily>
+    <!-- 图标字体：添加 Segoe MDL2 Assets 作为回退，确保在 Windows 10 上也能正常显示 -->
+    <FontFamily x:Key="FontFamily.Icon">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
     <FontFamily x:Key="FontFamily.Icon.Legacy">Segoe MDL2 Assets</FontFamily>
     <FontFamily x:Key="FontFamily.Mono">Consolas</FontFamily>
     

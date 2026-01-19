@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -58,6 +59,22 @@ namespace Lemoo.UI.Services
         {
             try
             {
+                var assembly = Assembly.GetExecutingAssembly();
+
+                // 首先尝试从嵌入资源加载（这是最可靠的方式）
+                var resourceStream = assembly.GetManifestResourceStream("Lemoo.UI.Models.Icons.IconMetadata.json");
+                if (resourceStream != null)
+                {
+                    using var reader = new StreamReader(resourceStream);
+                    var json = reader.ReadToEnd();
+                    System.Diagnostics.Debug.WriteLine("Successfully loaded IconMetadata.json from embedded resources");
+                    return JsonSerializer.Deserialize<IconMetadataContainer>(json, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+                }
+
+                // 如果嵌入资源失败，尝试从文件系统加载
                 // 尝试多个可能的路径
                 var possiblePaths = new[]
                 {
@@ -71,26 +88,15 @@ namespace Lemoo.UI.Services
                     if (File.Exists(path))
                     {
                         var json = File.ReadAllText(path);
-                        var metadata = JsonSerializer.Deserialize<IconMetadataContainer>(json, new JsonSerializerOptions
+                        System.Diagnostics.Debug.WriteLine($"Successfully loaded IconMetadata.json from: {path}");
+                        return JsonSerializer.Deserialize<IconMetadataContainer>(json, new JsonSerializerOptions
                         {
                             PropertyNameCaseInsensitive = true
                         });
-                        return metadata;
                     }
                 }
 
-                // 尝试从嵌入资源加载
-                var assembly = Assembly.GetExecutingAssembly();
-                var resourceStream = assembly.GetManifestResourceStream("Lemoo.UI.Models.Icons.IconMetadata.json");
-                if (resourceStream != null)
-                {
-                    using var reader = new StreamReader(resourceStream);
-                    var json = reader.ReadToEnd();
-                    return JsonSerializer.Deserialize<IconMetadataContainer>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                }
+                System.Diagnostics.Debug.WriteLine("IconMetadata.json not found in any location");
             }
             catch (Exception ex)
             {
@@ -99,6 +105,95 @@ namespace Lemoo.UI.Services
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 解析 Unicode 字符串
+        /// 支持格式："\uE72B" 或 "E72B" 或实际的 Unicode 字符
+        /// </summary>
+        private static string ParseUnicodeString(string? unicodeString, string? unicode)
+        {
+            // 优先使用 UnicodeString
+            if (!string.IsNullOrEmpty(unicodeString))
+            {
+                // 处理 "\\uXXXX" 格式（JSON 中的转义 Unicode）
+                if (unicodeString.StartsWith("\\u") && unicodeString.Length == 6)
+                {
+                    var hexCode = unicodeString.Substring(2);
+                    if (int.TryParse(hexCode, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var codePoint))
+                    {
+                        return char.ConvertFromUtf32(codePoint);
+                    }
+                }
+
+                // 处理 "uXXXX" 格式（JSON 中的 unicode_string 字段）
+                if (unicodeString.StartsWith("u") && unicodeString.Length == 5)
+                {
+                    var hexCode = unicodeString.Substring(1);
+                    if (int.TryParse(hexCode, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var codePoint))
+                    {
+                        return char.ConvertFromUtf32(codePoint);
+                    }
+                }
+
+                // 如果已经是单个字符，直接返回
+                if (unicodeString.Length == 1)
+                {
+                    return unicodeString;
+                }
+            }
+
+            // 回退到使用 Unicode 字段
+            if (!string.IsNullOrEmpty(unicode) && unicode.Length == 4)
+            {
+                if (int.TryParse(unicode, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var codePoint))
+                {
+                    return char.ConvertFromUtf32(codePoint);
+                }
+            }
+
+            // 默认返回空字符
+            return "\u0000";
+        }
+
+        /// <summary>
+        /// 获取诊断信息（用于调试）
+        /// </summary>
+        public static string GetDiagnosticInfo()
+        {
+            EnsureInitialized();
+
+            var info = new System.Text.StringBuilder();
+            info.AppendLine($"=== IconMetadataRegistry 诊断信息 ===");
+            info.AppendLine($"已初始化: {_isInitialized}");
+            info.AppendLine($"缓存图标数量: {_iconCache.Count}");
+            info.AppendLine($"分类数量: {_categoryCache.Count}");
+
+            // 获取前5个图标作为示例
+            info.AppendLine("\n前5个图标示例:");
+            int count = 0;
+            foreach (var icon in _iconCache.Values.OrderBy(x => x.Name).Take(5))
+            {
+                info.AppendLine($"  [{count + 1}] {icon.Kind}: {icon.Name} = Glyph: '{icon.Glyph}' (U+{(int)icon.Glyph[0]:X4})");
+                count++;
+            }
+
+            // 测试一些常见的图标
+            info.AppendLine("\n测试常见图标:");
+            var testKinds = new[] { IconKind.Back, IconKind.Forward, IconKind.Search, IconKind.Home, IconKind.Settings };
+            foreach (var kind in testKinds)
+            {
+                if (_iconCache.TryGetValue(kind, out var icon))
+                {
+                    info.AppendLine($"  {kind}: '{icon.Glyph}' (U+{(int)icon.Glyph[0]:X4})");
+                }
+                else
+                {
+                    info.AppendLine($"  {kind}: 未找到");
+                }
+            }
+
+            return info.ToString();
         }
 
         /// <summary>
@@ -114,7 +209,8 @@ namespace Lemoo.UI.Services
                     var info = new IconInfo
                     {
                         Kind = kind,
-                        Glyph = iconData.UnicodeString ?? "\u0000",
+                        // 修复：正确解析 Unicode 字符串
+                        Glyph = ParseUnicodeString(iconData.UnicodeString, iconData.Unicode),
                         Name = iconData.Name,
                         Category = iconData.Category,  // 保留原始分类键
                         Keywords = iconData.Keywords ?? Array.Empty<string>()

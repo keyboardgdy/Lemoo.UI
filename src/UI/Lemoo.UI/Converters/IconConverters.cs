@@ -8,12 +8,10 @@ namespace Lemoo.UI.Converters
 {
     /// <summary>
     /// IconKind 到字形字符的转换器
-    /// 优化：使用单例模式，减少内存占用
+    /// 优化：直接使用 IconMetadataRegistry，避免中间层
     /// </summary>
     public class IconKindToGlyphConverter : IValueConverter
     {
-        private static readonly Lazy<IconService> _iconService = new(() => new IconService());
-
         /// <summary>
         /// 获取共享实例
         /// </summary>
@@ -25,7 +23,17 @@ namespace Lemoo.UI.Converters
         {
             if (value is IconKind kind)
             {
-                return _iconService.Value.GetGlyph(kind);
+                // 直接使用 IconMetadataRegistry，确保初始化
+                IconMetadataRegistry.Initialize();
+                string glyph = IconMetadataRegistry.GetGlyph(kind);
+
+                // 调试输出（限制输出量）
+                if (kind == IconKind.Back || kind == IconKind.Forward || kind == IconKind.Home)
+                {
+                    System.Diagnostics.Debug.WriteLine($"[IconKindToGlyphConverter] Kind={kind}, Glyph='{glyph}' (U+{(glyph.Length > 0 ? ((int)glyph[0]):0):X4})");
+                }
+
+                return glyph;
             }
             return "\u0000";
         }

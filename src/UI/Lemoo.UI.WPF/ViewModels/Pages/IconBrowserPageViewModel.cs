@@ -45,7 +45,10 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
 
         public IconBrowserPageViewModel()
         {
-            _allIcons = new ObservableCollection<IconInfo>(IconRegistry.GetAllIcons());
+            // 确保图标注册表已初始化
+            IconMetadataRegistry.Initialize();
+
+            _allIcons = new ObservableCollection<IconInfo>(IconMetadataRegistry.GetAllIcons());
             _filteredIcons = new ObservableCollection<IconInfo>(_allIcons);
             _categories = new ObservableCollection<IconCategoryItemViewModel>();
             _currentIconSize = IconSize.Normal;
@@ -99,7 +102,7 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
             _categories.Add(allCategory);
 
             // 添加其他分类
-            var categories = IconRegistry.GetCategories()
+            var categories = IconMetadataRegistry.GetCategories()
                 .OrderBy(c => c.Priority)
                 .ToList();
 
@@ -185,45 +188,5 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
             _selectedCategory = category;
             UpdateFilteredIcons();
         }
-    }
-
-    /// <summary>
-    /// 图标分类项视图模型
-    /// </summary>
-    public partial class IconCategoryItemViewModel : ObservableObject
-    {
-        private bool _isSelected;
-
-        /// <summary>
-        /// 显示名称
-        /// </summary>
-        public string DisplayName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 分类名称
-        /// </summary>
-        public string CategoryName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// 图标数量
-        /// </summary>
-        public int IconCount { get; set; }
-
-        /// <summary>
-        /// 是否选中
-        /// </summary>
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                SetProperty(ref _isSelected, value);
-            }
-        }
-
-        /// <summary>
-        /// 显示文本（名称 + 数量）
-        /// </summary>
-        public string DisplayText => $"{DisplayName} ({IconCount})";
     }
 }

@@ -23,13 +23,25 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
 
         public IconBrowserPageViewModelV2()
         {
+            // 确保图标注册表已初始化
+            IconMetadataRegistry.Initialize();
+
             _allIcons = new ObservableCollection<IconInfo>(IconMetadataRegistry.GetAllIcons());
             _filteredIcons = new ObservableCollection<IconInfo>(_allIcons);
             _categories = new ObservableCollection<IconCategoryItemViewModel>();
             _currentIconSize = IconSize.Normal;
 
+            // 调试输出
+            System.Diagnostics.Debug.WriteLine($"[IconBrowserViewModel] AllIcons count: {_allIcons.Count}");
+            if (_allIcons.Count > 0)
+            {
+                System.Diagnostics.Debug.WriteLine($"[IconBrowserViewModel] First icon: Name={_allIcons[0].Name}, Kind={_allIcons[0].Kind}, Glyph={_allIcons[0].Glyph}");
+            }
+
             InitializeCategories();
             UpdateFilteredIcons();
+
+            System.Diagnostics.Debug.WriteLine($"[IconBrowserViewModel] FilteredIcons count: {_filteredIcons.Count}");
         }
 
         /// <summary>
@@ -45,15 +57,7 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         /// <summary>
         /// 获取过滤后的图标列表
         /// </summary>
-        public ObservableCollection<IconInfo> FilteredIcons
-        {
-            get => _filteredIcons;
-            private set
-            {
-                _filteredIcons = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<IconInfo> FilteredIcons => _filteredIcons;
 
         /// <summary>
         /// 获取分类列表
@@ -68,14 +72,17 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
             get => _selectedIcon;
             set
             {
-                _selectedIcon = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(DetailName));
-                OnPropertyChanged(nameof(DetailCategory));
-                OnPropertyChanged(nameof(DetailGlyph));
-                OnPropertyChanged(nameof(DetailCode));
-                OnPropertyChanged(nameof(DetailUnicode));
-                OnPropertyChanged(nameof(DetailKeywords));
+                if (_selectedIcon != value)
+                {
+                    _selectedIcon = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(DetailName));
+                    OnPropertyChanged(nameof(DetailCategory));
+                    OnPropertyChanged(nameof(DetailGlyph));
+                    OnPropertyChanged(nameof(DetailCode));
+                    OnPropertyChanged(nameof(DetailUnicode));
+                    OnPropertyChanged(nameof(DetailKeywords));
+                }
             }
         }
 
@@ -144,7 +151,7 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         }
 
         /// <summary>
-        /// 更新过滤后的图标列表
+        /// 更新过滤后的图标列表（优化版本 - 复用集合）
         /// </summary>
         private void UpdateFilteredIcons()
         {
@@ -166,9 +173,15 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
                     icon.KeywordsLower.Any(k => k.Contains(searchLower)));
             }
 
-            // 批量更新集合
+            // 批量更新集合（复用现有集合，减少内存分配）
             var result = query.ToList();
-            FilteredIcons = new ObservableCollection<IconInfo>(result);
+            _filteredIcons.Clear();
+            foreach (var icon in result)
+            {
+                _filteredIcons.Add(icon);
+            }
+
+            OnPropertyChanged(nameof(FilteredIcons));
             OnPropertyChanged(nameof(DisplayedIconCount));
         }
 
@@ -223,6 +236,16 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
             _allIcons = new ObservableCollection<IconInfo>(IconMetadataRegistry.GetAllIcons());
             InitializeCategories();
             UpdateFilteredIcons();
+        }
+
+        /// <summary>
+        /// 调试命令：输出诊断信息到调试窗口
+        /// </summary>
+        [RelayCommand]
+        private void Diagnose()
+        {
+            var diagnosticInfo = IconMetadataRegistry.GetDiagnosticInfo();
+            System.Diagnostics.Debug.WriteLine(diagnosticInfo);
         }
     }
 

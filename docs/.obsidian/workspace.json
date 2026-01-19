@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "开发日志/打磨程序.md",
+                "file": "CSnakes使用文档.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "打磨程序"
+              "title": "CSnakes使用文档"
             }
           }
         ]
@@ -182,8 +182,8 @@
   },
   "active": "6fdb1b4a5b0e6702",
   "lastOpenFiles": [
-    "Lemoo.UI框架不足分析与改进建议.md",
     "开发日志/打磨程序.md",
+    "Lemoo.UI框架不足分析与改进建议.md",
     "WPF控件文档.md",
     "Lemoo.UI框架不足分析与改进建议.md.tmp.9916.1768551413745",
     "WPF自定义控件设计文档.md",

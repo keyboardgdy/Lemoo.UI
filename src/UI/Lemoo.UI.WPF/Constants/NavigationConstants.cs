@@ -20,12 +20,12 @@ public static class NavigationConstants
         /// <summary>
         /// 工具箱图标
         /// </summary>
-        public const IconKind Toolbox = IconKind.Grid;
+        public const IconKind Toolbox = IconKind.IntegrationTest;
 
         /// <summary>
         /// 图标浏览器图标
         /// </summary>
-        public const IconKind IconBrowser = IconKind.Grid;
+        public const IconKind IconBrowser = IconKind.Paste;
     }
 
     /// <summary>
