@@ -21,14 +21,16 @@
 
 ```
 tools/IconGenerator/
-├── parse_font.py              # Python 字体解析工具
-├── IconMetadata.json          # 生成的图标元数据（数据源）
-├── IconMetadata.schema.json   # JSON Schema 验证
-├── generate-icons.ps1         # PowerShell 构建脚本
-├── Lemoo.UI.IconGenerator/    # Source Generator (C#)
+├── parse_font.py                    # Python 字体解析工具（基础）
+├── create_official_metadata.py      # 官方元数据生成器（推荐）
+├── extract_from_existing.py         # 从现有代码提取
+├── IconMetadata.json                # 生成的图标元数据（数据源）
+├── IconMetadata.schema.json         # JSON Schema 验证
+├── generate-icons.ps1               # PowerShell 构建脚本
+├── Lemoo.UI.IconGenerator/          # Source Generator (C#)
 │   ├── LemooIconGenerator.cs
 │   └── Lemoo.UI.IconGenerator.csproj
-└── T4Templates/               # T4 模板 (替代方案)
+└── T4Templates/                     # T4 模板 (替代方案)
     └── IconKind.tt
 ```
 
@@ -49,7 +51,20 @@ pip install fonttools
 dotnet tool install -g dotnet-t4
 ```
 
-### 完整流程
+### 完整流程（推荐：使用官方元数据生成器）
+
+```powershell
+# 进入项目根目录
+cd D:\Code\Claude\Lemoo.UI
+
+# 步骤 1: 从微软官方文档生成图标元数据
+python tools/IconGenerator/create_official_metadata.py
+
+# 步骤 2: 生成 C# 代码
+.\tools\IconGenerator\generate-icons.ps1 -SkipParse
+```
+
+### 基础流程（使用字体解析工具）
 
 ```powershell
 # 进入项目根目录
@@ -59,7 +74,7 @@ cd D:\Code\Claude\Lemoo.UI
 .\tools\IconGenerator\generate-icons.ps1
 ```
 
-### 仅生成代码（跳过字体解析）
+### 仅生成代码（跳过元数据生成）
 
 ```powershell
 .\tools\IconGenerator\generate-icons.ps1 -SkipParse
@@ -72,9 +87,11 @@ cd D:\Code\Claude\Lemoo.UI
 ### 数据流
 
 ```
-Segoe Fluent Icons.ttf (400KB)
+Microsoft Official Documentation
         ↓
-parse_font.py (fonttools)
+create_official_metadata.py (推荐)
+        ↓
+Segoe Fluent Icons.ttf + 官方文档
         ↓
 IconMetadata.json (结构化数据)
         ↓
@@ -86,12 +103,35 @@ LemooIconGenerator         IconKind.tt
 └───────────────┬───────────────┘
                 ↓
          IconKind.g.cs
-         (396 个枚举值)
+         (1077+ 个枚举值)
 ```
 
 ### 步骤详解
 
-#### 1. 字体解析 (parse_font.py)
+#### 方法 1: 官方元数据生成器（推荐）
+
+**create_official_metadata.py** 从微软官方文档提取图标映射：
+
+```python
+# 从微软官方文档解析图标
+parse_documentation()  # 提取 1474 个图标映射
+
+# 从字体文件验证 Unicode 值
+get_font_glyphs()      # 验证 1435 个字形
+
+# 生成完整元数据
+generate_metadata()    # 生成 1077 个验证通过的图标
+
+# 特点：
+# - 使用微软官方语义化名称
+# - 验证所有 Unicode 值存在
+# - 智能分类和关键词生成
+# - 中文翻译支持
+```
+
+#### 方法 2: 字体解析工具（基础）
+
+**parse_font.py** 从字体文件直接提取：
 
 ```python
 # 使用 fonttools 读取 TTF 文件
@@ -378,10 +418,13 @@ dotnet-t4 IconKind.tt
 
 | 指标 | 数值 |
 |------|------|
-| **字体解析时间** | ~2 秒 |
-| **JSON 文件大小** | ~150 KB (396 个图标) |
+| **官方文档解析时间** | ~1 秒 |
+| **字体验证时间** | ~2 秒 |
+| **总生成时间** | ~3 秒 |
+| **提取的图标数量** | 1077 个（已验证） |
+| **JSON 文件大小** | ~500 KB (1077 个图标) |
 | **代码生成时间** | < 100 ms |
-| **生成的文件大小** | ~80 KB |
+| **生成的文件大小** | ~200 KB |
 | **编译时开销** | < 50 ms (增量) |
 
 ---
@@ -390,6 +433,7 @@ dotnet-t4 IconKind.tt
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| **3.0** | 2026-01-19 | 官方元数据生成器 - 从微软文档提取，1077 个图标 |
 | **2.0** | 2026-01-19 | 完全数据驱动方案 |
 | **1.0** | 2025-12-01 | 初始手工枚举方案 |
 

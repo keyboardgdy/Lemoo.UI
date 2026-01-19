@@ -180,6 +180,9 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Icons\" />
+  </ItemGroup>
   <ProjectExtensions><VisualStudio><UserProperties models_4icons_4iconmetadata_1json__JsonSchema="C:\Users\gdy15\AppData\Local\Microsoft\VisualStudio\18.0_d34a9e6a\OpenFolder\CMakeSettings_schema.json" /></VisualStudio></ProjectExtensions>
 
   <!-- 图标代码生成器 -->
