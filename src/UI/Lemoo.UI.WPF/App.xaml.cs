@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Lemoo.UI.Abstractions;
@@ -8,6 +9,7 @@ using Lemoo.UI.WPF.ViewModels;
 using Lemoo.UI.WPF.ViewModels.Pages;
 using Lemoo.UI.WPF.Views;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace Lemoo.UI.WPF;
 
@@ -18,6 +20,7 @@ namespace Lemoo.UI.WPF;
 public partial class App : Application
 {
     private IServiceProvider? _serviceProvider;
+    private IUserSettingsService? _userSettingsService;
 
     /// <summary>
     /// 获取服务提供者（用于依赖注入）
@@ -27,13 +30,13 @@ public partial class App : Application
     /// <summary>
     /// 应用程序启动时调用
     /// </summary>
-    private void OnStartup(object sender, StartupEventArgs e)
+    private async void OnStartup(object sender, StartupEventArgs e)
     {
-        // 初始化主题系统（在创建任何窗口之前）
-        Lemoo.UI.Helpers.ThemeManager.Initialize();
-
         // 配置依赖注入容器
         var services = new ServiceCollection();
+
+        // 注册用户设置服务（必须是最早注册的服务之一）
+        services.AddSingleton<IUserSettingsService, UserSettingsService>();
 
         // 注册页面注册服务
         var pageRegistry = new PageRegistryService();
@@ -68,6 +71,22 @@ public partial class App : Application
         // 配置 CommunityToolkit.Mvvm 的 Ioc
         Ioc.Default.ConfigureServices(_serviceProvider);
 
+        // 加载用户设置
+        _userSettingsService = _serviceProvider.GetRequiredService<IUserSettingsService>();
+        await _userSettingsService.LoadAsync();
+
+        // 初始化主题系统（在创建任何窗口之前）
+        // 应用用户保存的主题，如果没有保存的主题则使用默认主题
+        var savedTheme = _userSettingsService.CurrentSettings.Theme.CurrentTheme;
+        if (Enum.TryParse<Lemoo.UI.Helpers.ThemeManager.Theme>(savedTheme, out var theme))
+        {
+            Lemoo.UI.Helpers.ThemeManager.CurrentTheme = theme;
+        }
+        else
+        {
+            Lemoo.UI.Helpers.ThemeManager.Initialize();
+        }
+
         // 显示主窗口
         var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
         mainWindow.Show();
@@ -76,12 +95,19 @@ public partial class App : Application
     /// <summary>
     /// 应用程序退出时调用
     /// </summary>
-    private void OnExit(object sender, ExitEventArgs e)
+    private async void OnExit(object sender, ExitEventArgs e)
     {
-        // 清理资源
-        if (_serviceProvider is IDisposable disposable)
+        try
         {
-            disposable.Dispose();
+            // 在退出前保存用户设置
+            if (_userSettingsService != null)
+            {
+                await _userSettingsService.SaveAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"App.OnExit: 保存设置失败: {ex.Message}");
         }
     }
 

@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lemoo.UI.Helpers;
+using Lemoo.UI.WPF.Services;
 using System.Collections.ObjectModel;
 
 namespace Lemoo.UI.WPF.ViewModels.Pages;
@@ -10,6 +11,8 @@ namespace Lemoo.UI.WPF.ViewModels.Pages;
 /// </summary>
 public partial class SettingsViewModel : ObservableObject, IDisposable
 {
+    private readonly IUserSettingsService _userSettingsService;
+
     /// <summary>
     /// 所有可用主题
     /// </summary>
@@ -18,8 +21,13 @@ public partial class SettingsViewModel : ObservableObject, IDisposable
     [ObservableProperty]
     private ThemeInfo? _selectedTheme;
 
-    public SettingsViewModel()
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    public SettingsViewModel(IUserSettingsService userSettingsService)
     {
+        _userSettingsService = userSettingsService ?? throw new ArgumentNullException(nameof(userSettingsService));
+
         // 初始化主题列表
         Themes = new ObservableCollection<ThemeInfo>(ThemeManager.AvailableThemes);
 
@@ -51,11 +59,14 @@ public partial class SettingsViewModel : ObservableObject, IDisposable
     /// 选择主题
     /// </summary>
     [RelayCommand]
-    private void SelectTheme(ThemeInfo? theme)
+    private async Task SelectTheme(ThemeInfo? theme)
     {
         if (theme != null)
         {
-            ThemeManager.CurrentTheme = theme.ThemeType;
+            // 保存主题设置到用户配置
+            await _userSettingsService.UpdateThemeAsync(theme.ThemeType.ToString());
+
+            // ThemeManager.CurrentTheme 会在 UpdateThemeAsync 中设置
             // 选中状态会在 OnThemeChanged 中通过 SelectedTheme 更新
         }
     }

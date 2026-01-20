@@ -1,7 +1,10 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+using Lemoo.UI.Helpers;
 using Lemoo.UI.Models.Icons;
 using Lemoo.UI.WPF.ViewModels.Pages;
 
@@ -42,6 +45,21 @@ namespace Lemoo.UI.WPF.Views.Pages
             {
                 IconListBox.SelectionChanged += OnIconSelectionChanged;
             }
+
+            // 订阅主题变化事件，主题切换时刷新图标列表
+            ThemeManager.ThemeChanged += OnThemeChanged;
+        }
+
+        /// <summary>
+        /// 主题变化事件处理
+        /// </summary>
+        private void OnThemeChanged(object? sender, ThemeChangedEventArgs e)
+        {
+            // 使用 Dispatcher 确保在UI线程执行
+            Dispatcher.BeginInvoke(() =>
+            {
+                _viewModel?.RefreshIcons();
+            }, DispatcherPriority.Loaded);
         }
 
         /// <summary>
@@ -51,6 +69,9 @@ namespace Lemoo.UI.WPF.Views.Pages
         {
             if (sender is TextBox textBox && _viewModel != null)
             {
+                // 更新清空按钮显示状态
+                UpdateClearButtonVisibility();
+
                 // 重置计时器
                 _searchDebounceTimer?.Stop();
 
@@ -68,6 +89,31 @@ namespace Lemoo.UI.WPF.Views.Pages
         }
 
         /// <summary>
+        /// 清空搜索按钮点击
+        /// </summary>
+        private void OnClearSearchClick(object sender, RoutedEventArgs e)
+        {
+            if (SearchTextBox != null)
+            {
+                SearchTextBox.Text = string.Empty;
+                UpdateClearButtonVisibility();
+            }
+        }
+
+        /// <summary>
+        /// 更新清空按钮的可见性
+        /// </summary>
+        private void UpdateClearButtonVisibility()
+        {
+            if (ClearSearchButton != null && SearchTextBox != null)
+            {
+                ClearSearchButton.Visibility = string.IsNullOrWhiteSpace(SearchTextBox.Text)
+                    ? Visibility.Collapsed
+                    : Visibility.Visible;
+            }
+        }
+
+        /// <summary>
         /// 防抖计时器触发
         /// </summary>
         private void OnSearchDebounceTick(object? sender, EventArgs e)
@@ -81,17 +127,6 @@ namespace Lemoo.UI.WPF.Views.Pages
         }
 
         /// <summary>
-        /// 尺寸选择变化
-        /// </summary>
-        private void OnSizeChecked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton rb && rb.Tag is string tag && _viewModel != null)
-            {
-                _viewModel.SetSizeCommand?.Execute(tag);
-            }
-        }
-
-        /// <summary>
         /// 分类点击
         /// </summary>
         private void OnCategoryClick(object sender, RoutedEventArgs e)
@@ -99,6 +134,63 @@ namespace Lemoo.UI.WPF.Views.Pages
             if (sender is RadioButton rb && rb.DataContext is IconCategoryItemViewModel category && _viewModel != null)
             {
                 _viewModel.SelectCategoryCommand?.Execute(category);
+
+                // 切换分类后，将滚动位置重置到顶部
+                if (IconListBox != null)
+                {
+                    var scrollViewer = FindVisualChild<ScrollViewer>(IconListBox);
+                    if (scrollViewer != null)
+                    {
+                        scrollViewer.ScrollToTop();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 查找可视化子元素
+        /// </summary>
+        private static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null) return null;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T result)
+                    return result;
+
+                var resultOfChild = FindVisualChild<T>(child);
+                if (resultOfChild != null)
+                    return resultOfChild;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 密度滑块拖动事件
+        /// </summary>
+        private void OnDensityThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is Thumb thumb && _viewModel != null)
+            {
+                const double trackWidth = 120.0; // 轨道宽度
+                const double thumbWidth = 14.0;  // 滑块宽度
+
+                // 获取当前Margin
+                var currentMargin = thumb.Margin.Left;
+
+                // 计算新位置
+                var newPosition = currentMargin + e.HorizontalChange;
+
+                // 限制在轨道范围内
+                newPosition = Math.Max(0, Math.Min(newPosition, trackWidth - thumbWidth));
+
+                // 转换为密度值 (0-100)
+                var newDensity = (newPosition / (trackWidth - thumbWidth)) * 100;
+
+                _viewModel.DensityValue = Math.Clamp(newDensity, 0, 100);
             }
         }
 
@@ -171,7 +263,7 @@ namespace Lemoo.UI.WPF.Views.Pages
             // 更改为 Check 图标
             button.Content = new Lemoo.UI.Controls.Icons.Icon
             {
-                IconKind = Lemoo.UI.Models.Icons.IconKind.Check,
+                IconKind = Lemoo.UI.Models.Icons.IconKind.CheckMark,
                 IconSize = Lemoo.UI.Models.Icons.IconSize.ExtraSmall
             };
 
@@ -201,10 +293,6 @@ namespace Lemoo.UI.WPF.Views.Pages
             {
                 DetailIcon.Visibility = Visibility.Collapsed;
             }
-            if (SizePreviewContainer != null)
-            {
-                SizePreviewContainer.Visibility = Visibility.Collapsed;
-            }
             if (ColorPreviewContainer != null)
             {
                 ColorPreviewContainer.Visibility = Visibility.Collapsed;
@@ -228,10 +316,6 @@ namespace Lemoo.UI.WPF.Views.Pages
             {
                 DetailIcon.Visibility = Visibility.Visible;
             }
-            if (SizePreviewContainer != null)
-            {
-                SizePreviewContainer.Visibility = Visibility.Visible;
-            }
             if (ColorPreviewContainer != null)
             {
                 ColorPreviewContainer.Visibility = Visibility.Visible;
@@ -253,12 +337,6 @@ namespace Lemoo.UI.WPF.Views.Pages
             {
                 DetailIcon.IconKind = icon.Kind;
             }
-
-            // 更新尺寸预览
-            if (SizePreviewXS != null) SizePreviewXS.IconKind = icon.Kind;
-            if (SizePreviewS != null) SizePreviewS.IconKind = icon.Kind;
-            if (SizePreviewM != null) SizePreviewM.IconKind = icon.Kind;
-            if (SizePreviewL != null) SizePreviewL.IconKind = icon.Kind;
 
             // 更新颜色预览
             if (ColorPreviewDark != null) ColorPreviewDark.IconKind = icon.Kind;

@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Lemoo.UI.Models.Icons;
@@ -7,6 +8,16 @@ using Lemoo.UI.Services;
 
 namespace Lemoo.UI.WPF.ViewModels.Pages
 {
+    /// <summary>
+    /// 显示密度范围常量
+    /// </summary>
+    public static class DisplayDensityConstants
+    {
+        public const double MinCardSize = 75;   // 最小卡片尺寸
+        public const double MaxCardSize = 150;  // 最大卡片尺寸
+        public const double SliderRange = 100;  // 滑块范围 0-100
+    }
+
     /// <summary>
     /// 图标浏览器页面视图模型 V2
     /// 使用新的 IconMetadataRegistry，支持中英文搜索
@@ -20,6 +31,7 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         private IconCategoryItemViewModel? _selectedCategory;
         private string _searchText = string.Empty;
         private IconInfo? _selectedIcon;
+        private double _densityValue = 40; // 默认值，对应105px卡片尺寸
 
         public IconBrowserPageViewModelV2()
         {
@@ -115,6 +127,45 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         /// 详情页：关键词
         /// </summary>
         public string DetailKeywords => SelectedIcon != null ? string.Join(", ", SelectedIcon.Keywords.Take(5)) : string.Empty;
+
+        /// <summary>
+        /// 滑块值 (0-100)
+        /// </summary>
+        public double DensityValue
+        {
+            get => _densityValue;
+            set
+            {
+                _densityValue = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CardSize));
+                OnPropertyChanged(nameof(DisplayIconSize));
+                OnPropertyChanged(nameof(NameSize));
+                OnPropertyChanged(nameof(CardPadding));
+            }
+        }
+
+        /// <summary>
+        /// 计算后的卡片尺寸
+        /// </summary>
+        public double CardSize => DisplayDensityConstants.MinCardSize +
+            (DensityValue / DisplayDensityConstants.SliderRange) *
+            (DisplayDensityConstants.MaxCardSize - DisplayDensityConstants.MinCardSize);
+
+        /// <summary>
+        /// 图标大小（卡片的22%）
+        /// </summary>
+        public double DisplayIconSize => CardSize * 0.22;
+
+        /// <summary>
+        /// 名称字号（卡片的11%）
+        /// </summary>
+        public double NameSize => CardSize * 0.11;
+
+        /// <summary>
+        /// 卡片内边距（卡片的12%）
+        /// </summary>
+        public Thickness CardPadding => new Thickness(CardSize * 0.12);
 
         /// <summary>
         /// 初始化分类列表
@@ -246,6 +297,24 @@ namespace Lemoo.UI.WPF.ViewModels.Pages
         {
             var diagnosticInfo = IconMetadataRegistry.GetDiagnosticInfo();
             System.Diagnostics.Debug.WriteLine(diagnosticInfo);
+        }
+
+        /// <summary>
+        /// 刷新图标列表（用于主题切换后强制更新UI）
+        /// </summary>
+        public void RefreshIcons()
+        {
+            // 临时保存当前列表
+            var temp = _filteredIcons.ToList();
+
+            // 清空并重新添加，强制触发UI更新
+            _filteredIcons.Clear();
+            foreach (var icon in temp)
+            {
+                _filteredIcons.Add(icon);
+            }
+
+            OnPropertyChanged(nameof(FilteredIcons));
         }
     }
 
